@@ -1,0 +1,139 @@
+{
+	"users": [
+		{
+			"id": "90806fcb-3d85-4b42-a9b5-e620b6e2fefe",
+			"email": "indiocode@dev.com",
+			"password": "indiocode@dev",
+			"name": "Jhollyfer Rodrigues",
+			"active": true
+		}
+	],
+	"templates": [
+		{
+			"active": true,
+			"name": "Template 1",
+			"version": "1.0.0",
+			"id": "5bf5a5a2-5a1e-47d4-a72e-4c78ba4b4854"
+		},
+		{
+			"active": false,
+			"name": "Template 2",
+			"version": "2.1.3",
+			"id": "5d5fc3ec-f8eb-4633-80d7-750130e0571a"
+		},
+		{
+			"active": true,
+			"name": "Template 3",
+			"version": "1.2.1",
+			"id": "8f6b96a6-efaf-455d-9e9e-22c8691b77f6"
+		},
+		{
+			"active": false,
+			"name": "Template 4",
+			"version": "1.1.0",
+			"id": "f7c1f1a2-8e50-4d1e-b5c5-5a3a5c5e145d"
+		},
+		{
+			"active": true,
+			"name": "Template 5",
+			"version": "3.4.2",
+			"id": "2b95cfd8-6b19-41f9-9ec7-6d9d6e9edee3"
+		},
+		{
+			"active": false,
+			"name": "Template 6",
+			"version": "2.0.0",
+			"id": "b78d1e68-9243-40b3-aaf3-6d7a64cf1b70"
+		},
+		{
+			"active": true,
+			"name": "Template 7",
+			"version": "4.1.1",
+			"id": "6b03be50-24eb-4e61-a7f2-11c74bda86b6"
+		},
+		{
+			"active": false,
+			"name": "Template 8",
+			"version": "1.3.2",
+			"id": "c1f47b6c-89f1-47a7-a9a9-2e430c13778c"
+		},
+		{
+			"active": true,
+			"name": "Template 9",
+			"version": "2.1.1",
+			"id": "dbbab46d-cdf0-4d24-bce3-3dbd868810c9"
+		},
+		{
+			"active": false,
+			"name": "Template 10",
+			"version": "3.2.0",
+			"id": "c1f8ca60-45d6-4967-8a11-8cb7f54bfa02"
+		},
+		{
+			"active": true,
+			"name": "Template 11",
+			"version": "2.2.2",
+			"id": "98d0476c-9cb2-4dc5-9d45-7e294c50581d"
+		},
+		{
+			"active": false,
+			"name": "Template 12",
+			"version": "3.3.3",
+			"id": "81f10d2e-3c3b-4ca3-9c9a-977aa85b0f8d"
+		},
+		{
+			"active": true,
+			"name": "Template 13",
+			"version": "1.3.0",
+			"id": "3a2c0a54-8b85-4170-86a1-ea8411b8ccdb"
+		},
+		{
+			"active": false,
+			"name": "Template 14",
+			"version": "1.4.0",
+			"id": "d74978e6-95a6-4a6b-aeb6-0b6c1a9d3a3b"
+		},
+		{
+			"active": true,
+			"name": "Template 15",
+			"version": "1.0.0",
+			"id": "a3cb3a2b-5df5-497e-921f-c1d37f5e5e1f"
+		},
+		{
+			"active": false,
+			"name": "Template 16",
+			"version": "2.0.0",
+			"id": "b6fa204a-41c2-487b-944d-1d753ae18890"
+		},
+		{
+			"active": true,
+			"name": "Template 17",
+			"version": "1.1.0",
+			"id": "ecf51eaa-8c31-4b3d-b71a-3c8dc734f0c2"
+		},
+		{
+			"active": false,
+			"name": "Template 18",
+			"version": "2.0.0",
+			"id": "b16c9bde-1aae-44f7-b8e8-08c9313aa3d3"
+		},
+		{
+			"active": true,
+			"name": "Template 18",
+			"version": "2.0.0",
+			"id": "b16c9bde-1aae-44f7-b8e8-08c9313aa3d6"
+		},
+		{
+			"active": false,
+			"name": "Template 19",
+			"version": "1.5.0",
+			"id": "ef5d312d-56c8-4a2c-9ef5-5c6599b8a2f2"
+		},
+		{
+			"active": true,
+			"name": "Template 20",
+			"version": "1.0.0",
+			"id": "0dc481cd-035e-4df6-a594-1d3f1e73635f"
+		}
+	]
+}
