@@ -7,7 +7,7 @@ import { ContainerLoading } from './styles';
 export function Loading(): ReactElement {
 	return (
 		<ContainerLoading>
-			<CircularProgress />
+			<CircularProgress style={{ color: '#131C55' }} />
 		</ContainerLoading>
 	);
 }

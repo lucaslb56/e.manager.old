@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import styled from 'styled-components';
 
-export const TransmissionsContainer = styled.div`
+export const TemplatesContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;

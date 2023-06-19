@@ -10,10 +10,10 @@ import { Header } from '~/components/Header';
 import { Loading } from '~/components/Loading';
 import { Table } from '~/components/Table';
 import { useModal } from '~/hooks/Modal';
-import { useTemplateList } from '~/hooks/query/template/list';
+import { useExtractList } from '~/hooks/query/extracts/list';
 import type { QueryParams, QueryType, QueryValueType } from '~/models/Params';
 
-export function Templates(): ReactElement {
+export function Extracts(): ReactElement {
 	const [query, setQuery] = useState<QueryParams>({
 		limit: 10,
 		order: 'asc',
@@ -24,7 +24,7 @@ export function Templates(): ReactElement {
 
 	const [search, setSearch] = useState('');
 
-	const { data: template, isLoading, isSuccess } = useTemplateList(query);
+	const { data: extracts, isLoading, isSuccess } = useExtractList(query);
 
 	function handleSearch(event: ChangeEvent<HTMLInputElement>): void {
 		setSearch(event.target.value);
@@ -50,7 +50,7 @@ export function Templates(): ReactElement {
 
 	return (
 		<TemplatesContainer>
-			<h1>Templates</h1>
+			<h1>Transmissões</h1>
 			<Header
 				createClick={handleOpenNewTemplateModal}
 				searchClick={(): void => handleQuery('search', search)}
@@ -63,9 +63,9 @@ export function Templates(): ReactElement {
 			{isSuccess && (
 				<Fragment>
 					<Table
-						headers={['Nome', 'Versão', 'Status', 'Ações']}
+						headers={['Template', 'Entidade', 'Coluna', 'Valor']}
 						Row={TableRow}
-						data={template?.data}
+						data={extracts?.data}
 					/>
 
 					<Stack
@@ -73,8 +73,8 @@ export function Templates(): ReactElement {
 						style={{ margin: '0 auto' }}
 					>
 						<Pagination
-							count={template?.meta?.last_page}
-							page={template?.meta?.current_page}
+							count={extracts?.meta?.last_page}
+							page={extracts?.meta?.current_page}
 							onChange={(_, page): void => handleQuery('page', page)}
 							variant="outlined"
 							shape="rounded"

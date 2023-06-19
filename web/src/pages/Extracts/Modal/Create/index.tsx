@@ -10,13 +10,10 @@ import { Upload } from './steps/upload';
 
 import { Box, Button } from '~/components/Mui';
 import { queryClient } from '~/hooks/query';
+import { useExtractBuilder } from '~/hooks/query/extracts/builder';
 import { KEYS } from '~/hooks/query/keys';
-import { useTemplateBuilder } from '~/hooks/query/template/builder';
-import {
-	StepOneSchema,
-	StepTwoSchema,
-	type CreateTemplate,
-} from '~/schemas/Template';
+import type { ExtractTemplate } from '~/schemas/Extract';
+import { StepOneSchema, StepTwoSchema } from '~/schemas/Extract';
 
 const StepView = {
 	0: <Upload />,
@@ -37,14 +34,14 @@ export function Create({ close }: CreateProps): ReactElement {
 	const [step, setStep] = useState(0);
 
 	function success(): void {
-		queryClient.invalidateQueries([KEYS.TEMPLATES]);
+		queryClient.invalidateQueries([KEYS.EXTRACTS]);
 		close();
-		toast.success('Template criado com sucesso!');
+		toast.success('Dados armazenados com sucesso!');
 	}
 
-	const { mutateAsync: buildTemplate } = useTemplateBuilder({ success });
+	const { mutateAsync: buildExtract } = useExtractBuilder({ success });
 
-	const CreateTemplateForm = useForm<CreateTemplate>({
+	const CreateTemplateForm = useForm<ExtractTemplate>({
 		mode: 'all',
 		resolver: StepValidator[step as keyof typeof StepValidator],
 	});
@@ -53,9 +50,9 @@ export function Create({ close }: CreateProps): ReactElement {
 		setStep((state) => (step > 0 ? state - 1 : state));
 	}
 
-	function nextStep(data: CreateTemplate): void {
+	function nextStep(data: ExtractTemplate): void {
 		if (step === STEPS_COUNT - 1) {
-			buildTemplate(data);
+			buildExtract(data.extracts);
 		}
 
 		setStep((state) => (step < STEPS_COUNT - 1 ? state + 1 : state));

@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react';
 export type RoutePath =
 	| 'signin'
 	| 'templates'
-	| 'transmissions'
+	| 'extracts'
 	| 'users'
 	| 'logout';
 

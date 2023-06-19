@@ -22,7 +22,7 @@ type UseTemplateListType = UseQueryResult<
 
 export function useTemplateList(params?: QueryParams): UseTemplateListType {
 	return useQuery({
-		queryKey: [KEYS.TEMPLATE, params],
+		queryKey: [KEYS.TEMPLATES, params],
 		queryFn: () => fetcher(params),
 	});
 }

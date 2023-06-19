@@ -3,8 +3,8 @@ import { Entity } from "App/Dtos/Entity";
 import { Template } from "App/Dtos/Template";
 
 enum CollumType {
-  number = "INT",
-  string = "VARCHAR(255)",
+  number = "BIGINT",
+  string = "TEXT",
   boolean = "BOOLEAN",
   array = "TEXT",
   object = "TEXT",

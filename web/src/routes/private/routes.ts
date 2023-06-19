@@ -1,16 +1,15 @@
-import { Layout, TreeStructure, UsersThree } from 'phosphor-react';
+import { Layout, TreeStructure } from 'phosphor-react';
 
 import type { RouteMenu } from '~/models/Route';
+import { Extracts } from '~/pages/Extracts';
 import { Templates } from '~/pages/Templates';
-import { Transmissions } from '~/pages/Transmissions';
-import { Users } from '~/pages/Users';
 
 export const PrivateRoutes: RouteMenu[] = [
 	{
 		label: 'Transmissões',
-		path: 'transmissions',
+		path: 'extracts',
 		icon: TreeStructure,
-		component: Transmissions,
+		component: Extracts,
 	},
 	{
 		label: 'Templates',
@@ -18,10 +17,10 @@ export const PrivateRoutes: RouteMenu[] = [
 		icon: Layout,
 		component: Templates,
 	},
-	{
-		label: 'Usuários',
-		path: 'users',
-		icon: UsersThree,
-		component: Users,
-	},
+	// {
+	// 	label: 'Usuários',
+	// 	path: 'users',
+	// 	icon: UsersThree,
+	// 	component: Users,
+	// },
 ];

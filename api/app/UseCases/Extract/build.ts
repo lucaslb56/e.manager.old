@@ -10,6 +10,19 @@ export class BuildUseCase {
 
     for (const { template, entities } of data) {
       for (const { prefix: entity, values } of entities) {
+        const insertValuesQuery = `INSERT INTO "${template}_${entity}" (id, ${values
+          .flatMap((item) => `"${item.prefix}"`)
+          .join(",")}) VALUES (gen_random_uuid(), ${values
+          .flatMap((item) => {
+            if (typeof item.value === "string") {
+              return `'${item.value}'`;
+            }
+            return item.value;
+          })
+          .join(",")})`;
+
+        await Database.rawQuery(insertValuesQuery);
+
         for (const { prefix: collumn, value } of values) {
           create.push({
             template,
@@ -19,14 +32,6 @@ export class BuildUseCase {
           });
         }
       }
-    }
-
-    for (const item of create) {
-      const insertValuesQuery = `
-        INSERT INTO ${item.template}_${item.entity} (id, ${item.collumn}) VALUES (gen_random_uuid(), ${item.value})
-      `;
-
-      await Database.rawQuery(insertValuesQuery);
     }
 
     return await this.extractRepository.build(create);

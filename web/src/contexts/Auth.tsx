@@ -48,7 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps): ReactElement {
 			API.defaults.headers.Authorization = `Bearer ${data.token}`;
 			setIsLogged(true);
 
-			navigate('/transmissions');
+			navigate('/extracts');
 
 			toast.info(AuthStatusResponse[status as AuthStatusResponseType]);
 		} catch (error) {
