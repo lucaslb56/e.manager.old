@@ -1,4 +1,4 @@
-Algumas instalações importantes
+Algumas instalações importantes para executar a aplicação
 
 > Para ambiente Linux/Ubuntu
 > Caso esteja no Windows usar o Terminal Integrado WSL
@@ -86,7 +86,7 @@ node ace db:seed
 
 ```
 
-## API
+## API {development}
 
 > No pacote API executar
 
@@ -94,7 +94,7 @@ node ace db:seed
 yarn dev
 ```
 
-## WEB
+## WEB (development)
 
 > Nno pacote Web executar
 
