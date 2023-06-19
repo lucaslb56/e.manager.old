@@ -9,7 +9,7 @@ export default class Extract extends Base {
   public entity: string;
 
   @column()
-  public collumn: boolean;
+  public collumn: string;
 
   @column()
   public value: string | number;
