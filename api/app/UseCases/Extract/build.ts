@@ -10,16 +10,23 @@ export class BuildUseCase {
 
     for (const { template, entities } of data) {
       for (const { prefix: entity, values } of entities) {
-        const insertValuesQuery = `INSERT INTO "${template}_${entity}" (id, ${values
-          .flatMap((item) => `"${item.prefix}"`)
-          .join(",")}) VALUES (gen_random_uuid(), ${values
+        console.log(values);
+        const insertCollumns = [
+          ...new Set(values.flatMap((item) => `"${item.prefix}"`)),
+        ].join(",");
+
+        const insertValues = values
           .flatMap((item) => {
             if (typeof item.value === "string") {
               return `'${item.value}'`;
             }
             return item.value;
           })
-          .join(",")})`;
+          .join(",");
+
+        const insertValuesQuery = `INSERT INTO "${template}_${entity}" (id, ${insertCollumns}) VALUES (gen_random_uuid(), ${insertValues})`;
+
+        console.log({ insertValuesQuery });
 
         await Database.rawQuery(insertValuesQuery);
 

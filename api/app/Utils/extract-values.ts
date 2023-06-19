@@ -23,22 +23,23 @@ export function extractValues(
         } as unknown as Entity;
 
         output.push(newNode);
+
         mapProperties(value, key);
       } else if (Array.isArray(value)) {
-        const arrayNode = {
-          name: key,
-          prefix: key,
-          parent: parentPrefix === "" ? null : parentPrefix,
-          type: "array",
-          active: true,
-          collumns: [],
-        } as unknown as Entity;
-
-        output.push(arrayNode);
-
         if (value.length > 0 && typeof value[0] === "object") {
           for (let i = 0; i < value.length; i++) {
-            mapProperties(value[i], key);
+            const arrayNode = {
+              name: `${key}_${i}`,
+              prefix: `${key}_${i}`,
+              parent: parentPrefix === "" ? null : parentPrefix,
+              type: "array",
+              active: true,
+              collumns: [],
+            } as unknown as Entity;
+
+            output.push(arrayNode);
+
+            mapProperties(value[i], `${key}_${i}`);
           }
         }
       } else {
@@ -63,7 +64,7 @@ export function extractValues(
   return output
     .filter((item) => (item?.collumns as Collumn[])?.length > 0)
     .map(({ prefix, collumns }) => ({
-      prefix,
+      prefix: prefix?.split("_")?.[0],
       values: collumns?.map(({ prefix, value }) => ({
         prefix,
         value,

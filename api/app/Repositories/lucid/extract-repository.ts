@@ -17,10 +17,16 @@ export class LucidExtractRepository implements ExtractRepository {
   }
 
   public async list(query: Query): Promise<List> {
+    console.log({ query });
+
     return (
       await Model.query()
         .if(query.search, (build) =>
-          build.where("value", "ilike", `%${query.search}%`)
+          build
+            .where("value", "ilike", `%${query.search}%`)
+            .orWhere("template", "ilike", `%${query.search}%`)
+            .orWhere("entity", "ilike", `%${query.search}%`)
+            .orWhere("collumn", "ilike", `%${query.search}%`)
         )
         .orderBy("template", query.order)
         .paginate(Number(query.page), Number(query.limit))
