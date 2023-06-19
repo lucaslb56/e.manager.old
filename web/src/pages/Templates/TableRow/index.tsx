@@ -1,9 +1,9 @@
-import { CaretDown, Eye } from 'phosphor-react';
+import { Eye } from 'phosphor-react';
 import type { FunctionComponent } from 'react';
 
 import { ViewButton } from './styles';
 
-import { MenuItem, Select } from '~/components/Mui';
+import { Input, MenuItem } from '~/components/Mui';
 import type { TableData } from '~/models/Table';
 import type { Template } from '~/models/Template';
 
@@ -17,20 +17,18 @@ export const TableRow: FunctionComponent<TableRowProps> = ({ item }) => {
 			<td>{item.name}</td>
 			<td>{item.version}</td>
 			<td>
-				<Select
-					defaultValue={item.active ? 'Ativo' : 'Inativo'}
-					value={10}
-					onChange={(): void => console.log('onChange')}
-					input={<CaretDown size={20} />}
+				<Input
+					select
+					size="small"
+					variant="standard"
+					defaultValue={item.active ? 'active' : 'inactive'}
+					onChange={(event): void => console.log(event.target.value)}
 				>
-					<MenuItem value="">
-						<em>None</em>
-					</MenuItem>
-					<MenuItem value={10}>Ten</MenuItem>
-					<MenuItem value={20}>Twenty</MenuItem>
-					<MenuItem value={30}>Thirty</MenuItem>
-				</Select>
-
+					<MenuItem value="active">Ativo</MenuItem>
+					<MenuItem value="inactive">Inativo</MenuItem>
+				</Input>
+			</td>
+			<td>
 				<ViewButton>
 					<Eye
 						fill="bold"

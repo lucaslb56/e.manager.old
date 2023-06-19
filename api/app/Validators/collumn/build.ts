@@ -1,15 +1,11 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
-import { CustomMessages, rules, schema } from "@ioc:Adonis/Core/Validator";
+import { CustomMessages, schema } from "@ioc:Adonis/Core/Validator";
 
 const collumns = schema.array().members(
   schema.object().members({
     entity_id: schema.string(),
-    name: schema.string({}, [
-      rules.unique({ table: "entities", column: "name" }),
-    ]),
-    prefix: schema.string({}, [
-      rules.unique({ table: "entities", column: "prefix" }),
-    ]),
+    name: schema.string(),
+    prefix: schema.string(),
     active: schema.boolean(),
     type: schema.string(),
   })

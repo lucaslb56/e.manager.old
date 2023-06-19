@@ -21,7 +21,7 @@ export const Header = styled.header`
 `;
 
 export const Body = styled.div`
-	max-width: 44.25rem;
+	max-width: 60rem;
 	width: 100%;
 	position: absolute;
 	border-radius: 5px;

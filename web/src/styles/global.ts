@@ -39,7 +39,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     ::-webkit-scrollbar-thumb {
-      background-color: ${({ theme }) => theme['gray-200']};
+      background-color: ${({ theme }) => theme['indigo-300']};
       border-radius: 999px;
     }
 `;

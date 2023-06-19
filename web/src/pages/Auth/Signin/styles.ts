@@ -21,7 +21,7 @@ export const SigninForm = styled.form`
 export const FormGroupBox = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 0.75rem;
+	gap: 1.5rem;
 `;
 
 export const FormInputBox = styled.div`

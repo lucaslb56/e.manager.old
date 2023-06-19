@@ -6,6 +6,6 @@ import type { AuthRequest, AuthResponse } from '~/models/Auth';
 export async function signin(
 	data: AuthRequest,
 ): Promise<AxiosResponse<AuthResponse>> {
-	const response = await API.post('/auth', data);
+	const response = await API.post('/auth/signin', data);
 	return response;
 }

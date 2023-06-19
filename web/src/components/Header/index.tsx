@@ -51,7 +51,7 @@ export function Header({
 					size={16}
 					weight="bold"
 				/>
-				Adicionar
+				Novo
 			</Button>
 		</HeaderBox>
 	);

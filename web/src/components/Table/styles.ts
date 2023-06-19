@@ -4,12 +4,12 @@ import styled from 'styled-components';
 export const TableContainer = styled.div`
 	flex: 1;
 	overflow-y: auto;
-	max-height: 65vh;
+	min-height: 65vh;
 	width: 100%;
 
 	table {
 		width: inherit;
-		height: inherit;
+		/* height: inherit; */
 		border-collapse: collapse;
 		border-spacing: 0;
 

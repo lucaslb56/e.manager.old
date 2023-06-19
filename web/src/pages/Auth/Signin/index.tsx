@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod';
+import { InputAdornment } from '@mui/material';
 import { Eye, EyeSlash } from 'phosphor-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
@@ -7,20 +8,20 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import {
-	FormButtonBox,
 	FormGroupBox,
 	FormHeaderBox,
-	FormInputBox,
-	FormInputControl,
 	SigninContainer,
 	SigninForm,
 } from './styles';
 
+import { Button, Input } from '~/components/Mui';
 import { useAuth } from '~/hooks/Auth';
 
 const SigninFormSchema = z.object({
-	email: z.string().email({ message: 'Informe um e-mail válido.' }),
-	password: z.string().min(1, { message: 'Informe uma senha.' }),
+	email: z.string().nonempty({ message: 'Informe um e-mail.' }).email({
+		message: 'Informe um e-mail válido.',
+	}),
+	password: z.string().nonempty({ message: 'Informe sua senha.' }),
 });
 
 type SigninFormType = z.infer<typeof SigninFormSchema>;
@@ -38,7 +39,6 @@ export function Signin(): ReactElement {
 	const {
 		handleSubmit,
 		register,
-		reset,
 		formState: { errors },
 	} = useForm<SigninFormType>({
 		mode: 'all',
@@ -56,8 +56,6 @@ export function Signin(): ReactElement {
 	async function handleSignin(data: SigninFormType): Promise<void> {
 		try {
 			await signIn(data);
-
-			reset();
 		} catch (error) {
 			console.error(error);
 		}
@@ -72,51 +70,54 @@ export function Signin(): ReactElement {
 				</FormHeaderBox>
 
 				<FormGroupBox>
-					<FormInputBox>
-						<label>E-mail</label>
-						<FormInputControl error={Boolean(errors.email?.message)}>
-							<input
-								type="email"
-								placeholder="example@mail.com"
-								{...register('email')}
-							/>
-						</FormInputControl>
-						{errors.email?.message && <span>* {errors.email.message}</span>}
-					</FormInputBox>
+					<Input
+						size="small"
+						placeholder="E-mail"
+						label={errors.email?.message ?? 'E-mail'}
+						error={Boolean(errors.email?.message)}
+						{...register('email')}
+					/>
 
-					<FormInputBox>
-						<label>Senha</label>
-						<FormInputControl error={Boolean(errors.password?.message)}>
-							<input
-								type={isVisible.password ? 'text' : 'password'}
-								placeholder="Sua senha aqui"
-								{...register('password')}
-							/>
+					<Input
+						size="small"
+						placeholder="Senha"
+						label={errors.password?.message ?? 'Senha'}
+						type={isVisible.password ? 'text' : 'password'}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment
+									position="end"
+									style={{ cursor: 'pointer' }}
+								>
+									{isVisible.password && (
+										<EyeSlash
+											fill="bold"
+											size={16}
+											onClick={(): void => handleVisibility('password')}
+										/>
+									)}
 
-							{isVisible.password && (
-								<EyeSlash
-									fill="bold"
-									size={16}
-									onClick={(): void => handleVisibility('password')}
-								/>
-							)}
+									{!isVisible.password && (
+										<Eye
+											fill="bold"
+											size={16}
+											onClick={(): void => handleVisibility('password')}
+										/>
+									)}
+								</InputAdornment>
+							),
+						}}
+						error={Boolean(errors.password?.message)}
+						{...register('password')}
+					/>
 
-							{!isVisible.password && (
-								<Eye
-									fill="bold"
-									size={16}
-									onClick={(): void => handleVisibility('password')}
-								/>
-							)}
-						</FormInputControl>
-						{errors.password?.message && (
-							<span>* {errors.password.message}</span>
-						)}
-					</FormInputBox>
-
-					<FormButtonBox>
-						<button>Entrar</button>
-					</FormButtonBox>
+					<Button
+						type="submit"
+						size="large"
+						variant="contained"
+					>
+						Entrar
+					</Button>
 				</FormGroupBox>
 			</SigninForm>
 		</SigninContainer>
