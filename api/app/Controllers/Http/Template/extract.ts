@@ -7,8 +7,8 @@ export async function extract({
 }: HttpContextContract): Promise<void> {
   try {
     const templates = request.files("templates", {
-      size: "2mb",
-      extnames: ["xml"],
+      size: "10mb",
+      // extnames: [".xml"],
     });
 
     const extracts = await generatorExtract(templates);

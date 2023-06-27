@@ -10,9 +10,11 @@ export async function generator({
 }: HttpContextContract): Promise<void> {
   try {
     const template = request.file("template", {
-      size: "2mb",
-      extnames: ["xml"],
+      size: "10mb",
+      // extnames: ["xml"],
     });
+
+    console.log({ template: template?.extname });
 
     if (!template?.isValid) {
       return response.forbidden(template?.errors);
