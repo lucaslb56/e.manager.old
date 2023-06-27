@@ -11,14 +11,12 @@ export async function generator({
   try {
     const template = request.file("template", {
       size: "10mb",
-      // extnames: ["xml"],
     });
 
-    console.log({ template: template?.extname });
+    const contentType = template?.headers["content-type"];
+    const isXML = /^application\/xml($|;)/.test(String(contentType));
 
-    if (!template?.isValid) {
-      return response.forbidden(template?.errors);
-    }
+    if (!isXML) return response.forbidden(template?.errors);
 
     const xmlContent = await readFile(String(template?.tmpPath), "utf-8");
 

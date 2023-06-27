@@ -8,8 +8,14 @@ export async function extract({
   try {
     const templates = request.files("templates", {
       size: "10mb",
-      // extnames: [".xml"],
     });
+
+    for (const template of templates) {
+      const contentType = template?.headers["content-type"];
+      const isXML = /^application\/xml($|;)/.test(String(contentType));
+
+      if (!isXML) return response.forbidden(template?.errors);
+    }
 
     const extracts = await generatorExtract(templates);
 
