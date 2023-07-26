@@ -1,4 +1,4 @@
-import { Collumn } from "App/Dtos/Collumn";
+import { Column } from "App/Dtos/Column";
 import { Entity } from "App/Dtos/Entity";
 
 export function generatorTemplate(json: Record<string, any>, prefix = "") {
@@ -15,7 +15,7 @@ export function generatorTemplate(json: Record<string, any>, prefix = "") {
           parent: parentPrefix === "" ? null : parentPrefix,
           type: "object",
           active: true,
-          collumns: [],
+          columns: [],
         } as unknown as Entity;
 
         output.push(newNode);
@@ -27,7 +27,7 @@ export function generatorTemplate(json: Record<string, any>, prefix = "") {
           parent: parentPrefix === "" ? null : parentPrefix,
           type: "array",
           active: true,
-          collumns: [],
+          columns: [],
         } as unknown as Entity;
 
         output.push(arrayNode);
@@ -41,11 +41,11 @@ export function generatorTemplate(json: Record<string, any>, prefix = "") {
           prefix: key,
           active: true,
           type: typeof value,
-        } as Collumn;
+        } as Column;
 
         const parentNode = output.find((node) => node.name === parentPrefix);
         if (parentNode) {
-          parentNode.collumns?.push(newNode);
+          parentNode.columns?.push(newNode);
         }
       }
     }
@@ -53,5 +53,5 @@ export function generatorTemplate(json: Record<string, any>, prefix = "") {
 
   mapProperties(json, prefix);
 
-  return output.filter((item) => (item?.collumns as Collumn[])?.length > 0);
+  return output.filter((item) => (item?.columns as Column[])?.length > 0);
 }

@@ -11,27 +11,15 @@ const columns = schema.array().members(
   })
 );
 
-const entities = schema.array().members(
-  schema.object().members({
-    template_id: schema.string(),
-    name: schema.string(),
-    prefix: schema.string(),
-    active: schema.boolean(),
-    parent: schema.string(),
-    type: schema.string(),
-    columns,
-  })
-);
-
 export class BuildValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    name: schema.string(),
-    prefix: schema.string(),
-    version: schema.string(),
-    entities,
+    columns,
   });
 
-  public messages: CustomMessages = {};
+  public messages: CustomMessages = {
+    "columns.*.name.unique": "Já existe um column com este nome",
+    "columns.*.prefix.unique": "Já existe um column com este nome",
+  };
 }

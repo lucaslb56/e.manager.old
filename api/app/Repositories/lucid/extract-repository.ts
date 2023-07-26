@@ -26,7 +26,7 @@ export class LucidExtractRepository implements ExtractRepository {
             .where("value", "ilike", `%${query.search}%`)
             .orWhere("template", "ilike", `%${query.search}%`)
             .orWhere("entity", "ilike", `%${query.search}%`)
-            .orWhere("collumn", "ilike", `%${query.search}%`)
+            .orWhere("column", "ilike", `%${query.search}%`)
         )
         .orderBy("template", query.order)
         .paginate(Number(query.page), Number(query.limit))

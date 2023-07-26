@@ -6,7 +6,7 @@ import {
   hasMany,
 } from "@ioc:Adonis/Lucid/Orm";
 import { Base } from "./Base";
-import Collumn from "./Collumn";
+import Column from "./Column";
 import Template from "./Template";
 
 export default class Entity extends Base {
@@ -31,6 +31,6 @@ export default class Entity extends Base {
   @belongsTo(() => Template)
   public template: BelongsTo<typeof Template>;
 
-  @hasMany(() => Collumn)
-  public collumns: HasMany<typeof Collumn>;
+  @hasMany(() => Column)
+  public columns: HasMany<typeof Column>;
 }

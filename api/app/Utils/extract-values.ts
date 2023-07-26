@@ -1,4 +1,4 @@
-import { Collumn } from "App/Dtos/Collumn";
+import { Column } from "App/Dtos/Column";
 import { Entity } from "App/Dtos/Entity";
 import { EntityExtract } from "App/Dtos/Extract";
 
@@ -19,7 +19,7 @@ export function extractValues(
           parent: parentPrefix === "" ? null : parentPrefix,
           type: "object",
           active: true,
-          collumns: [],
+          columns: [],
         } as unknown as Entity;
 
         output.push(newNode);
@@ -34,7 +34,7 @@ export function extractValues(
               parent: parentPrefix === "" ? null : parentPrefix,
               type: "array",
               active: true,
-              collumns: [],
+              columns: [],
             } as unknown as Entity;
 
             output.push(arrayNode);
@@ -49,11 +49,11 @@ export function extractValues(
           active: true,
           type: typeof value,
           value: value,
-        } as unknown as Collumn;
+        } as unknown as Column;
 
         const parentNode = output.find((node) => node.name === parentPrefix);
         if (parentNode) {
-          parentNode.collumns?.push(newNode);
+          parentNode.columns?.push(newNode);
         }
       }
     }
@@ -62,10 +62,10 @@ export function extractValues(
   mapProperties(json, prefix);
 
   return output
-    .filter((item) => (item?.collumns as Collumn[])?.length > 0)
-    .map(({ prefix, collumns }) => ({
+    .filter((item) => (item?.columns as Column[])?.length > 0)
+    .map(({ prefix, columns }) => ({
       prefix: prefix?.split("_")?.[0],
-      values: collumns?.map(({ prefix, value }) => ({
+      values: columns?.map(({ prefix, value }) => ({
         prefix,
         value,
       })),

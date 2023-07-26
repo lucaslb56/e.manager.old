@@ -16,10 +16,8 @@ export class BuildUseCase {
       const createTableQuery = `
         CREATE TABLE IF NOT EXISTS "${data.prefix}_${entity.prefix}" (
           id UUID PRIMARY KEY,
-          ${entity.collumns
-            ?.map(
-              (collumn) => `"${collumn.prefix}" ${CollumType[collumn.type]}`
-            )
+          ${entity.columns
+            ?.map((column) => `"${column.prefix}" ${CollumType[column.type]}`)
             .join(",\n")},
           created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP

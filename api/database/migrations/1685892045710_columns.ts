@@ -1,15 +1,22 @@
 import BaseSchema from "@ioc:Adonis/Lucid/Schema";
 
 export default class extends BaseSchema {
-  protected tableName = "extracts";
+  protected tableName = "columns";
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid("id").primary();
-      table.string("template").notNullable();
-      table.string("entity").notNullable();
-      table.string("column").notNullable();
-      table.string("value").notNullable();
+      table.string("name").notNullable();
+      table.string("prefix").notNullable();
+      table.boolean("active").notNullable();
+      table.string("type").notNullable();
+
+      table
+        .uuid("entity_id")
+        .references("id")
+        .inTable("entities")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

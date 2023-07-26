@@ -1,5 +1,5 @@
 import { Base } from "./Base";
-import { Collumn } from "./Collumn";
+import { Column } from "./Column";
 import { Meta } from "./Meta";
 
 export interface Entity extends Base {
@@ -9,12 +9,12 @@ export interface Entity extends Base {
   active: boolean;
   parent?: string;
   type: string;
-  collumns?: Collumn[];
+  columns?: Column[];
 }
 
 export type Create = Omit<
   Entity,
-  "id" | "created_at" | "updated_at" | "collumns"
+  "id" | "created_at" | "updated_at" | "columns"
 >;
 
 export type List = {

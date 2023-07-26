@@ -14,7 +14,7 @@ export class LucidTemplateRepository implements TemplateRepository {
   ): Promise<Template | null> {
     const template = await Model.findBy(key, value);
 
-    await template?.load("entities", (entity) => entity.preload("collumns"));
+    await template?.load("entities", (entity) => entity.preload("columns"));
 
     return (template?.toJSON() as Template) ?? null;
   }
@@ -22,7 +22,7 @@ export class LucidTemplateRepository implements TemplateRepository {
   public async list(query: Query): Promise<List> {
     return (
       await Model.query()
-        .preload("entities", (build) => build.preload("collumns"))
+        .preload("entities", (build) => build.preload("columns"))
         .if(query.search, (build) =>
           build
             .where("name", "ilike", `%${query.search}%`)

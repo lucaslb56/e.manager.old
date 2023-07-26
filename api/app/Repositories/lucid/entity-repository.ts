@@ -23,7 +23,7 @@ export class LucidEntityRepository implements EntityRepository {
   public async list(query: Query): Promise<List> {
     return (
       await Model.query()
-        .preload("collumns")
+        .preload("columns")
         .if(query.search, (build) =>
           build
             .where("name", "ilike", `%${query.search}%`)

@@ -11,7 +11,7 @@ export class BuildUseCase {
     for (const { template, entities } of data) {
       for (const { prefix: entity, values } of entities) {
         console.log(values);
-        const insertCollumns = [
+        const insertColumns = [
           ...new Set(values.flatMap((item) => `"${item.prefix}"`)),
         ].join(",");
 
@@ -24,17 +24,17 @@ export class BuildUseCase {
           })
           .join(",");
 
-        const insertValuesQuery = `INSERT INTO "${template}_${entity}" (id, ${insertCollumns}) VALUES (gen_random_uuid(), ${insertValues})`;
+        const insertValuesQuery = `INSERT INTO "${template}_${entity}" (id, ${insertColumns}) VALUES (gen_random_uuid(), ${insertValues})`;
 
         console.log({ insertValuesQuery });
 
         await Database.rawQuery(insertValuesQuery);
 
-        for (const { prefix: collumn, value } of values) {
+        for (const { prefix: column, value } of values) {
           create.push({
             template,
             entity,
-            collumn,
+            column,
             value,
           });
         }
