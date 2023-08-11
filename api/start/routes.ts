@@ -21,8 +21,6 @@
 import Route from "@ioc:Adonis/Core/Route";
 
 import "./auth";
-import "./column";
-import "./entity";
 import "./extract";
 import "./template";
 import "./user";

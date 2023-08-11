@@ -1,5 +1,5 @@
 import { Create, Template } from "App/Dtos/Template";
-import { TemplateRepository } from "App/Repositories/template-respository";
+import { TemplateRepository } from "App/Repositories/template-repository";
 
 export class CreateUseCase {
   constructor(private templateRepository: TemplateRepository) {}

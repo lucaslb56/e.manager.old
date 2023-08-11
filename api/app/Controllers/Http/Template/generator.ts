@@ -13,19 +13,12 @@ export async function generator({
       size: "10mb",
     });
 
-    // const contentType = template?.headers["content-type"];
-    // const isXML = /^application\/xml($|;)/.test(String(contentType));
-
-    // if (!isXML) return response.forbidden(template?.errors);
-
     const xmlContent = await readFile(String(template?.tmpPath), "utf-8");
 
     const file = new XMLParser({
       ignoreAttributes: true,
       trimValues: true,
     }).parse(xmlContent);
-
-    console.log({ file });
 
     return response.ok(generatorTemplate(file.eSocial));
   } catch (error) {

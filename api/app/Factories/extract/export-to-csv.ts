@@ -1,11 +1,11 @@
 import { LucidExtractRepository } from "App/Repositories/lucid/extract-repository";
 import { LucidTemplateRepository } from "App/Repositories/lucid/template-repository";
-import { BuildUseCase } from "App/UseCases/Extract/build";
+import { ExportToCSVUseCase } from "App/UseCases/Extract/export-to-csv";
 
-export function BuildFactory(): BuildUseCase {
+export function ExportToCSVFactory(): ExportToCSVUseCase {
   const extractRepository = new LucidExtractRepository();
   const templateRepository = new LucidTemplateRepository();
-  const useCase = new BuildUseCase(extractRepository, templateRepository);
+  const useCase = new ExportToCSVUseCase(extractRepository, templateRepository);
 
   return useCase;
 }

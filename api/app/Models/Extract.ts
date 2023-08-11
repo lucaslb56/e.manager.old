@@ -6,11 +6,8 @@ export default class Extract extends Base {
   public template: string;
 
   @column()
-  public entity: string;
+  public accumulation: number;
 
   @column()
-  public column: string;
-
-  @column()
-  public value: string | number;
+  public xml_id: string;
 }

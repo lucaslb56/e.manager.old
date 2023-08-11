@@ -9,13 +9,28 @@ export async function generatorExtract(templates: MultipartFileContract[]) {
       const xmlContent = await readFile(String(template?.tmpPath), "utf-8");
 
       const file = new XMLParser({
-        ignoreAttributes: true,
+        ignoreAttributes: false,
         trimValues: true,
       }).parse(xmlContent);
 
-      const entities = extractValues(file.eSocial);
+      const extract = extractValues(file.eSocial);
 
-      return { template: template.clientName.split("_")[0], entities };
+      const _id = extract
+        .flatMap(
+          (entity) =>
+            entity.values.find((value) => value.prefix === "@_Id")?.value || []
+        )
+        .toString();
+
+      const entities = extract.filter((entity) =>
+        entity.values.find((value) => value.prefix !== "@_Id")
+      );
+
+      return {
+        _id,
+        template: template.clientName.split("_")[0],
+        entities,
+      };
     })
   );
 }

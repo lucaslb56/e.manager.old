@@ -2,6 +2,10 @@
   "name": "emanager",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "18.17.0",
+    "npm": "9.6.7"
+  },
   "scripts": {
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
@@ -15,6 +19,7 @@
     "@japa/preset-adonis": "^1.2.0",
     "@japa/runner": "^2.2.2",
     "@types/node": "^20.2.5",
+    "@types/objects-to-csv": "^1.3.1",
     "adonis-preset-ts": "^2.1.0",
     "pino-pretty": "^9.1.1",
     "typescript": "~4.6",
@@ -26,8 +31,11 @@
     "@adonisjs/core": "^5.8.8",
     "@adonisjs/lucid": "^18.2.0",
     "@adonisjs/repl": "^3.1.11",
+    "fast-csv": "^4.3.6",
     "fast-xml-parser": "^4.2.4",
+    "json-2-csv": "^4.1.0",
     "luxon": "^3.1.0",
+    "objects-to-csv": "^1.3.6",
     "pg": "^8.8.0",
     "phc-bcrypt": "^1.0.7",
     "proxy-addr": "^2.0.7",

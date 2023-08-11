@@ -7,9 +7,8 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid("id").primary();
       table.string("template").notNullable();
-      table.string("entity").notNullable();
-      table.string("column").notNullable();
-      table.string("value").notNullable();
+      table.string("accumulation").notNullable();
+      table.string("xml_id").notNullable();
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

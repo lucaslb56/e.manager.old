@@ -5,6 +5,6 @@ import * as Extract from "App/Controllers/Http/Extract";
 Route.group(() => {
   Route.post("extract/build", Extract.build);
   Route.get("extract", Extract.list);
-})
-  .prefix(Env.get("PREFIX"))
-  .middleware("auth");
+  Route.get("/extract/export-to-csv", Extract.exportToCSV);
+}).prefix(Env.get("PREFIX"));
+// .middleware("auth");

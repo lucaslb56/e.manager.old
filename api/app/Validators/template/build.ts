@@ -3,7 +3,7 @@ import { CustomMessages, schema } from "@ioc:Adonis/Core/Validator";
 
 const columns = schema.array().members(
   schema.object().members({
-    entity_id: schema.string(),
+    // entity_id: schema.string(),
     name: schema.string(),
     prefix: schema.string(),
     active: schema.boolean(),
@@ -13,7 +13,7 @@ const columns = schema.array().members(
 
 const entities = schema.array().members(
   schema.object().members({
-    template_id: schema.string(),
+    // template_id: schema.string(),
     name: schema.string(),
     prefix: schema.string(),
     active: schema.boolean(),

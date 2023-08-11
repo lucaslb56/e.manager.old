@@ -3,9 +3,9 @@ import { Meta } from "./Meta";
 
 export interface Extract extends Base {
   template: string;
-  entity: string;
-  column: string;
-  value: string | number;
+  // entity: string;
+  accumulation: number;
+  xml_id: string;
 }
 
 export type Create = Omit<Extract, "id" | "created_at" | "updated_at">;
@@ -22,6 +22,7 @@ export interface ValueColumnExtract {
 
 export interface CollectExtract {
   template: string;
+  _id: string;
   entities: EntityExtract[];
 }
 
@@ -31,3 +32,12 @@ export type List = {
 };
 
 export type Key = keyof Extract;
+
+export interface ExportToCSVRequest {
+  prefix: string;
+  date?: {
+    initial: string;
+    final: string;
+  };
+  _id?: string;
+}

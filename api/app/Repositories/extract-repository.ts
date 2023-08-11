@@ -1,4 +1,10 @@
-import { Create, Extract, List } from "App/Dtos/Extract";
+import {
+  CollectExtract,
+  Create,
+  ExportToCSVRequest,
+  Extract,
+  List,
+} from "App/Dtos/Extract";
 import { Query } from "App/Dtos/Query";
 
 export interface ExtractRepository {
@@ -9,4 +15,6 @@ export interface ExtractRepository {
     value: Extract[T]
   ) => Promise<Extract | null>;
   list: (query: Query) => Promise<List>;
+  findExistXMLId: (data: CollectExtract[]) => Promise<string[]>;
+  generateExportData: (query: ExportToCSVRequest) => Promise<any[]>;
 }
