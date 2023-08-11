@@ -73,11 +73,21 @@ export class LucidExtractRepository implements ExtractRepository {
     query: ExportToCSVRequest,
     builder: DatabaseQueryBuilderContract<unknown>
   ) {
-    const initial_date = DateTime.fromISO(query?.date?.initial as string);
-    const final_date = DateTime.fromISO(query?.date?.final as string);
+    const initial_date = DateTime.fromJSDate(
+      new Date(query?.date?.initial as string)
+    );
+    const final_date = DateTime.fromJSDate(
+      new Date(query?.date?.final as string)
+    );
 
     const initial_date_sql = initial_date.toSQL() as string;
     const final_date_sql = final_date.toSQL() as string;
+
+    console.log("Initial Date:", initial_date.toISO());
+    console.log("Final Date:", final_date.toISO());
+
+    console.log("Initial Date SQL:", initial_date_sql);
+    console.log("Final Date SQL:", final_date_sql);
 
     return builder.whereBetween("created_at", [
       initial_date_sql,
