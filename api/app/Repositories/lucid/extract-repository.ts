@@ -1,4 +1,6 @@
-import Database from "@ioc:Adonis/Lucid/Database";
+import Database, {
+  DatabaseQueryBuilderContract,
+} from "@ioc:Adonis/Lucid/Database";
 import {
   CollectExtract,
   Create,
@@ -52,22 +54,37 @@ export class LucidExtractRepository implements ExtractRepository {
     ).toJSON() as List;
   }
 
-  public async generateExportData(query: ExportToCSVRequest): Promise<any[]> {
+  public async generateExportData(
+    query: ExportToCSVRequest
+  ): Promise<unknown[]> {
     const exist_query_date = query?.date?.initial && query?.date?.final;
 
     return await Database.query()
       .from(`entity_${query?.prefix}`)
       .select("*")
-      .if(exist_query_date, (builder) =>
-        builder.whereBetween("created_at", [
-          DateTime.fromJSDate(
-            new Date(query?.date?.initial as string)
-          ).toSQL() as string,
-          DateTime.fromJSDate(
-            new Date(query?.date?.final as string)
-          ).toSQL() as string,
-        ])
+      .if(
+        exist_query_date,
+        async (builder) => await this.filterGenerateExportData(query, builder)
       )
       .if(query._id, (builder) => builder.where("_id", query._id as string));
+  }
+
+  private async filterGenerateExportData(
+    query: ExportToCSVRequest,
+    builder: DatabaseQueryBuilderContract<unknown>
+  ) {
+    const initial_date = new Date(query?.date?.initial as string);
+    const final_date = new Date(query?.date?.final as string);
+    const initial_date_sql = DateTime.fromJSDate(
+      initial_date
+    ).toLocaleString() as string;
+    const final_date_sql = DateTime.fromJSDate(
+      final_date
+    ).toLocaleString() as string;
+
+    return builder.whereBetween("created_at", [
+      initial_date_sql,
+      final_date_sql,
+    ]);
   }
 }
