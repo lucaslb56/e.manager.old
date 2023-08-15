@@ -28,7 +28,7 @@ export async function generatorExtract(templates: MultipartFileContract[]) {
 
       return {
         _id,
-        template: template.clientName.split("_")[0],
+        template: template.clientName.split(".")[0],
         entities,
       };
     })

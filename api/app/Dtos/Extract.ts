@@ -3,7 +3,6 @@ import { Meta } from "./Meta";
 
 export interface Extract extends Base {
   template: string;
-  // entity: string;
   accumulation: number;
   xml_id: string;
 }
