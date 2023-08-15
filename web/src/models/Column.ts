@@ -1,6 +1,6 @@
 import type { Base } from './Base';
 
-export interface Collumn extends Base {
+export interface Column extends Base {
 	entity_id?: string;
 	name: string;
 	prefix: string;
@@ -9,11 +9,11 @@ export interface Collumn extends Base {
 	value?: string | number;
 }
 
-export type CollumnGenerator = Omit<
-	Collumn,
+export type ColumnGenerator = Omit<
+	Column,
 	'id' | 'created_at' | 'updated_at' | 'value' | 'entity_id'
 >;
 
 export interface Build {
-	collumns: Omit<Collumn, 'id' | 'created_at' | 'updated_at' | 'value'>[];
+	columns: Omit<Column, 'id' | 'created_at' | 'updated_at' | 'value'>[];
 }

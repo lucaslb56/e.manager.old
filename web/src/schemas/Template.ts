@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const ACCEPTED: string[] = ['text/xml'];
 
-export const CollumnSchema = z.object({
+export const ColumnSchema = z.object({
 	name: z.string().nonempty({ message: 'Informe nome' }),
 	prefix: z.string().nonempty({ message: 'Informe o prefixo' }),
 	active: z.boolean(),
@@ -15,7 +15,7 @@ export const EntitySchema = z.object({
 	active: z.boolean(),
 	parent: z.string().nonempty({ message: 'Informe o nó superior' }),
 	type: z.string().nonempty({ message: 'Informe o tipo' }),
-	collumns: z.array(CollumnSchema),
+	columns: z.array(ColumnSchema),
 });
 
 export const StepOneSchema = z.object({

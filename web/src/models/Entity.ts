@@ -1,5 +1,5 @@
 import type { Base } from './Base';
-import type { Collumn, CollumnGenerator } from './Collumn';
+import type { Column, ColumnGenerator } from './Column';
 
 export interface Entity extends Base {
 	template_id?: string;
@@ -8,16 +8,16 @@ export interface Entity extends Base {
 	active: boolean;
 	parent: string;
 	type: string;
-	collumns: Collumn[];
+	columns: Column[];
 }
 
 export type EntityGenerator = Omit<
 	Entity,
 	'id' | 'created_at' | 'updated_at' | 'template_id'
 > & {
-	collumns: CollumnGenerator[];
+	collumns: ColumnGenerator[];
 };
 
 export interface Build {
-	entities: Omit<Entity, 'id' | 'created_at' | 'updated_at' | 'collumns'>[];
+	entities: Omit<Entity, 'id' | 'created_at' | 'updated_at' | 'columns'>[];
 }

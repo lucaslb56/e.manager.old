@@ -2,7 +2,7 @@ import type { AxiosResponse } from 'axios';
 
 import { API } from '..';
 
-import type { Build as BuildData, Collumn } from '~/models/Collumn';
+import type { Build as BuildData, Collumn } from '~/models/Column';
 
 export async function Build(
 	data: BuildData,

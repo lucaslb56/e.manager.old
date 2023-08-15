@@ -81,9 +81,9 @@ export function Generator(): ReactElement {
 								fullWidth
 								placeholder="Prefixo"
 								label="Prefixo"
-								value={template.name.split('_')[0]}
+								defaultValue={template.name}
 								size="small"
-								disabled
+								// disabled
 								error={!!errors?.prefix?.message}
 							/>
 						</Grid>
@@ -94,7 +94,7 @@ export function Generator(): ReactElement {
 							<Controller
 								name="name"
 								control={control}
-								defaultValue={template.name.split('_')[0]}
+								defaultValue={template.name}
 								render={({ field }): ReactElement => (
 									<TextField
 										{...field}
@@ -175,7 +175,7 @@ export function Generator(): ReactElement {
 													label="Prefixo"
 													defaultValue={item.prefix}
 													size="small"
-													disabled
+													// disabled
 												/>
 											</Grid>
 
@@ -222,7 +222,7 @@ export function Generator(): ReactElement {
 													fullWidth
 													select
 													placeholder="Status"
-													label="Tipo"
+													label="Status"
 													defaultValue={item.active ? 'active' : 'inactive'}
 													size="small"
 												>
@@ -236,7 +236,7 @@ export function Generator(): ReactElement {
 											Colunas
 										</Typography>
 
-										{item?.collumns?.map((col, colindex) => (
+										{item?.columns?.map((col, colindex) => (
 											<Grid
 												container
 												spacing={2}
@@ -252,7 +252,7 @@ export function Generator(): ReactElement {
 														label="Prefixo"
 														defaultValue={col.prefix}
 														size="small"
-														disabled
+														// disabled
 													/>
 												</Grid>
 
@@ -261,7 +261,7 @@ export function Generator(): ReactElement {
 													xs={3}
 												>
 													<Controller
-														name={`entities.${index}.collumns.${colindex}.name`}
+														name={`entities.${index}.columns.${colindex}.name`}
 														control={control}
 														defaultValue={col.name}
 														render={({ field }): ReactElement => (
@@ -272,7 +272,7 @@ export function Generator(): ReactElement {
 																label="Nome"
 																size="small"
 																error={
-																	!!errors?.entities?.[index]?.collumns?.[
+																	!!errors?.entities?.[index]?.columns?.[
 																		colindex
 																	]?.name?.message
 																}

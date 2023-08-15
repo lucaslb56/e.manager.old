@@ -1,3 +1,4 @@
+import { DownloadSimple } from 'phosphor-react';
 import { Fragment, type FunctionComponent } from 'react';
 
 import type { Extract } from '~/models/Extract';
@@ -12,9 +13,23 @@ export const TableRow: FunctionComponent<TableRowProps> = ({ item }) => {
 		<Fragment>
 			<tr>
 				<td>{item.template}</td>
-				<td>{item.entity}</td>
-				<td>{item.collumn}</td>
-				<td>{item.value}</td>
+				<td>{item.xml_id}</td>
+				<td>
+					{item.accumulation}
+					<DownloadSimple
+						size={20}
+						cursor={'pointer'}
+						onClick={(): Window | null =>
+							window.open(
+								`${
+									import.meta.env.VITE_API_BASE_URL
+								}/extract/export-to-csv?_id=${item.xml_id}&prefix=${
+									item.template
+								}`,
+							)
+						}
+					/>
+				</td>
 			</tr>
 		</Fragment>
 	);

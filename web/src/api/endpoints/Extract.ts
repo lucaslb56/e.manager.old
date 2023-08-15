@@ -4,7 +4,7 @@ import { API } from '..';
 
 import type { Extract, ExtractGenerator } from '~/models/Extract';
 import type { ListPaginate } from '~/models/List';
-import type { QueryParams } from '~/models/Params';
+import type { ExportToCSVQueryParams, QueryParams } from '~/models/Params';
 
 export async function list(
 	params?: QueryParams,
@@ -22,4 +22,12 @@ export async function Build(
 	data: ExtractGenerator[],
 ): Promise<AxiosResponse<Extract[]>> {
 	return await API.post('/extract/build', data);
+}
+
+export async function exportToCSV(
+	params: ExportToCSVQueryParams,
+): Promise<void> {
+	return await API.get('/extract/export-to-csv', {
+		params,
+	});
 }

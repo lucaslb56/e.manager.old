@@ -63,7 +63,7 @@ export function Extracts(): ReactElement {
 			{isSuccess && (
 				<Fragment>
 					<Table
-						headers={['Template', 'Entidade', 'Coluna', 'Valor']}
+						headers={['Template', 'Identificador', 'N Registros']}
 						Row={TableRow}
 						data={extracts?.data}
 					/>

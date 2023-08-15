@@ -2,9 +2,8 @@ import type { Base } from './Base';
 
 export interface Extract extends Base {
 	template: string;
-	entity: string;
-	collumn: string;
-	value: string | number;
+	accumulation: number;
+	xml_id: string;
 }
 
 export interface ExtractValue {

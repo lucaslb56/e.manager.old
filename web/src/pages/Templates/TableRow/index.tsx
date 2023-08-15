@@ -1,12 +1,7 @@
-import { Eye } from 'phosphor-react';
+import { DownloadSimple } from 'phosphor-react';
 import { Fragment, type FunctionComponent } from 'react';
 
-import { View } from '../Modal/View';
-
-import { ViewButton } from './styles';
-
 import { Input, MenuItem } from '~/components/Mui';
-import { useModal } from '~/hooks/Modal';
 import type { TableData } from '~/models/Table';
 import type { Template } from '~/models/Template';
 
@@ -15,19 +10,6 @@ interface TableRowProps {
 }
 
 export const TableRow: FunctionComponent<TableRowProps> = ({ item }) => {
-	const { Modal, open } = useModal();
-
-	function handleOpenViewTemplateModal(): void {
-		open({
-			component: (
-				<View
-					template={{ id: item.id, name: item.name, version: item.version }}
-				/>
-			),
-			title: 'Visualizar template',
-		});
-	}
-
 	return (
 		<Fragment>
 			<tr>
@@ -46,15 +28,20 @@ export const TableRow: FunctionComponent<TableRowProps> = ({ item }) => {
 					</Input>
 				</td>
 				<td>
-					<ViewButton onClick={handleOpenViewTemplateModal}>
-						<Eye
-							fill="bold"
-							size={14}
-						/>
-					</ViewButton>
+					<DownloadSimple
+						fill="bold"
+						size={20}
+						cursor={'pointer'}
+						onClick={(): Window | null =>
+							window.open(
+								`${
+									import.meta.env.VITE_API_BASE_URL
+								}/extract/export-to-csv?prefix=${item.prefix}`,
+							)
+						}
+					/>
 				</td>
 			</tr>
-			<Modal />
 		</Fragment>
 	);
 };
