@@ -15,7 +15,9 @@ export class BuildUseCase {
     const columns = extractColumns(data);
 
     const createTableQuery = `
-      CREATE TABLE IF NOT EXISTS "entity_${data.prefix}" (
+      CREATE TABLE IF NOT EXISTS "entity_${data.prefix
+        ?.toUpperCase()
+        ?.replace("-", "_")}" (
         id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
         "_id" TEXT NOT NULL,
         "template_id"UUID REFERENCES templates(id),

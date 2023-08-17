@@ -26,9 +26,10 @@ export class BuildUseCase {
       );
 
       const items = formattedExtractData(entities, _id, template?.id as string);
-      await Database.table(`entity_${template?.prefix}` as string).multiInsert(
-        items
-      );
+
+      await Database.table(
+        `entity_${template?.prefix.replace("-", "_")}` as string
+      ).multiInsert(items);
     }
 
     const created_data = filtered_data.map(({ _id, entities, template }) => ({

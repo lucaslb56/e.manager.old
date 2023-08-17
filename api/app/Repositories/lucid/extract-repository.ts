@@ -19,7 +19,7 @@ export class LucidExtractRepository implements ExtractRepository {
       data.map(async ({ template, _id }) => {
         return (await Database.query()
           .select("_id")
-          .from(`entity_${template.toLowerCase()}`)
+          .from(`entity_${template.replace("-", "_")}`)
           .where("_id", _id)
           .first()) as { _id: string };
       })
@@ -60,7 +60,7 @@ export class LucidExtractRepository implements ExtractRepository {
     const exist_query_date = query?.date?.initial && query?.date?.final;
 
     return await Database.query()
-      .from(`entity_${query?.prefix}`)
+      .from(`entity_${query?.prefix?.replace("-", "_")}`)
       .select("*")
       .if(
         exist_query_date,

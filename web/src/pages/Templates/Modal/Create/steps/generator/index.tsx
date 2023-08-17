@@ -16,6 +16,7 @@ import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { Loading } from '~/components/Loading';
 import { useTemplateGenerator } from '~/hooks/query/template/generator';
 import type { CreateTemplate } from '~/schemas/Template';
+import { getTemplatePrefixName } from '~/utils/get-template-prefix-name';
 
 export function Generator(): ReactElement {
 	const {
@@ -47,7 +48,7 @@ export function Generator(): ReactElement {
 
 		templateGenerator(form);
 
-		setValue('prefix', template.name.split('_')[0]);
+		setValue('prefix', getTemplatePrefixName(template.name));
 	}
 
 	useEffect(() => {
@@ -81,7 +82,7 @@ export function Generator(): ReactElement {
 								fullWidth
 								placeholder="Prefixo"
 								label="Prefixo"
-								defaultValue={template.name}
+								defaultValue={getTemplatePrefixName(template.name)}
 								size="small"
 								// disabled
 								error={!!errors?.prefix?.message}
@@ -94,7 +95,7 @@ export function Generator(): ReactElement {
 							<Controller
 								name="name"
 								control={control}
-								defaultValue={template.name}
+								defaultValue={getTemplatePrefixName(template.name)}
 								render={({ field }): ReactElement => (
 									<TextField
 										{...field}

@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { useTemplateList } from '~/hooks/query/template/list';
 import type { ExtractTemplate } from '~/schemas/Extract';
+import { getTemplatePrefixName } from '~/utils/get-template-prefix-name';
 
 export function Upload(): ReactElement {
 	const {
@@ -17,10 +18,15 @@ export function Upload(): ReactElement {
 
 	const { data } = useTemplateList();
 	const templateList = data?.data?.flatMap((item) => item.prefix);
+	console.log(templateList);
 
 	function handleUpload(event: ChangeEvent<HTMLInputElement>): void {
+		console.log(event.target.files);
 		const templates = Array.from(event.target.files as FileList).filter(
-			(file) => templateList?.some((template) => file.name.includes(template)),
+			(file) =>
+				templateList?.some((template) =>
+					getTemplatePrefixName(file.name).includes(template),
+				),
 		);
 
 		setValue('templates', templates);
@@ -28,6 +34,8 @@ export function Upload(): ReactElement {
 	}
 
 	const templates = getValues('templates');
+
+	console.log(templates);
 
 	return (
 		<Box

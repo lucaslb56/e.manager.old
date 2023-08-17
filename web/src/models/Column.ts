@@ -1,7 +1,7 @@
 import type { Base } from './Base';
 
 export interface Column extends Base {
-	entity_id?: string;
+	// entity_id?: string;
 	name: string;
 	prefix: string;
 	active: boolean;

@@ -6,7 +6,7 @@ export interface Template extends Base {
 	prefix: string;
 	version: string;
 	active: boolean;
-	entities: Entity[];
+	entities: Partial<Entity>[];
 }
 
 export type Create = Pick<Template, 'name' | 'prefix' | 'version'>;
