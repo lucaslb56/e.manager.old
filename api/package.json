@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "18.17.0",
-    "npm": "9.6.7"
+    "node": "20.x",
+    "npm": "9.x"
   },
   "scripts": {
     "dev": "node ace serve --watch",

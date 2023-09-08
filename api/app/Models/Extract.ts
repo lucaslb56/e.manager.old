@@ -3,7 +3,7 @@ import { Base } from "./Base";
 
 export default class Extract extends Base {
   @column()
-  public template: string;
+  public leiaute: string;
 
   @column()
   public accumulation: number;

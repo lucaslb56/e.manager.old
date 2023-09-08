@@ -1,6 +1,6 @@
 import { ExportToCSVRequest } from "App/Dtos/Extract";
 import { ExtractRepository } from "App/Repositories/extract-repository";
-import { TemplateRepository } from "App/Repositories/template-repository";
+import { LeiauteRepository } from "App/Repositories/leiaute-repository";
 import { randomUUID } from "crypto";
 import { writeFile } from "fs/promises";
 import { json2csv } from "json-2-csv";
@@ -8,13 +8,13 @@ import { json2csv } from "json-2-csv";
 export class ExportToCSVUseCase {
   constructor(
     private extractRepository: ExtractRepository,
-    private templateRepository: TemplateRepository
+    private leiauteRepository: LeiauteRepository
   ) {}
 
   async execute(
     query: ExportToCSVRequest
   ): Promise<{ path: string; filename: string }> {
-    const template = await this.templateRepository.findBy(
+    const template = await this.leiauteRepository.findBy(
       "prefix",
       query.prefix
     );

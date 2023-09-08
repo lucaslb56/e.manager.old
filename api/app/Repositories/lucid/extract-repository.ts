@@ -16,10 +16,10 @@ import { ExtractRepository } from "../extract-repository";
 export class LucidExtractRepository implements ExtractRepository {
   public async findExistXMLId(data: CollectExtract[]): Promise<string[]> {
     const result = await Promise.all(
-      data.map(async ({ template, _id }) => {
+      data.map(async ({ leiaute, _id }) => {
         return (await Database.query()
           .select("_id")
-          .from(`entity_${template.replace("-", "_")}`)
+          .from(`entity_${leiaute.replace("-", "_")}`)
           .where("_id", _id)
           .first()) as { _id: string };
       })
@@ -45,11 +45,11 @@ export class LucidExtractRepository implements ExtractRepository {
         .if(query.search, (build) =>
           build
             .where("value", "ilike", `%${query.search}%`)
-            .orWhere("template", "ilike", `%${query.search}%`)
+            .orWhere("leiaute", "ilike", `%${query.search}%`)
             .orWhere("entity", "ilike", `%${query.search}%`)
             .orWhere("column", "ilike", `%${query.search}%`)
         )
-        .orderBy("template", query.order)
+        .orderBy("leiaute", query.order)
         .paginate(Number(query.page), Number(query.limit))
     ).toJSON() as List;
   }

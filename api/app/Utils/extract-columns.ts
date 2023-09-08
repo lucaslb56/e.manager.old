@@ -1,7 +1,7 @@
 import { Column } from "App/Dtos/Column";
-import { Template } from "App/Dtos/Template";
+import { Leiaute } from "App/Dtos/Leiaute";
 
-export function extractColumns(data: Partial<Template>) {
+export function extractColumns(data: Partial<Leiaute>) {
   return data.entities
     ?.flatMap((entity) =>
       entity.columns?.filter((column) => column.type !== "array")

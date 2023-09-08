@@ -2,7 +2,7 @@ import { Base } from "./Base";
 import { Meta } from "./Meta";
 
 export interface Extract extends Base {
-  template: string;
+  leiaute: string;
   accumulation: number;
   xml_id: string;
 }
@@ -20,7 +20,7 @@ export interface ValueColumnExtract {
 }
 
 export interface CollectExtract {
-  template: string;
+  leiaute: string;
   _id: string;
   entities: EntityExtract[];
 }

@@ -3,7 +3,7 @@ import { EntityExtract } from "App/Dtos/Extract";
 export function formattedExtractData(
   data: EntityExtract[],
   _id: string,
-  template_id: string
+  leiaute_id: string
 ) {
   return data.map((entity) => {
     const props = entity.values.reduce((acc, cur) => {
@@ -14,7 +14,7 @@ export function formattedExtractData(
     const obj = {
       ...props,
       _id,
-      template_id,
+      leiaute_id,
     };
 
     console.log({ obj });

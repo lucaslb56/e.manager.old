@@ -3,7 +3,7 @@ import { Column } from "./Column";
 import { Meta } from "./Meta";
 
 export interface Entity extends Base {
-  template_id: string;
+  leiaute_id: string;
   name: string;
   prefix: string;
   active: boolean;

@@ -3,10 +3,10 @@ import { XMLParser } from "fast-xml-parser";
 import { readFile } from "fs/promises";
 import { extractValues } from "./extract-values";
 
-export async function generatorExtract(templates: MultipartFileContract[]) {
+export async function generatorExtract(leiautes: MultipartFileContract[]) {
   return await Promise.all(
-    templates.map(async (template) => {
-      const xmlContent = await readFile(String(template?.tmpPath), "utf-8");
+    leiautes.map(async (leiaute) => {
+      const xmlContent = await readFile(String(leiaute?.tmpPath), "utf-8");
 
       const file = new XMLParser({
         ignoreAttributes: false,
@@ -22,20 +22,20 @@ export async function generatorExtract(templates: MultipartFileContract[]) {
         )
         .toString();
 
-      const regex_template = /(S\d{4})|(S-\d{4})/;
+      const regex_leiaute = /(S\d{4})|(S-\d{4})/;
       const entities = extract.filter((entity) =>
         entity.values.find((value) => value.prefix !== "@_Id")
       );
 
-      const is_template = template.clientName
+      const is_leiaute = leiaute.clientName
         .split(".")[0]
-        .match(regex_template) as RegExpMatchArray;
+        .match(regex_leiaute) as RegExpMatchArray;
 
       return {
         _id,
-        template: is_template[0].includes("-")
-          ? is_template[0]
-          : is_template[0].replace("S", "S-"),
+        leiaute: is_leiaute[0].includes("-")
+          ? is_leiaute[0]
+          : is_leiaute[0].replace("S", "S-"),
         entities,
       };
     })
