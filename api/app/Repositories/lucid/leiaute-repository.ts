@@ -1,5 +1,6 @@
 import Database from "@ioc:Adonis/Lucid/Database";
 import {
+  Build,
   FilteredBetweenDate,
   Leiaute,
   LeiauteQuery,
@@ -93,5 +94,20 @@ export class LucidLeiauteRepository implements LeiauteRepository {
     );
 
     return Object.entries(columnsInfo).flatMap(([key]) => key);
+  }
+
+  public async build({ data, query }: Build): Promise<void> {
+    await Database.table(`${query.prefix}_${query.version}`).multiInsert(data);
+  }
+
+  public async getExistsESocialId({
+    prefix,
+    version,
+  }: LeiauteQuery): Promise<string[]> {
+    const data = (
+      await Database.query().from(`${prefix}_${version}`).select("e_social_id")
+    )?.flatMap((item) => item.e_social_id);
+
+    return [...new Set(data)];
   }
 }

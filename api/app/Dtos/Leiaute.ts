@@ -39,3 +39,8 @@ export interface FilteredBetweenDate {
   query: LeiauteQuery;
   builder: DatabaseQueryBuilderContract;
 }
+
+export interface Build {
+  query: LeiauteQuery;
+  data: ListLeiauteData[];
+}

@@ -1,4 +1,5 @@
 import {
+  Build,
   Leiaute,
   LeiauteQuery,
   List,
@@ -16,4 +17,6 @@ export interface LeiauteRepository {
   listLeiaute: (query: LeiauteQuery) => Promise<ListLeiaute>;
   export: (query: LeiauteQuery) => Promise<ListLeiauteData[]>;
   columns: (query: LeiauteQuery) => Promise<string[]>;
+  build: (build: Build) => Promise<void>;
+  getExistsESocialId: (query: LeiauteQuery) => Promise<string[]>;
 }
