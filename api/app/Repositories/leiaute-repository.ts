@@ -1,4 +1,10 @@
-import { Leiaute, List } from "App/Dtos/Leiaute";
+import {
+  Leiaute,
+  LeiauteQuery,
+  List,
+  ListLeiaute,
+  ListLeiauteData,
+} from "App/Dtos/Leiaute";
 import { Query } from "App/Dtos/Query";
 
 export interface LeiauteRepository {
@@ -7,4 +13,7 @@ export interface LeiauteRepository {
     value: Leiaute[T]
   ) => Promise<Leiaute | null>;
   list: (query: Query) => Promise<List>;
+  listLeiaute: (query: LeiauteQuery) => Promise<ListLeiaute>;
+  export: (query: LeiauteQuery) => Promise<ListLeiauteData[]>;
+  columns: (query: LeiauteQuery) => Promise<string[]>;
 }

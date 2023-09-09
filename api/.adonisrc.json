@@ -2,7 +2,7 @@
   "typescript": true,
   "metaFiles": [
     {
-      "pattern": "resources/templates/**/*.csv",
+      "pattern": "resources/templates/**/*.(csv|xlsx|json)",
       "realoadServer": false
     }
   ],

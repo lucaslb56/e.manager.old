@@ -1,9 +1,9 @@
-// import { LucidExtractRepository } from "App/Repositories/lucid/extract-repository";
-// import { ListUseCase } from "App/UseCases/Extract/list";
+import { LucidLeiauteRepository } from "App/Repositories/lucid/leiaute-repository";
+import { ListLeiauteUseCase } from "App/UseCases/Leiaute/list-leiaute";
 
-// export function ListFactory(): ListUseCase {
-//   const extractRepository = new LucidExtractRepository();
-//   const useCase = new ListUseCase(extractRepository);
+export function ListLeiauteFactory(): ListLeiauteUseCase {
+  const leiauteRepository = new LucidLeiauteRepository();
+  const useCase = new ListLeiauteUseCase(leiauteRepository);
 
-//   return useCase;
-// }
+  return useCase;
+}

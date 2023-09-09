@@ -1,11 +1,10 @@
-// import { List } from "App/Dtos/Extract";
-// import { LeiauteQuery } from "App/Dtos/Leiaute";
-// import { ExtractRepository } from "App/Repositories/extract-repository";
+import { LeiauteQuery, ListLeiaute } from "App/Dtos/Leiaute";
+import { LeiauteRepository } from "App/Repositories/leiaute-repository";
 
-// export class ListUseCase {
-//   constructor(private extractRepository: ExtractRepository) {}
+export class ListLeiauteUseCase {
+  constructor(private leiauteRepository: LeiauteRepository) {}
 
-//   async execute(query: LeiauteQuery): Promise<List> {
-//     return await this.extractRepository.list(query);
-//   }
-// }
+  async execute(query: LeiauteQuery): Promise<ListLeiaute> {
+    return await this.leiauteRepository.listLeiaute(query);
+  }
+}
