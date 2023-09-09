@@ -7,11 +7,16 @@ export async function list({
   response,
 }: HttpContextContract): Promise<void> {
   try {
-    const query: Query = request.qs();
+    const { limit = 8, page = 1, order = "asc", search }: Query = request.qs();
 
     const listUseCase = ListFactory();
 
-    const paginate = await listUseCase.execute(query);
+    const paginate = await listUseCase.execute({
+      limit,
+      page,
+      order,
+      search,
+    });
 
     return response.ok(paginate);
   } catch (error) {

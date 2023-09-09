@@ -23,7 +23,9 @@ export default class extends BaseSeeder {
             Object.entries(leiaute).flatMap(([key, values]) =>
               values.flatMap(
                 (value: { name: string; type: string }) =>
-                  `"${key}_${value.name}" ${ColumnType[value.type]}`
+                  `"${key.toLowerCase()}_${value.name.toLowerCase()}" ${
+                    ColumnType[value.type]
+                  }`
               )
             )
           ),

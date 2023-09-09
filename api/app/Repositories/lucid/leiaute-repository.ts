@@ -1,13 +1,9 @@
-import { Create, Leiaute, List } from "App/Dtos/Leiaute";
+import { Leiaute, List } from "App/Dtos/Leiaute";
 import { Query } from "App/Dtos/Query";
 import Model from "App/Models/Leiaute";
 import { LeiauteRepository } from "../leiaute-repository";
 
 export class LucidLeiauteRepository implements LeiauteRepository {
-  public async create(data: Create): Promise<Leiaute> {
-    return (await Model.create(data)).toJSON() as Leiaute;
-  }
-
   public async findBy<T extends keyof Leiaute>(
     key: T,
     value: Leiaute[T]

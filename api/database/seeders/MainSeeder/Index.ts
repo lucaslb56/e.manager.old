@@ -19,6 +19,6 @@ export default class extends BaseSeeder {
       await this.runSeeder(await import("../Leiaute"));
     }
 
-    await this.runSeeder(await import("../LeiauteBuilder"));
+    // await this.runSeeder(await import("../LeiauteBuilder"));
   }
 }
