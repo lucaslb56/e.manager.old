@@ -73,7 +73,10 @@ export function extractXML(
   return data;
 }
 
-export function extractData(arr: ListLeiauteData[], leiaute: Leiaute): { [key: string]: number | string }[]{
+export function extractData(
+  arr: ListLeiauteData[],
+  leiaute: Leiaute
+): { [key: string]: number | string }[] {
   const complementary: { [key: string]: number | string }[] = [];
 
   const formatted_data = arr.map((item) => {
@@ -93,7 +96,8 @@ export function extractData(arr: ListLeiauteData[], leiaute: Leiaute): { [key: s
           (item: { [key: string]: number | string }) => {
             const data = Object.entries(item).reduce(
               (acc, [key_complementary, values_complementary]) => {
-                acc[`${key.toLowerCase()}_${key_complementary.toLowerCase()}`] = values_complementary;
+                acc[`${key.toLowerCase()}_${key_complementary.toLowerCase()}`] =
+                  values_complementary;
                 return acc;
               },
               {} as any
@@ -102,7 +106,7 @@ export function extractData(arr: ListLeiauteData[], leiaute: Leiaute): { [key: s
             return {
               e_social_id,
               event_type,
-              leiaute_id: leiaute.id
+              leiaute_id: leiaute.id,
               ...data,
             };
           }
