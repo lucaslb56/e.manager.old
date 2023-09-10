@@ -17,6 +17,8 @@ export interface LeiauteRepository {
   ) => Promise<Leiaute | null>;
   list: (query: Query) => Promise<List>;
   listLeiaute: (query: LeiauteQuery) => Promise<ListLeiaute>;
+  activeList: (query: Query) => Promise<Leiaute[]>;
+  toggleActive: (leiaute: Leiaute) => Promise<void>;
   export: (query: LeiauteQuery) => Promise<ListLeiauteData[]>;
   columns: (query: LeiauteQuery) => Promise<LeiauteColumn[]>;
   build: (build: Build) => Promise<void>;

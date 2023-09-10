@@ -5,9 +5,11 @@ import * as Leiaute from "App/Controllers/Http/Leiaute";
 Route.group(() => {
   Route.get("leiaute", Leiaute.list);
   Route.get("leiaute/list", Leiaute.listLeiaute);
+  Route.get("leiaute/active-list", Leiaute.activeList);
   Route.get("leiaute/columns", Leiaute.columns);
   Route.get("leiaute/export", Leiaute.export);
   Route.get("leiaute/:id", Leiaute.show);
+  Route.patch("leiaute/:id/toggle-active", Leiaute.toggleActive);
   Route.post("leiaute/build", Leiaute.build);
   Route.post("leiaute/extract", Leiaute.extract);
 })

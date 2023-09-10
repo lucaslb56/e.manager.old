@@ -42,6 +42,18 @@ export class LucidLeiauteRepository implements LeiauteRepository {
     ).toJSON() as List;
   }
 
+  public async activeList(query: Query): Promise<Leiaute[]> {
+    return (
+      await Model.query().where("active", true).orderBy("name", query.order)
+    ).map((item) => item.toJSON() as Leiaute);
+  }
+
+  public async toggleActive(leiaute: Leiaute): Promise<void> {
+    await Model.query()
+      .where("id", leiaute.id)
+      .update({ active: !leiaute.active });
+  }
+
   public async listLeiaute(query: LeiauteQuery): Promise<ListLeiaute> {
     return (
       await Database.query()
