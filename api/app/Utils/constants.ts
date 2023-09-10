@@ -59,6 +59,14 @@ export enum LeiauteVersion {
 }
 
 export enum ColumnType {
-  number = "NUMERIC",
-  string = "TEXT",
+  number = "numeric",
+  string = "text",
+}
+
+export enum TypeColumn {
+  "numeric" = "number",
+  "text" = "string",
+  "uuid" = "string",
+  "character varying" = "string",
+  "timestamp with time zone" = "string",
 }

@@ -1,41 +1,36 @@
-import { Build, ListLeiauteData } from "App/Dtos/Leiaute";
+import { Build } from "App/Dtos/Leiaute";
 import { LeiauteRepository } from "App/Repositories/leiaute-repository";
 import { LeiautePrefix } from "App/Utils/constants";
+import { extractData } from "App/Utils/extract";
 
 export class BuildUseCase {
   constructor(private leiauteRepository: LeiauteRepository) {}
 
-  async execute({ data, query }: Build): Promise<void> {
-    const template = await this.leiauteRepository.findBy(
-      "prefix",
-      query.prefix
-    );
+  async execute({
+    data,
+    query,
+  }: Build): Promise<{ [key: string]: number | string }[]> {
+    const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
 
-    if (!template || template.version !== query.version)
-      throw new Error("Template not found");
+    if (!leiaute || leiaute.version !== query.version)
+      throw new Error("Leiaute not found");
 
     const exist_e_social_id_list =
       await this.leiauteRepository.getExistsESocialId({
-        prefix: template.prefix as keyof typeof LeiautePrefix,
-        version: template.version,
+        prefix: leiaute.prefix as keyof typeof LeiautePrefix,
+        version: leiaute.version,
       });
-
-    console.log({ exist_e_social_id_list });
 
     const filtered_data = data.filter(
       (item) => !exist_e_social_id_list.includes(item.e_social_id as string)
     );
 
-    console.log({ filtered_data });
+    if (!filtered_data.length) return [];
 
-    if (!filtered_data.length) return;
+    const extract_create_data = extractData(filtered_data, leiaute);
 
-    await this.leiauteRepository.build({
-      query,
-      data: filtered_data.map((item) => ({
-        ...item,
-        leiaute_id: template.id,
-      })) as ListLeiauteData[],
-    });
+    await this.leiauteRepository.build({ data: extract_create_data, query });
+
+    return extract_create_data;
   }
 }

@@ -1,4 +1,5 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Logger from "@ioc:Adonis/Core/Logger";
 import { ShowFactory } from "App/Factories/leiaute/show";
 
 export async function show({
@@ -14,7 +15,11 @@ export async function show({
 
     return response.ok(leiaute);
   } catch (error) {
-    console.log(error);
-    return response.conflict(error);
+    if (error instanceof Error) {
+      return response.conflict({ message: error.message });
+    }
+
+    Logger.error(error);
+    return response.internalServerError(error);
   }
 }

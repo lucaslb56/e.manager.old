@@ -1,4 +1,5 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Logger from "@ioc:Adonis/Core/Logger";
 import { LeiauteQuery } from "App/Dtos/Leiaute";
 import { ListLeiauteFactory } from "App/Factories/leiaute/list-leiaute";
 
@@ -31,7 +32,11 @@ export async function listLeiaute({
 
     return response.ok(paginate);
   } catch (error) {
-    console.log(error);
-    return response.conflict(error);
+    if (error instanceof Error) {
+      return response.conflict({ message: error.message });
+    }
+
+    Logger.error(error);
+    return response.internalServerError(error);
   }
 }

@@ -1,22 +1,22 @@
-import { LeiauteQuery } from "App/Dtos/Leiaute";
+import { LeiauteColumn, LeiauteQuery } from "App/Dtos/Leiaute";
 import { LeiauteRepository } from "App/Repositories/leiaute-repository";
 
 export class ColumnstUseCase {
   constructor(private leiauteRepository: LeiauteRepository) {}
 
-  async execute(query: LeiauteQuery): Promise<string[]> {
-    const template = await this.leiauteRepository.findBy(
+  async execute(query: LeiauteQuery): Promise<LeiauteColumn[]> {
+    const leuiaute = await this.leiauteRepository.findBy(
       "prefix",
       query.prefix
     );
 
-    if (!template || template.version !== query.version)
-      throw new Error("Template not found");
+    if (!leuiaute || leuiaute.version !== query.version)
+      throw new Error("leuiaute not found");
 
-    const data = await this.leiauteRepository.columns(query);
+    const columns = await this.leiauteRepository.columns(query);
 
-    if (!data.length) throw new Error("Data not found");
+    if (!columns.length) throw new Error("Data not found");
 
-    return data;
+    return columns;
   }
 }

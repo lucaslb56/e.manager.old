@@ -1,4 +1,5 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Logger from "@ioc:Adonis/Core/Logger";
 import { LeiauteQuery, ListLeiauteData } from "App/Dtos/Leiaute";
 import { BuildFactory } from "App/Factories/leiaute/build";
 
@@ -9,18 +10,24 @@ export async function build({
   try {
     const query = request.qs() as LeiauteQuery;
 
-    const { data } = request.only(["data"]) as { data: ListLeiauteData[] };
+    const { extracts } = request.only(["extracts"]) as {
+      extracts: ListLeiauteData[];
+    };
 
     const buildUseCase = BuildFactory();
 
     const inserts = await buildUseCase.execute({
       query,
-      data,
+      data: extracts,
     });
 
     return response.created(inserts);
   } catch (error) {
-    console.log(error);
-    return response.conflict(error);
+    if (error instanceof Error) {
+      return response.conflict({ message: error.message });
+    }
+
+    Logger.error(error);
+    return response.internalServerError(error);
   }
 }

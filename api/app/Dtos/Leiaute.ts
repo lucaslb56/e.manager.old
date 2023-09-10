@@ -1,3 +1,4 @@
+import { MultipartFileContract } from "@ioc:Adonis/Core/BodyParser";
 import { DatabaseQueryBuilderContract } from "@ioc:Adonis/Lucid/Database";
 import { LeiautePrefix, LeiauteVersion } from "App/Utils/constants";
 import { Base } from "./Base";
@@ -19,13 +20,22 @@ export type List = {
 };
 
 export interface ListLeiauteData {
-  [name: string]: number | string;
+  [key: string]: number | string;
+}
+
+export interface LeiauteType {
+  name: string;
+  type: "number" | "string";
 }
 
 export type ListLeiaute = {
   meta: Meta;
   data: ListLeiauteData[];
 };
+
+export interface LeiauteExtractType {
+  [key: string]: LeiauteType[];
+}
 
 export interface LeiauteQuery extends Query {
   prefix: keyof typeof LeiautePrefix;
@@ -44,3 +54,12 @@ export interface Build {
   query: LeiauteQuery;
   data: ListLeiauteData[];
 }
+
+export interface LeiauteColumn {
+  key: string;
+  type: "number" | "string";
+}
+
+export type LeiauteExtract = Pick<LeiauteQuery, "prefix" | "version"> & {
+  leiautes: MultipartFileContract[];
+};

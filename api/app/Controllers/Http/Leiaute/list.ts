@@ -1,4 +1,5 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Logger from "@ioc:Adonis/Core/Logger";
 import { Query } from "App/Dtos/Query";
 import { ListFactory } from "App/Factories/leiaute/list";
 
@@ -20,7 +21,11 @@ export async function list({
 
     return response.ok(paginate);
   } catch (error) {
-    console.log(error);
-    return response.conflict(error);
+    if (error instanceof Error) {
+      return response.conflict({ message: error.message });
+    }
+
+    Logger.error(error);
+    return response.internalServerError(error);
   }
 }

@@ -3,6 +3,8 @@ import {
   Build,
   FilteredBetweenDate,
   Leiaute,
+  LeiauteColumn,
+  LeiauteExtract,
   LeiauteQuery,
   List,
   ListLeiaute,
@@ -10,6 +12,10 @@ import {
 } from "App/Dtos/Leiaute";
 import { Query } from "App/Dtos/Query";
 import Model from "App/Models/Leiaute";
+import { TypeColumn } from "App/Utils/constants";
+import { extractXML, getESocialEvent, getESocialId } from "App/Utils/extract";
+import { Leiautes } from "App/Utils/leiautes";
+import { readFile } from "fs/promises";
 import { DateTime } from "luxon";
 import { LeiauteRepository } from "../leiaute-repository";
 
@@ -37,8 +43,6 @@ export class LucidLeiauteRepository implements LeiauteRepository {
   }
 
   public async listLeiaute(query: LeiauteQuery): Promise<ListLeiaute> {
-    console.log({ query });
-
     return (
       await Database.query()
         .from(`${query.prefix}_${query.version}`)
@@ -52,7 +56,6 @@ export class LucidLeiauteRepository implements LeiauteRepository {
   public async export(query: LeiauteQuery): Promise<ListLeiauteData[]> {
     const existQueryDate = query?.date?.initial && query?.date?.final;
 
-    console.log({ a: query.columns });
     return (await Database.query()
       .from(`${query.prefix}_${query.version}`)
       .if((query?.columns as string)?.length > 0, (builder) =>
@@ -88,12 +91,15 @@ export class LucidLeiauteRepository implements LeiauteRepository {
     ]);
   }
 
-  public async columns(query: LeiauteQuery): Promise<string[]> {
+  public async columns(query: LeiauteQuery): Promise<LeiauteColumn[]> {
     const columnsInfo = await Database.connection().columnsInfo(
       `${query.prefix}_${query.version}`
     );
 
-    return Object.entries(columnsInfo).flatMap(([key]) => key);
+    return Object.entries(columnsInfo).map(([key, { type }]) => ({
+      key,
+      type: TypeColumn[type],
+    }));
   }
 
   public async build({ data, query }: Build): Promise<void> {
@@ -109,5 +115,34 @@ export class LucidLeiauteRepository implements LeiauteRepository {
     )?.flatMap((item) => item.e_social_id);
 
     return [...new Set(data)];
+  }
+
+  public async extract({
+    leiautes,
+    prefix,
+    version,
+  }: LeiauteExtract): Promise<ListLeiauteData[]> {
+    const e_social_exist_ids = await this.getExistsESocialId({
+      prefix,
+      version,
+    });
+
+    const extract_data = leiautes.map(async (field) => {
+      const file = await readFile(field.tmpPath as string, "utf-8");
+
+      const e_social_event = getESocialEvent(file);
+
+      const e_social_id = getESocialId(file, e_social_event);
+
+      const data = extractXML(Leiautes[`${prefix}_${version}`], file);
+
+      return { event_type: e_social_event, e_social_id, ...data };
+    });
+
+    const data = (await Promise.all(extract_data)) as ListLeiauteData[];
+
+    return data.filter(
+      (item) => !e_social_exist_ids.includes(item.e_social_id as string)
+    );
   }
 }

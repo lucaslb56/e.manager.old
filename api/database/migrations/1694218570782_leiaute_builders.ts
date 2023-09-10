@@ -1,22 +1,20 @@
 import BaseSchema from "@ioc:Adonis/Lucid/Schema";
+import { ColumnType } from "App/Utils/constants";
 import { Leiautes } from "App/Utils/leiautes";
-
-export enum ColumnType {
-  number = "bigInteger",
-  string = "text",
-}
 
 export default class extends BaseSchema {
   public async up() {
-    for (const { prefix, version, ...leiaute } of Leiautes) {
-      const table_name = `${prefix}_${version}`;
+    const entries = Object.entries(Leiautes);
+
+    for (const [key, leiaute] of entries) {
+      const table_name = key;
 
       this.schema.createTable(table_name, (table) => {
         table
           .uuid("id")
           .primary()
           .defaultTo(this.db.knexRawQuery("gen_random_uuid()"));
-
+        Leiautes;
         table.text("e_social_id").notNullable();
 
         table
@@ -26,21 +24,31 @@ export default class extends BaseSchema {
           .onDelete("CASCADE")
           .onUpdate("CASCADE");
 
+        table.string("event_type").notNullable();
+
         for (const [key, values] of Object.entries(leiaute)) {
           for (const value of values) {
-            table[ColumnType[value.type]](
-              `${key.toLowerCase()}_${value.name.toLowerCase()}`
+            table.specificType(
+              `${key.toLowerCase()}_${value.name.toLowerCase()}`,
+              ColumnType[value.type]
             );
           }
         }
+
+        /**
+         * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
+         */
+        table.timestamp("created_at", { useTz: true }).defaultTo(this.now());
+        table.timestamp("updated_at", { useTz: true }).defaultTo(this.now());
       });
     }
   }
 
   public async down() {
-    for (const { prefix, version } of Leiautes) {
-      const table_name = `${prefix}_${version}`;
+    const entries = Object.entries(Leiautes);
 
+    for (const [key] of entries) {
+      const table_name = key;
       this.schema.dropTableIfExists(table_name);
     }
   }

@@ -1,4 +1,5 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Logger from "@ioc:Adonis/Core/Logger";
 import { LeiauteQuery } from "App/Dtos/Leiaute";
 import { ColumnsFactory } from "App/Factories/leiaute/columns";
 
@@ -18,7 +19,11 @@ export async function columns({
 
     return response.ok({ columns: data });
   } catch (error) {
-    console.log(error);
-    return response.conflict(error);
+    if (error instanceof Error) {
+      return response.conflict({ message: error.message });
+    }
+
+    Logger.error(error);
+    return response.internalServerError(error);
   }
 }

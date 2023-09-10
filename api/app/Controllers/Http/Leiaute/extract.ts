@@ -1,27 +1,28 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Logger from "@ioc:Adonis/Core/Logger";
 import { LeiauteQuery } from "App/Dtos/Leiaute";
-import { ExportFactory } from "App/Factories/leiaute/export";
-export async function _export({
+import { ExtractFactory } from "App/Factories/leiaute/extract";
+
+export async function extract({
   request,
   response,
 }: HttpContextContract): Promise<void> {
   try {
-    const { date, prefix, version, e_social_id, export_type, columns } =
-      request.qs() as LeiauteQuery;
+    const { prefix, version } = request.qs() as LeiauteQuery;
 
-    const exportUseCase = ExportFactory();
+    const extractUseCase = ExtractFactory();
 
-    const { path, filename } = await exportUseCase.execute({
-      date,
-      prefix,
-      version,
-      e_social_id,
-      export_type,
-      columns,
+    const leiautes = request.files("leiautes", {
+      size: "20mb",
     });
 
-    return response.attachment(path, filename);
+    const extracts = await extractUseCase.execute({
+      leiautes,
+      prefix,
+      version,
+    });
+
+    return response.ok({ extracts });
   } catch (error) {
     if (error instanceof Error) {
       return response.conflict({ message: error.message });

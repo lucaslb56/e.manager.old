@@ -1,8 +1,4 @@
-import { LeiautePrefix, LeiauteVersion } from "../constants";
-
 export const S1200 = {
-  prefix: LeiautePrefix.S1200,
-  version: LeiauteVersion.S_1_0,
   ideEvento: [
     {
       name: "indRetif",
@@ -163,7 +159,7 @@ export const S1200 = {
       type: "number",
     },
   ],
-  itensRenum: [
+  itensRemun: [
     {
       name: "codRubr",
       type: "string",

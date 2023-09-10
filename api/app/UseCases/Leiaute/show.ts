@@ -7,7 +7,7 @@ export class ShowUseCase {
   async execute(id: string): Promise<Leiaute> {
     const leiaute = await this.leiauteRepository.findBy("id", id);
 
-    if (!leiaute) throw new Error();
+    if (!leiaute) throw new Error("Leiaute not found");
 
     return leiaute;
   }

@@ -9,6 +9,7 @@ Route.group(() => {
   Route.get("leiaute/export", Leiaute.export);
   Route.get("leiaute/:id", Leiaute.show);
   Route.post("leiaute/build", Leiaute.build);
+  Route.post("leiaute/extract", Leiaute.extract);
 })
   .prefix(Env.get("PREFIX"))
   .middleware("auth");
