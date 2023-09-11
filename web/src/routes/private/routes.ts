@@ -1,26 +1,25 @@
-import { Layout, TreeStructure } from 'phosphor-react';
+import type { Route } from '~/models/Route';
+import * as Page from '~/pages';
 
-import type { RouteMenu } from '~/models/Route';
-import { Extracts } from '~/pages/Extracts';
-import { Templates } from '~/pages/Templates';
-
-export const PrivateRoutes: RouteMenu[] = [
+export const PrivateRoutes: Route[] = [
 	{
-		label: 'Transmissões',
+		path: 'leiautes',
+		component: Page.Leiautes,
+	},
+	{
 		path: 'extracts',
-		icon: TreeStructure,
-		component: Extracts,
+		component: Page.Extracts,
 	},
 	{
-		label: 'Templates',
-		path: 'templates',
-		icon: Layout,
-		component: Templates,
+		path: 'leiautes/detail',
+		component: Page.LeiauteDetail,
 	},
-	// {
-	// 	label: 'Usuários',
-	// 	path: 'users',
-	// 	icon: UsersThree,
-	// 	component: Users,
-	// },
+	{
+		path: 'extracts/detail',
+		component: Page.ExtractDetail,
+	},
+	{
+		path: 'extracts/data',
+		component: Page.ExtractData,
+	},
 ];

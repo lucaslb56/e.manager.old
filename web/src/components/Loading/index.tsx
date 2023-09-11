@@ -1,13 +1,19 @@
+import type { StackProps } from '@mui/material';
+import { CircularProgress, Stack } from '@mui/material';
 import type { ReactElement } from 'react';
 
-import { CircularProgress } from '../Mui';
+interface Props extends Omit<StackProps, 'children'> {}
 
-import { ContainerLoading } from './styles';
-
-export function Loading(): ReactElement {
+export function Loading({ ...rest }: Props): ReactElement {
 	return (
-		<ContainerLoading>
-			<CircularProgress style={{ color: '#131C55' }} />
-		</ContainerLoading>
+		<Stack
+			padding="4rem"
+			direction="row"
+			display="flex"
+			justifyContent="center"
+			{...rest}
+		>
+			<CircularProgress color="info" />
+		</Stack>
 	);
 }

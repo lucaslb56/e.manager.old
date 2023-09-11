@@ -4,10 +4,10 @@ import { Fragment } from 'react';
 import { Private } from './private';
 import { Public } from './public';
 
-import { useAuth } from '~/hooks/Auth';
+import { useAuth } from '~/hooks/store';
 
 export function Router(): ReactElement {
-	const { isLogged } = useAuth();
+	const { isLogged } = useAuth().check();
 
 	return (
 		<Fragment>

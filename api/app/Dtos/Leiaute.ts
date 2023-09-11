@@ -33,6 +33,20 @@ export type ListLeiaute = {
   data: ListLeiauteData[];
 };
 
+export interface Extract {
+  e_social_id: string;
+  event_type: string;
+  leiaute_id?: string;
+  prefix?: string;
+  version?: string;
+  count: number;
+}
+
+export type ExtractList = {
+  meta: Meta;
+  data: Extract[];
+};
+
 export interface LeiauteExtractType {
   [key: string]: LeiauteType[];
 }

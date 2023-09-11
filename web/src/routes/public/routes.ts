@@ -1,13 +1,9 @@
-import { SignOut } from 'phosphor-react';
+import type { Route } from '~/models/Route';
+import { Signin } from '~/pages';
 
-import type { RouteMenu } from '~/models/Route';
-import { Signin } from '~/pages/Auth/Signin';
-
-export const PublicRoutes: RouteMenu[] = [
+export const PublicRoutes: Route[] = [
 	{
-		label: 'Signin',
 		path: 'signin',
-		icon: SignOut,
 		component: Signin,
 	},
 ];

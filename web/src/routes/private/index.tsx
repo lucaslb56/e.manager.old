@@ -14,12 +14,12 @@ export function Private(): ReactElement {
 			>
 				<Route
 					path="*"
-					element={<Navigate to={'/transmissions'} />}
+					element={<Navigate to={'/leiautes'} />}
 				/>
 
 				<Route
 					path="/"
-					element={<Navigate to={'/transmissions'} />}
+					element={<Navigate to={'/leiautes'} />}
 				/>
 
 				{PrivateRoutes.map((route) => (

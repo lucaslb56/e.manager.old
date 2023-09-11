@@ -1,11 +1,11 @@
 import {
   Build,
+  ExtractList,
   Leiaute,
   LeiauteColumn,
   LeiauteExtract,
   LeiauteQuery,
   List,
-  ListLeiaute,
   ListLeiauteData,
 } from "App/Dtos/Leiaute";
 import { Query } from "App/Dtos/Query";
@@ -16,7 +16,7 @@ export interface LeiauteRepository {
     value: Leiaute[T]
   ) => Promise<Leiaute | null>;
   list: (query: Query) => Promise<List>;
-  listLeiaute: (query: LeiauteQuery) => Promise<ListLeiaute>;
+  extracts: (query: LeiauteQuery) => Promise<ExtractList>;
   activeList: (query: Query) => Promise<Leiaute[]>;
   toggleActive: (leiaute: Leiaute) => Promise<void>;
   export: (query: LeiauteQuery) => Promise<ListLeiauteData[]>;
@@ -24,4 +24,5 @@ export interface LeiauteRepository {
   build: (build: Build) => Promise<void>;
   getExistsESocialId: (query: LeiauteQuery) => Promise<string[]>;
   extract: (data: LeiauteExtract) => Promise<ListLeiauteData[]>;
+  findManyByESocialId(query: LeiauteQuery): Promise<ListLeiauteData[]>;
 }

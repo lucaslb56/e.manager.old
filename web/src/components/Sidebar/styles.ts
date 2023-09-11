@@ -1,39 +1,26 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import styled from 'styled-components';
+import { Stack, styled } from '@mui/material';
 
-export const SidebarContainer = styled.aside`
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 16rem;
-	height: 100vh;
-	background: ${({ theme }) => theme['indigo-600']};
+export const Container = styled('aside')({
+	display: 'flex',
+	flexDirection: 'column',
+	// padding: '2rem 3rem',
+	paddingTop: '4rem',
+	paddingLeft: '3rem',
+	paddingRight: '3rem',
+	height: '100vh',
+	gap: '4.31rem',
+	background: '#0E1B6B',
+});
 
-	p {
-		position: absolute;
-		bottom: 2rem;
-		color: ${({ theme }) => theme['white']};
-		opacity: 0.15;
-	}
-`;
+export const Navbar = styled('nav')({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '1rem',
+	width: '16rem',
+});
 
-export const Navbar = styled.nav`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 0.75rem;
-	padding-top: 2rem;
-
-	@media (max-width: 820px) {
-		padding: 2rem 1rem;
-	}
-`;
-
-export const SidebarHeader = styled.div`
-	height: 4rem;
-	color: ${({ theme }) => theme['white']};
-	background: ${({ theme }) => theme['indigo-700']};
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
+export const Header = styled(Stack)({
+	// background: '#E0E7FF',
+	padding: '1rem',
+	borderRadius: '1rem',
+});

@@ -1,5 +1,6 @@
 import { LeiauteExtract, ListLeiauteData } from "App/Dtos/Leiaute";
 import { LeiauteRepository } from "App/Repositories/leiaute-repository";
+import { extractData } from "App/Utils/extract";
 
 export class ExtractUseCase {
   constructor(private leiauteRepository: LeiauteRepository) {}
@@ -22,6 +23,6 @@ export class ExtractUseCase {
 
     if (!extracts.length) throw new Error("Data not found");
 
-    return extracts;
+    return extractData(extracts, leiaute);
   }
 }

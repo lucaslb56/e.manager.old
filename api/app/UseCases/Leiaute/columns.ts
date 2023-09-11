@@ -5,17 +5,13 @@ export class ColumnstUseCase {
   constructor(private leiauteRepository: LeiauteRepository) {}
 
   async execute(query: LeiauteQuery): Promise<LeiauteColumn[]> {
-    const leuiaute = await this.leiauteRepository.findBy(
-      "prefix",
-      query.prefix
-    );
+    const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
 
-    if (!leuiaute || leuiaute.version !== query.version)
-      throw new Error("leuiaute not found");
+    if (!leiaute || leiaute.version !== query.version) return [];
 
     const columns = await this.leiauteRepository.columns(query);
 
-    if (!columns.length) throw new Error("Data not found");
+    if (!columns.length) return [];
 
     return columns;
   }

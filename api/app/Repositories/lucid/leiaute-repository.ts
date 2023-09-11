@@ -1,13 +1,13 @@
 import Database from "@ioc:Adonis/Lucid/Database";
 import {
   Build,
+  ExtractList,
   FilteredBetweenDate,
   Leiaute,
   LeiauteColumn,
   LeiauteExtract,
   LeiauteQuery,
   List,
-  ListLeiaute,
   ListLeiauteData,
 } from "App/Dtos/Leiaute";
 import { Query } from "App/Dtos/Query";
@@ -54,15 +54,39 @@ export class LucidLeiauteRepository implements LeiauteRepository {
       .update({ active: !leiaute.active });
   }
 
-  public async listLeiaute(query: LeiauteQuery): Promise<ListLeiaute> {
+  public async extracts(query: LeiauteQuery): Promise<ExtractList> {
     return (
       await Database.query()
         .from(`${query.prefix}_${query.version}`)
-        .if(query?.e_social_id, (builder) =>
-          builder.where("e_social_id", "ilike", `%${query.e_social_id}%`)
+        .select([
+          "e_social_id",
+          "event_type",
+          "leiaute_id",
+          "leiautes.prefix as prefix",
+          "leiautes.version as version",
+        ])
+        .if(query?.search, (builder) =>
+          builder
+            .where("e_social_id", "ilike", `%${query.search}%`)
+            .orWhere("event_type", "ilike", `%${query.search}%`)
         )
+        .distinct(["e_social_id"])
+        .select(
+          Database.raw(
+            `COUNT(e_social_id) OVER(PARTITION BY e_social_id)::int as count`
+          )
+        )
+        .innerJoin("leiautes", "leiaute_id", "leiautes.id")
         .paginate(Number(query.page), Number(query.limit))
-    ).toJSON() as ListLeiaute;
+    ).toJSON() as ExtractList;
+  }
+
+  public async findManyByESocialId(
+    query: LeiauteQuery
+  ): Promise<ListLeiauteData[]> {
+    return await Database.query()
+      .from(`${query.prefix}_${query.version}`)
+      .where("e_social_id", query.e_social_id as string);
   }
 
   public async export(query: LeiauteQuery): Promise<ListLeiauteData[]> {

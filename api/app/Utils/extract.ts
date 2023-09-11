@@ -10,17 +10,17 @@ export function getESocialEvent(file: string): string {
   return e_social_tag_match[1];
 }
 
-export function getESocialId(file: string, e_social_event: string): string {
-  const e_social_event_regex = new RegExp(
-    `<${e_social_event}\\s+Id="(.*?)"`,
+export function getESocialId(file: string, e_social_event_tag: string): string {
+  const e_social_event_tag_regex = new RegExp(
+    `<${e_social_event_tag}\\s+Id="(.*?)"`,
     "s"
   );
 
-  const e_social_event_match = file.match(e_social_event_regex);
+  const e_social_event_tag_match = file.match(e_social_event_tag_regex);
 
-  if (!e_social_event_match) throw new Error("Evento não encontrado.");
+  if (!e_social_event_tag_match) throw new Error("Evento não encontrado.");
 
-  return e_social_event_match[1];
+  return e_social_event_tag_match[1];
 }
 
 export function extractXML(

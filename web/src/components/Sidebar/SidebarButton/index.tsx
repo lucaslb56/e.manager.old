@@ -1,35 +1,30 @@
-import type { Icon as NavIconType } from 'phosphor-react';
+import type { Icon } from 'phosphor-react';
 import type { HTMLAttributes, ReactElement } from 'react';
 
-import { ButtonLinkContainer } from './styles';
+import { Button } from './styles';
 
-import type { RoutePath } from '~/models/Route';
+import type { MenuPath } from '~/models/Menu';
 
 interface SidebarButtonProps
 	extends HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
 	label: string;
-	path?: RoutePath;
-	Icon: NavIconType;
+	path?: MenuPath;
+	Icon: Icon;
 }
 
 export function SidebarButton({
 	label,
-	path,
 	Icon,
+	path,
 	...rest
 }: SidebarButtonProps): ReactElement {
 	return (
-		<ButtonLinkContainer
+		<Button
 			to={`/${path}`}
 			{...rest}
 		>
-			{Icon && (
-				<Icon
-					size={20}
-					weight="fill"
-				/>
-			)}
+			<Icon size={25} />
 			{label}
-		</ButtonLinkContainer>
+		</Button>
 	);
 }
