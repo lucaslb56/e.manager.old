@@ -1,5 +1,6 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
 import { KEYS } from '../keys';
 
@@ -11,12 +12,11 @@ async function fetch(): Promise<User[]> {
 	return data;
 }
 
-type UseUserListType = UseQueryResult<User[], unknown>;
+type UseUserListType = UseQueryResult<User[], AxiosError | Error>;
 
 export function useUserList(): UseUserListType {
-	const query = useQuery({
-		queryKey: [KEYS.USER_LIST],
+	return useQuery({
+		queryKey: [KEYS['USER-PAGINATE-LIST']],
 		queryFn: () => fetch(),
 	});
-	return query;
 }

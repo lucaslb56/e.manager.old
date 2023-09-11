@@ -1,29 +1,24 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
 
-export const ButtonLinkContainer = styled(NavLink)`
-	width: 13.5rem;
-	height: 2.1875rem;
-	border-radius: 10px;
-	text-decoration: none;
-	color: ${({ theme }) => theme['white']};
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	padding-left: 2.25rem;
-	border: 1px solid transparent;
+export const Button = styled(NavLink)({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '1rem',
+	color: '#F4F4F4',
+	padding: '0.5rem 1rem',
+	fontSize: '1.125rem',
+	textDecoration: 'none',
+	borderRadius: '1rem',
+	width: '100%',
+	border: '1px solid transparent',
 
-	&:hover {
-		border: 1px solid ${({ theme }) => theme['white']};
-	}
+	':hover': {
+		borderColor: '#4256D0',
+		transition: 'all 0.2s ease',
+	},
 
-	&.active {
-		background: ${({ theme }) => theme['indigo-700']};
-	}
-
-	&:last-child {
-		/* position: absolute; */
-		/* bottom: 12rem; */
-	}
-`;
+	'&.active': {
+		backgroundColor: '#4256D0',
+	},
+});

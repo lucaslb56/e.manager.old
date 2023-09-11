@@ -28,7 +28,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - JavaScript/Typescript
 - [Node](https://nodejs.org/)
 - [ReactJS](https://reactjs.org/)
-- [Styled-Components](https://styled-components.com/)
 - [Vite](https://vitejs.dev/)
 - [Vitest](https://vitest.dev/)
 - [Yarn](https://yarnpkg.com/)
@@ -47,7 +46,6 @@ seguintes bibliotecas pré configuradas
   - Exhaustive Hooks Deps: identificar itens para o array de dependencias em
     Hooks
   - Resolve Aliases: resolvedores de importação com uso de aliases
-- Styled-Components: definir a criação de componentes estilizados
 - Vitest: realizar testes com o auxilio e integração de Testing Library e Jest
   Styled Components
 

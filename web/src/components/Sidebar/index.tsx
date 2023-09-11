@@ -1,37 +1,55 @@
-import { SignOut as ExitIcon } from 'phosphor-react';
+import { Typography } from '@mui/material';
+import type { Icon } from 'phosphor-react';
+import { SignOut } from 'phosphor-react';
 import type { ReactElement } from 'react';
+import { toast } from 'react-toastify';
 
+import { PrivateMenus } from './menus';
 import { SidebarButton } from './SidebarButton';
-import { Navbar, SidebarContainer, SidebarHeader } from './styles';
+import { Container, Header, Navbar } from './styles';
 
-import { useAuth } from '~/hooks/Auth';
-import { PrivateRoutes } from '~/routes/private/routes';
+import * as Logo from '~/components/Logo';
+import { useAuth } from '~/hooks/store';
 
 export function Sidebar(): ReactElement {
-	const { signOut } = useAuth();
+	const { logout } = useAuth();
+
+	function handleLogout(): void {
+		logout();
+		toast.success('Logout efetuado com sucesso!');
+	}
 
 	return (
-		<SidebarContainer>
-			<SidebarHeader>
-				<h1>eManager</h1>
-			</SidebarHeader>
+		<Container>
+			<Header
+				direction="row"
+				gap={2}
+			>
+				<Logo.Small />
+				<Typography
+					variant="h5"
+					fontWeight="bold"
+				>
+					eManager
+				</Typography>
+			</Header>
 
 			<Navbar>
-				{PrivateRoutes.map((menu) => (
+				{PrivateMenus.map((menu) => (
 					<SidebarButton
 						label={menu.label}
 						key={menu.label}
-						Icon={menu.icon}
 						path={menu.path}
+						Icon={menu.icon as Icon}
 					/>
 				))}
 
 				<SidebarButton
 					label="Sair"
-					Icon={ExitIcon}
-					onClick={signOut}
+					Icon={SignOut}
+					onClick={handleLogout}
 				/>
 			</Navbar>
-		</SidebarContainer>
+		</Container>
 	);
 }

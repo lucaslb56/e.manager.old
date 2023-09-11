@@ -7,7 +7,7 @@ export class RegisterUseCase {
   async execute(data: Signup): Promise<User> {
     const user = await this.userRepository.findBy("email", data.email);
 
-    if (user) throw new Error();
+    if (user) throw new Error("User already exists");
 
     return await this.userRepository.create(data);
   }

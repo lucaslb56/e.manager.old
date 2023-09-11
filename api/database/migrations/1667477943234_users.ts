@@ -5,7 +5,10 @@ export default class extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid("id").primary();
+      table
+        .uuid("id")
+        .primary()
+        .defaultTo(this.db.knexRawQuery("gen_random_uuid()"));
       table.string("name").notNullable();
       table.string("email", 255).notNullable().unique();
       table.string("password", 180).notNullable();

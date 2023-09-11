@@ -1,7 +1,5 @@
-import { BaseModel, beforeCreate, column } from "@ioc:Adonis/Lucid/Orm";
+import { BaseModel, column } from "@ioc:Adonis/Lucid/Orm";
 import { DateTime } from "luxon";
-
-import { v4 as uuid } from "uuid";
 
 export class Base extends BaseModel {
   public static selfAssignPrimaryKey = true;
@@ -14,9 +12,4 @@ export class Base extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updated_at: DateTime;
-
-  @beforeCreate()
-  public static assignUuid(base: Base): void {
-    base.id = uuid();
-  }
 }

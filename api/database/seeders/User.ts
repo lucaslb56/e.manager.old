@@ -9,7 +9,7 @@ export default class extends BaseSeeder {
     await User.create({
       email: "admin@mail.com",
       name: "admin",
-      password: "admin@admin",
+      password: "123123",
     });
   }
 }

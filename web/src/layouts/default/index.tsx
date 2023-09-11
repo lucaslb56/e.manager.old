@@ -1,17 +1,15 @@
 import type { ReactElement } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { LayoutContainer, Main } from './styles';
+import { Container } from './styles';
 
 import { Sidebar } from '~/components/Sidebar';
 
 export function DefaultLayout(): ReactElement {
 	return (
-		<LayoutContainer>
+		<Container>
 			<Sidebar />
-			<Main>
-				<Outlet />
-			</Main>
-		</LayoutContainer>
+			<Outlet />
+		</Container>
 	);
 }

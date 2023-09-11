@@ -21,8 +21,7 @@
 import Route from "@ioc:Adonis/Core/Route";
 
 import "./auth";
-import "./extract";
-import "./template";
+import "./leiaute";
 import "./user";
 
 Route.get("/", async () => {
