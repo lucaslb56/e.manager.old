@@ -12,11 +12,13 @@ export default class extends BaseSeeder {
         name: "Informações do Empregador/Contribuinte/Órgão Público",
         prefix: LeiautePrefix.S1000,
         version: LeiauteVersion.S_1_0,
+        active: true,
       },
       {
         name: "Tabela de Estabelecimentos, Obras ou Unidades de Órgãos Públicos",
         prefix: LeiautePrefix.S1005,
         version: LeiauteVersion.S_1_0,
+        active: true,
       },
       {
         name: "Tabela de Rubricas",
@@ -39,6 +41,7 @@ export default class extends BaseSeeder {
         name: "Remuneração de trabalhador vinculado ao Regime Geral de Previdência Social",
         prefix: LeiautePrefix.S1200,
         version: LeiauteVersion.S_1_0,
+        active: true,
       },
       {
         name: "Remuneração de servidor vinculado a Regime Próprio de Previdência Social – RPPS",

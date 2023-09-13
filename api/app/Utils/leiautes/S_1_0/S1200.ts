@@ -1,4 +1,6 @@
-export const S1200 = {
+import { LeiauteExtractType } from "App/Dtos/Leiaute";
+
+export const S1200: LeiauteExtractType = {
   ideEvento: [
     {
       name: "indRetif",
@@ -166,7 +168,7 @@ export const S1200 = {
     },
     {
       name: "ideTabRubr",
-      type: "number",
+      type: "string",
     },
     {
       name: "qtdRubr",

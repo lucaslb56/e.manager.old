@@ -37,7 +37,7 @@ export class LucidLeiauteRepository implements LeiauteRepository {
             .where("name", "ilike", `%${query.search}%`)
             .orWhere("prefix", "ilike", `%${query.search}%`)
         )
-        .orderBy("name", query.order)
+        .orderBy("prefix", query.order)
         .paginate(Number(query.page), Number(query.limit))
     ).toJSON() as List;
   }
