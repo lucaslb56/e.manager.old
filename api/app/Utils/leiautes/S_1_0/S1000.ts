@@ -74,6 +74,10 @@ export const S1000: LeiauteExtractType = {
       name: "dtTrans11096",
       type: "string",
     },
+    {
+      name: "indTribFolhaPisCofins",
+      type: "string",
+    },
   ],
   dadosIsencao: [
     {

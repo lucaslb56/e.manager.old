@@ -1,6 +1,6 @@
 import { LeiauteExtractType } from "App/Dtos/Leiaute";
 
-export const S1200: LeiauteExtractType = {
+export const S2399: LeiauteExtractType = {
   ideEvento: [
     {
       name: "indRetif",
@@ -8,20 +8,13 @@ export const S1200: LeiauteExtractType = {
     },
     {
       name: "nrRecibo",
-      type: "number",
-    },
-    {
-      name: "indApuracao",
-      type: "number",
-    },
-    {
-      name: "perApur",
       type: "string",
     },
     {
       name: "indGuia",
       type: "number",
     },
+
     {
       name: "tpAmb",
       type: "number",
@@ -45,92 +38,59 @@ export const S1200: LeiauteExtractType = {
       type: "string",
     },
   ],
-  ideTrabalhador: [
+  ideTrabSemVinculo: [
     {
       name: "cpfTrab",
       type: "string",
     },
-  ],
-  infoMV: [{ name: "indMV", type: "number" }],
-  remunOutrEmpr: [
     {
-      name: "tpInsc",
-      type: "number",
-    },
-    {
-      name: "nrInsc",
+      name: "matricula",
       type: "string",
     },
     {
       name: "codCateg",
-      type: "number",
-    },
-    {
-      name: "vlrRemunOE",
-      type: "number",
-    },
-  ],
-  infoComplem: [
-    {
-      name: "nmTrab",
-      type: "string",
-    },
-    {
-      name: "dtNascto",
       type: "string",
     },
   ],
-  sucessaoVinc: [
+  infoTSVTermino: [
     {
-      name: "tpInsc",
+      name: "dtTerm",
+      type: "string",
+    },
+    {
+      name: "mtvDesligTSV",
       type: "number",
     },
     {
-      name: "nrInsc",
-      type: "string",
-    },
-    {
-      name: "matricAnt",
-      type: "string",
-    },
-    {
-      name: "dtAdm",
-      type: "string",
-    },
-    {
-      name: "observacao",
-      type: "string",
-    },
-  ],
-  procJudTrab: [
-    {
-      name: "tpTrib",
+      name: "pensAlim",
       type: "number",
     },
     {
-      name: "nrProcJud",
-      type: "string",
-    },
-    {
-      name: "codSusp",
-      type: "string",
-    },
-  ],
-  infoInterm: [
-    {
-      name: "dia",
+      name: "percAliment",
       type: "number",
     },
+    {
+      name: "vrAlim",
+      type: "string",
+    },
+    {
+      name: "nrProcTrab",
+      type: "string",
+    },
   ],
+  mudancaCPF: [
+    {
+      name: "novoCPF	",
+      type: "string",
+    },
+  ],
+  verbasResc: [],
   dmDev: [
     {
       name: "ideDmDev",
       type: "string",
     },
-    {
-      name: "codCateg",
-      type: "number",
-    },
+
     {
       name: "indRRA",
       type: "string",
@@ -178,7 +138,6 @@ export const S1200: LeiauteExtractType = {
       type: "number",
     },
   ],
-  infoPerApur: [],
   ideEstabLot: [
     {
       name: "tpInsc",
@@ -192,32 +151,8 @@ export const S1200: LeiauteExtractType = {
       name: "codLotacao",
       type: "string",
     },
-    {
-      name: "qtdDiasAv",
-      type: "number",
-    },
   ],
-  remunPerAnt: [
-    {
-      name: "matricula",
-      type: "string",
-    },
-    {
-      name: "indSimples",
-      type: "number",
-    },
-  ],
-  remunPerApur: [
-    {
-      name: "matricula",
-      type: "string",
-    },
-    {
-      name: "indSimples",
-      type: "number",
-    },
-  ],
-  itensRemun: [
+  detVerbas: [
     {
       name: "codRubr",
       type: "string",
@@ -243,49 +178,53 @@ export const S1200: LeiauteExtractType = {
       type: "number",
     },
   ],
-  infoAgNocivo: [
+  infoSimples: [
     {
-      name: "grauExp",
+      name: "indSimples",
       type: "number",
     },
   ],
-  infoPerAnt: [],
-  ideADC: [
+  procJudTrab: [
     {
-      name: "dtAcConv",
-      type: "string",
-    },
-    {
-      name: "tpAcConv",
-      type: "string",
-    },
-    {
-      name: "dsc",
-      type: "string",
-    },
-    {
-      name: "remunSuc",
-      type: "string",
-    },
-  ],
-  idePeriodo: [
-    {
-      name: "perRef",
-      type: "string",
-    },
-  ],
-  infoComplCont: [
-    {
-      name: "codCBO",
-      type: "string",
-    },
-    {
-      name: "natAtividade",
+      name: "tpTrib",
       type: "number",
     },
     {
-      name: "qtdDiasTrab",
+      name: "nrProcJud",
+      type: "string",
+    },
+    {
+      name: "codSusp",
+      type: "string",
+    },
+  ],
+  infoMV: [{ name: "indMV", type: "number" }],
+  remunOutrEmpr: [
+    {
+      name: "tpInsc",
       type: "number",
+    },
+    {
+      name: "nrInsc",
+      type: "string",
+    },
+    {
+      name: "codCateg",
+      type: "number",
+    },
+    {
+      name: "vlrRemunOE",
+      type: "number",
+    },
+  ],
+  remunAposTerm: [
+    {
+      name: "indRemun",
+      type: "number",
+    },
+    {
+      name: "dtFimRemun",
+      type: "string",
     },
   ],
 };

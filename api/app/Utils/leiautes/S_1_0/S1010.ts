@@ -47,7 +47,7 @@ export const S1010: LeiauteExtractType = {
   ],
   dadosRubrica: [
     {
-      name: "dadosRubrica",
+      name: "dscRubr",
       type: "string",
     },
     {

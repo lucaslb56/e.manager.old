@@ -1,26 +1,18 @@
 import { LeiauteExtractType } from "App/Dtos/Leiaute";
 
-export const S1200: LeiauteExtractType = {
+export const S2299: LeiauteExtractType = {
   ideEvento: [
     {
       name: "indRetif",
       type: "number",
     },
     {
-      name: "nrRecibo",
-      type: "number",
-    },
-    {
-      name: "indApuracao",
-      type: "number",
-    },
-    {
-      name: "perApur",
-      type: "string",
-    },
-    {
       name: "indGuia",
       type: "number",
+    },
+    {
+      name: "nrRecibo",
+      type: "string",
     },
     {
       name: "tpAmb",
@@ -45,38 +37,63 @@ export const S1200: LeiauteExtractType = {
       type: "string",
     },
   ],
-  ideTrabalhador: [
+  ideVinculo: [
     {
       name: "cpfTrab",
       type: "string",
     },
-  ],
-  infoMV: [{ name: "indMV", type: "number" }],
-  remunOutrEmpr: [
     {
-      name: "tpInsc",
-      type: "number",
+      name: "matricula",
+      type: "string",
     },
+  ],
+  infoDeslig: [
     {
-      name: "nrInsc",
+      name: "mtvDeslig",
       type: "string",
     },
     {
-      name: "codCateg",
-      type: "number",
-    },
-    {
-      name: "vlrRemunOE",
-      type: "number",
-    },
-  ],
-  infoComplem: [
-    {
-      name: "nmTrab",
+      name: "dtDeslig",
       type: "string",
     },
     {
-      name: "dtNascto",
+      name: "dtAvPrv",
+      type: "string",
+    },
+    {
+      name: "indPagtoAPI",
+      type: "string",
+    },
+    {
+      name: "dtProjFimAPI",
+      type: "string",
+    },
+    {
+      name: "pensAlim",
+      type: "number",
+    },
+    {
+      name: "percAliment",
+      type: "number",
+    },
+    {
+      name: "vrAlim",
+      type: "number",
+    },
+    {
+      name: "nrProcTrab",
+      type: "string",
+    },
+  ],
+  infoInterm: [
+    {
+      name: "dia",
+      type: "number",
+    },
+  ],
+  observacoes: [
+    {
+      name: "observacao",
       type: "string",
     },
   ],
@@ -89,39 +106,24 @@ export const S1200: LeiauteExtractType = {
       name: "nrInsc",
       type: "string",
     },
+  ],
+  transfTit: [
     {
-      name: "matricAnt",
+      name: "cpfSubstituto",
       type: "string",
     },
     {
-      name: "dtAdm",
-      type: "string",
-    },
-    {
-      name: "observacao",
+      name: "dtNascto",
       type: "string",
     },
   ],
-  procJudTrab: [
+  mudancaCPF: [
     {
-      name: "tpTrib",
-      type: "number",
-    },
-    {
-      name: "nrProcJud",
-      type: "string",
-    },
-    {
-      name: "codSusp",
+      name: "novoCPF	",
       type: "string",
     },
   ],
-  infoInterm: [
-    {
-      name: "dia",
-      type: "number",
-    },
-  ],
+  verbasResc: [],
   dmDev: [
     {
       name: "ideDmDev",
@@ -192,32 +194,8 @@ export const S1200: LeiauteExtractType = {
       name: "codLotacao",
       type: "string",
     },
-    {
-      name: "qtdDiasAv",
-      type: "number",
-    },
   ],
-  remunPerAnt: [
-    {
-      name: "matricula",
-      type: "string",
-    },
-    {
-      name: "indSimples",
-      type: "number",
-    },
-  ],
-  remunPerApur: [
-    {
-      name: "matricula",
-      type: "string",
-    },
-    {
-      name: "indSimples",
-      type: "number",
-    },
-  ],
-  itensRemun: [
+  detVerbas: [
     {
       name: "codRubr",
       type: "string",
@@ -249,6 +227,12 @@ export const S1200: LeiauteExtractType = {
       type: "number",
     },
   ],
+  infoSimples: [
+    {
+      name: "indSimples",
+      type: "number",
+    },
+  ],
   infoPerAnt: [],
   ideADC: [
     {
@@ -263,10 +247,6 @@ export const S1200: LeiauteExtractType = {
       name: "dsc",
       type: "string",
     },
-    {
-      name: "remunSuc",
-      type: "string",
-    },
   ],
   idePeriodo: [
     {
@@ -274,18 +254,63 @@ export const S1200: LeiauteExtractType = {
       type: "string",
     },
   ],
-  infoComplCont: [
+  procJudTrab: [
     {
-      name: "codCBO",
+      name: "tpTrib",
+      type: "number",
+    },
+    {
+      name: "nrProcJud",
       type: "string",
     },
     {
-      name: "natAtividade",
+      name: "codSusp",
+      type: "string",
+    },
+  ],
+  infoMV: [{ name: "indMV", type: "number" }],
+  remunOutrEmpr: [
+    {
+      name: "tpInsc",
       type: "number",
     },
     {
-      name: "qtdDiasTrab",
+      name: "nrInsc",
+      type: "string",
+    },
+    {
+      name: "codCateg",
       type: "number",
+    },
+    {
+      name: "vlrRemunOE",
+      type: "number",
+    },
+  ],
+  procCS: [
+    {
+      name: "nrProcJud",
+      type: "string",
+    },
+  ],
+  remunAposDeslig: [
+    {
+      name: "indRemun",
+      type: "number",
+    },
+    {
+      name: "dtFimRemun",
+      type: "string",
+    },
+  ],
+  consigFGTS: [
+    {
+      name: "insConsig",
+      type: "string",
+    },
+    {
+      name: "nrContr",
+      type: "string",
     },
   ],
 };

@@ -1,6 +1,6 @@
 import { LeiauteExtractType } from "App/Dtos/Leiaute";
 
-export const S1005: LeiauteExtractType = {
+export const S1020: LeiauteExtractType = {
   ideEvento: [
     {
       name: "tpAmb",
@@ -25,15 +25,11 @@ export const S1005: LeiauteExtractType = {
       type: "string",
     },
   ],
-  infoEstab: [],
+  infoLotacao: [],
   inclusao: [],
-  ideEstab: [
+  ideLotacao: [
     {
-      name: "tpInsc",
-      type: "number",
-    },
-    {
-      name: "nrInsc",
+      name: "codLotacao",
       type: "string",
     },
     {
@@ -45,82 +41,74 @@ export const S1005: LeiauteExtractType = {
       type: "string",
     },
   ],
-  dadosEstab: [
+  dadosLotacao: [
     {
-      name: "cnaePrep",
-      type: "string",
+      name: "tpLotacao",
+      type: "number",
     },
     {
-      name: "cnpjResp",
+      name: "tpInsc",
+      type: "number",
+    },
+    {
+      name: "nrInsc",
       type: "string",
     },
   ],
-  aliqGilrat: [
+  fpasLotacao: [
+    {
+      name: "fpas",
+      type: "string",
+    },
+    {
+      name: "codTercs",
+      type: "number",
+    },
+    {
+      name: "codTercsSusp",
+      type: "number",
+    },
+  ],
+  infoProcJudTerceiros: [],
+  procJudTerceiro: [
+    {
+      name: "codTerc",
+      type: "number",
+    },
+    {
+      name: "nrProcJud",
+      type: "number",
+    },
+    {
+      name: "codSusp",
+      type: "string",
+    },
+  ],
+  infoEmprParcial: [
+    {
+      name: "tpInscContrat",
+      type: "number",
+    },
+    {
+      name: "nrInscContrat",
+      type: "string",
+    },
+    {
+      name: "tpInscProp",
+      type: "number",
+    },
+    {
+      name: "nrInscProp",
+      type: "string",
+    },
+  ],
+  dadosOpPort: [
     {
       name: "aliqRat",
       type: "number",
     },
     {
       name: "fap",
-      type: "number",
-    },
-  ],
-  procAdmJudRat: [
-    {
-      name: "tpProc",
-      type: "number",
-    },
-    {
-      name: "nrProc",
-      type: "number",
-    },
-    {
-      name: "codSusp",
-      type: "string",
-    },
-  ],
-  procAdmJudFap: [
-    {
-      name: "tpProc",
-      type: "number",
-    },
-    {
-      name: "nrProc",
-      type: "number",
-    },
-    {
-      name: "codSusp",
-      type: "string",
-    },
-  ],
-  infoCaepf: [
-    {
-      name: "tpCaepf",
-      type: "number",
-    },
-  ],
-  infoObra: [
-    {
-      name: "indSubstPatrObra",
-      type: "number",
-    },
-  ],
-  infoTrab: [],
-  infoApr: [
-    {
-      name: "nrProcJud",
-      type: "number",
-    },
-  ],
-  infoEntEduc: [
-    {
-      name: "nrInsc",
-      type: "string",
-    },
-  ],
-  infoPCD: [
-    {
-      name: "nrProcJud",
       type: "number",
     },
   ],

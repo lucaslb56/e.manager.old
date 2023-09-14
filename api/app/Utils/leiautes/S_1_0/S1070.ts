@@ -1,6 +1,6 @@
 import { LeiauteExtractType } from "App/Dtos/Leiaute";
 
-export const S1005: LeiauteExtractType = {
+export const S1070: LeiauteExtractType = {
   ideEvento: [
     {
       name: "tpAmb",
@@ -25,15 +25,15 @@ export const S1005: LeiauteExtractType = {
       type: "string",
     },
   ],
-  infoEstab: [],
+  infoProcesso: [],
   inclusao: [],
-  ideEstab: [
+  ideProcesso: [
     {
-      name: "tpInsc",
+      name: "tpProc",
       type: "number",
     },
     {
-      name: "nrInsc",
+      name: "nrProc",
       type: "string",
     },
     {
@@ -45,82 +45,49 @@ export const S1005: LeiauteExtractType = {
       type: "string",
     },
   ],
-  dadosEstab: [
+  dadosProc: [
     {
-      name: "cnaePrep",
-      type: "string",
+      name: "indAutoria",
+      type: "number",
     },
     {
-      name: "cnpjResp",
+      name: "indMatProc",
+      type: "number",
+    },
+    {
+      name: "observacao",
       type: "string",
     },
   ],
-  aliqGilrat: [
+  dadosProcJud: [
     {
-      name: "aliqRat",
-      type: "number",
+      name: "ufVara",
+      type: "string",
     },
     {
-      name: "fap",
-      type: "number",
+      name: "codMunic",
+      type: "string",
+    },
+    {
+      name: "idVara",
+      type: "string",
     },
   ],
-  procAdmJudRat: [
-    {
-      name: "tpProc",
-      type: "number",
-    },
-    {
-      name: "nrProc",
-      type: "number",
-    },
+  infoSusp: [
     {
       name: "codSusp",
       type: "string",
     },
-  ],
-  procAdmJudFap: [
     {
-      name: "tpProc",
+      name: "indSusp",
       type: "number",
     },
     {
-      name: "nrProc",
-      type: "number",
-    },
-    {
-      name: "codSusp",
+      name: "dtDecisao",
       type: "string",
     },
-  ],
-  infoCaepf: [
     {
-      name: "tpCaepf",
-      type: "number",
-    },
-  ],
-  infoObra: [
-    {
-      name: "indSubstPatrObra",
-      type: "number",
-    },
-  ],
-  infoTrab: [],
-  infoApr: [
-    {
-      name: "nrProcJud",
-      type: "number",
-    },
-  ],
-  infoEntEduc: [
-    {
-      name: "nrInsc",
-      type: "string",
-    },
-  ],
-  infoPCD: [
-    {
-      name: "nrProcJud",
+      name: "indDeposito",
       type: "number",
     },
   ],
