@@ -40,6 +40,8 @@ export function Extracts(): ReactElement {
 
 	const [queryParams, setQueryParams] = useState<LeiauteQuery>({
 		limit: 8,
+		prefix: 'S1000',
+		version: 'S_1_0',
 	} as LeiauteQuery);
 
 	const {
@@ -163,7 +165,7 @@ export function Extracts(): ReactElement {
 								}
 								fullWidth
 								label="Prefixo"
-								defaultValue={''}
+								defaultValue={queryParams.prefix ?? ''}
 								size="small"
 								select
 								SelectProps={{
@@ -199,7 +201,7 @@ export function Extracts(): ReactElement {
 								}
 								fullWidth
 								label="Versão"
-								defaultValue={''}
+								defaultValue={queryParams?.version ?? ''}
 								size="small"
 								select
 								SelectProps={{

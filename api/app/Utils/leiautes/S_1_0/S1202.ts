@@ -1,6 +1,6 @@
 import { LeiauteExtractType } from "App/Dtos/Leiaute";
 
-export const S1200: LeiauteExtractType = {
+export const S1202: LeiauteExtractType = {
   ideEvento: [
     {
       name: "indRetif",
@@ -8,7 +8,7 @@ export const S1200: LeiauteExtractType = {
     },
     {
       name: "nrRecibo",
-      type: "number",
+      type: "string",
     },
     {
       name: "indApuracao",
@@ -17,10 +17,6 @@ export const S1200: LeiauteExtractType = {
     {
       name: "perApur",
       type: "string",
-    },
-    {
-      name: "indGuia",
-      type: "number",
     },
     {
       name: "tpAmb",
@@ -51,25 +47,6 @@ export const S1200: LeiauteExtractType = {
       type: "string",
     },
   ],
-  infoMV: [{ name: "indMV", type: "number" }],
-  remunOutrEmpr: [
-    {
-      name: "tpInsc",
-      type: "number",
-    },
-    {
-      name: "nrInsc",
-      type: "string",
-    },
-    {
-      name: "codCateg",
-      type: "number",
-    },
-    {
-      name: "vlrRemunOE",
-      type: "number",
-    },
-  ],
   infoComplem: [
     {
       name: "nmTrab",
@@ -82,11 +59,7 @@ export const S1200: LeiauteExtractType = {
   ],
   sucessaoVinc: [
     {
-      name: "tpInsc",
-      type: "number",
-    },
-    {
-      name: "nrInsc",
+      name: "cnpjOrgaoAnt",
       type: "string",
     },
     {
@@ -94,32 +67,12 @@ export const S1200: LeiauteExtractType = {
       type: "string",
     },
     {
-      name: "dtAdm",
+      name: "dtExercicio",
       type: "string",
     },
     {
       name: "observacao",
       type: "string",
-    },
-  ],
-  procJudTrab: [
-    {
-      name: "tpTrib",
-      type: "number",
-    },
-    {
-      name: "nrProcJud",
-      type: "string",
-    },
-    {
-      name: "codSusp",
-      type: "string",
-    },
-  ],
-  infoInterm: [
-    {
-      name: "dia",
-      type: "number",
     },
   ],
   dmDev: [
@@ -156,18 +109,8 @@ export const S1200: LeiauteExtractType = {
   ],
   despProcJud: [
     {
-      name: "vlrDespCustas",
-      type: "number",
-    },
-    {
-      name: "vlrDespAdvogados",
-      type: "number",
-    },
-  ],
-  ideAdv: [
-    {
       name: "tpInsc",
-      type: "number",
+      type: "string",
     },
     {
       name: "nrInsc",
@@ -179,42 +122,20 @@ export const S1200: LeiauteExtractType = {
     },
   ],
   infoPerApur: [],
-  ideEstabLot: [
+  ideEstab: [
     {
       name: "tpInsc",
-      type: "number",
+      type: "string",
     },
     {
       name: "nrInsc",
       type: "string",
-    },
-    {
-      name: "codLotacao",
-      type: "string",
-    },
-    {
-      name: "qtdDiasAv",
-      type: "number",
-    },
-  ],
-  remunPerAnt: [
-    {
-      name: "matricula",
-      type: "string",
-    },
-    {
-      name: "indSimples",
-      type: "number",
     },
   ],
   remunPerApur: [
     {
       name: "matricula",
       type: "string",
-    },
-    {
-      name: "indSimples",
-      type: "number",
     },
   ],
   itensRemun: [
@@ -243,28 +164,9 @@ export const S1200: LeiauteExtractType = {
       type: "number",
     },
   ],
-  infoAgNocivo: [
+  infoPerAnt: [
     {
-      name: "grauExp",
-      type: "number",
-    },
-  ],
-  infoPerAnt: [],
-  ideADC: [
-    {
-      name: "dtAcConv",
-      type: "string",
-    },
-    {
-      name: "tpAcConv",
-      type: "string",
-    },
-    {
-      name: "dsc",
-      type: "string",
-    },
-    {
-      name: "remunSuc",
+      name: "remunOrgSuc",
       type: "string",
     },
   ],
@@ -274,18 +176,5 @@ export const S1200: LeiauteExtractType = {
       type: "string",
     },
   ],
-  infoComplCont: [
-    {
-      name: "codCBO",
-      type: "string",
-    },
-    {
-      name: "natAtividade",
-      type: "number",
-    },
-    {
-      name: "qtdDiasTrab",
-      type: "number",
-    },
-  ],
+  remunPerAnt: [],
 };
