@@ -215,19 +215,19 @@ export default class extends BaseSeeder {
         name: "Monitoramento da Saúde do Trabalhador",
         prefix: LeiautePrefix.S2220,
         version: LeiauteVersion.S_1_0,
-        // active: true,
+        active: true,
       },
       {
         name: "Condições Ambientais do Trabalho - Fatores de Risco",
         prefix: LeiautePrefix.S2240,
         version: LeiauteVersion.S_1_0,
-        // active: true,
+        active: true,
       },
       {
         name: " Processo Trabalhista",
         prefix: LeiautePrefix.S2500,
         version: LeiauteVersion.S_1_0,
-        // active: true,
+        active: true,
       },
       {
         name: "Informações dos Tributos Decorrentes de Processo Trabalhista",
