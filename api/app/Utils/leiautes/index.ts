@@ -16,17 +16,20 @@ import { S2200 as S2200_S_1_0 } from "./S_1_0/S2200";
 import { S2205 as S2205_S_1_0 } from "./S_1_0/S2205";
 import { S2206 as S2206_S_1_0 } from "./S_1_0/S2206";
 import { S2210 as S2210_S_1_0 } from "./S_1_0/S2210";
+import { S2220 as S2220_S_1_0 } from "./S_1_0/S2220";
 import { S2230 as S2230_S_1_0 } from "./S_1_0/S2230";
 import { S2231 as S2231_S_1_0 } from "./S_1_0/S2231";
+import { S2240 as S2240_S_1_0 } from "./S_1_0/S2240";
 import { S2298 as S2298_S_1_0 } from "./S_1_0/S2298";
 import { S2299 as S2299_S_1_0 } from "./S_1_0/S2299";
 import { S2300 as S2300_S_1_0 } from "./S_1_0/S2300";
 import { S2306 as S2306_S_1_0 } from "./S_1_0/S2306";
 import { S2399 as S2399_S_1_0 } from "./S_1_0/S2399";
+import { S2500 as S2500_S_1_0 } from "./S_1_0/S2500";
 import { S2501 as S2501_S_1_0 } from "./S_1_0/S2501";
 import { S3500 as S3500_S_1_0 } from "./S_1_0/S3500";
 
-// TODO 2400, 2405, 2410, 2416, 2418, 2418, 2420, 3000, 2220, 2240, 2500
+// TODO 2400, 2405, 2410, 2416, 2418, 2418, 2420, 3000
 
 export const Leiautes = {
   S1000_S_1_0,
@@ -46,14 +49,17 @@ export const Leiautes = {
   S2200_S_1_0,
   S2205_S_1_0,
   S2206_S_1_0,
-  S2300_S_1_0,
+  S2210_S_1_0,
+  S2220_S_1_0,
   S2230_S_1_0,
   S2231_S_1_0,
+  S2240_S_1_0,
   S2298_S_1_0,
+  S2299_S_1_0,
+  S2300_S_1_0,
   S2306_S_1_0,
-  S2210_S_1_0,
+  S2399_S_1_0,
+  S2500_S_1_0,
   S2501_S_1_0,
   S3500_S_1_0,
-  S2299_S_1_0,
-  S2399_S_1_0,
 };

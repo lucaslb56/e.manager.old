@@ -40,8 +40,12 @@ export default class extends BaseSchema {
          */
         table.timestamp("created_at", { useTz: true }).defaultTo(this.now());
         table.timestamp("updated_at", { useTz: true }).defaultTo(this.now());
+      });
 
-        console.log({ create: table_name, success: true });
+      console.log({
+        table_name,
+        prefix: table_name?.split("_")[0],
+        success: true,
       });
     }
   }
