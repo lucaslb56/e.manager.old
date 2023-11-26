@@ -11,12 +11,9 @@ import { CaretLeft, Download } from 'phosphor-react';
 import { Fragment, type ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Header } from '~/components/Header';
-import { Loading } from '~/components/Loading';
-import { Mui } from '~/components/Mui';
-import { useExtractBySocial } from '~/hooks/query/leiaute/extract-by-social';
-import { useLeiauteReport } from '~/hooks/query/leiaute/report';
-import type { Extract, LeiautePrefix, LeiauteVersion } from '~/models/Leiaute';
+import { Header, Loading, Mui } from '~/components';
+import { useExtractBySocial, useLeiauteReport } from '~/hooks';
+import type { Extract, LeiautePrefix, LeiauteVersion } from '~/models';
 
 interface UseLocation {
 	state: {

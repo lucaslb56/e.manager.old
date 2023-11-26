@@ -5,7 +5,7 @@ import type { AxiosError } from 'axios';
 import { KEYS } from '../keys';
 
 import { UserService } from '~/api';
-import type { User } from '~/models/User';
+import type { User } from '~/models';
 
 async function fetch(): Promise<User[]> {
 	const { data } = await UserService.list();

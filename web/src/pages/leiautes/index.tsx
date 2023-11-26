@@ -5,12 +5,9 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { List } from './table/list';
 
-import { Header } from '~/components/Header';
-import { Loading } from '~/components/Loading';
-import { Mui } from '~/components/Mui';
-import { useLeiautePaginate } from '~/hooks/query/leiaute/paginate';
-import type { LeiauteQuery } from '~/models/Leiaute';
-import type { QueryType, QueryValueType } from '~/models/Query';
+import { Header, Loading, Mui } from '~/components';
+import { useLeiautePaginate } from '~/hooks';
+import type { LeiauteQuery, QueryType, QueryValueType } from '~/models';
 
 const labels = ['Nome', 'Prefixo', 'Versão', 'Status'];
 

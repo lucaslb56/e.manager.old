@@ -10,16 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 
-import { Loading } from '~/components/Loading';
-import { Mui } from '~/components/Mui';
-import { useLeiauteActiveList } from '~/hooks/query/leiaute/active-list';
-import { useExtractLeiaute } from '~/hooks/query/leiaute/extract';
-import type { ExtractData } from '~/models/Leiaute';
+import { Loading, Mui } from '~/components';
+import { useExtractLeiaute, useLeiauteActiveList } from '~/hooks';
+import type { ExtractData } from '~/models';
 import {
 	LeiautePrefixEnum,
 	LeiauteVersionEnum,
 	LeiauteVersionList,
-} from '~/models/Leiaute';
+} from '~/models';
 
 interface Props extends Omit<ModalProps, 'children'> {}
 

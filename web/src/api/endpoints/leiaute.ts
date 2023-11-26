@@ -2,15 +2,8 @@ import type { AxiosResponse } from 'axios';
 
 import { API } from '..';
 
-import type {
-	ColumnData,
-	Extract,
-	ExtractData,
-	ExtractRequest,
-	Leiaute,
-	LeiauteQuery,
-} from '~/models/Leiaute';
-import type { Paginate } from '~/models/Paginate';
+import type { Extract, Leiaute, LeiauteQuery } from '~/models/leiaute';
+import type { Paginate } from '~/models/paginate';
 
 export async function list(
 	params?: LeiauteQuery,

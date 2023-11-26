@@ -3,8 +3,8 @@ import { CaretRight } from 'phosphor-react';
 import { type ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Table } from '~/components/Table';
-import { LeiauteVersionNormalize, type Leiaute } from '~/models/Leiaute';
+import { Table } from '~/components';
+import { LeiauteVersionNormalize, type Leiaute } from '~/models';
 
 interface ListProps {
 	data: Leiaute[];

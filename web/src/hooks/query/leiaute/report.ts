@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
 import { LeiauteService } from '~/api';
-import type { LeiauteQuery } from '~/models/Leiaute';
+import type { LeiauteQuery } from '~/models';
 
 async function mutator(params?: LeiauteQuery): Promise<void> {
 	await LeiauteService.report(params);

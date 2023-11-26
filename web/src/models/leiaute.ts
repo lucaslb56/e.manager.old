@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import type { Base } from './Base';
-import type { Query } from './Query';
+import type { Base } from './base';
+import type { Query } from './query';
 
 export interface Leiaute extends Base {
 	name: string;

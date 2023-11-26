@@ -79,6 +79,7 @@ export const MaterialTheme = createTheme({
 					'&::-webkit-scrollbar, & *::-webkit-scrollbar': {
 						backgroundColor: '#5C73DB44',
 						width: '8px',
+						height: '8px',
 					},
 					'&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
 						borderRadius: 10,

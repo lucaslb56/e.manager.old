@@ -1,4 +1,4 @@
-import type { Route } from '~/models/Route';
+import type { Route } from '~/models';
 import { Signin } from '~/pages';
 
 export const PublicRoutes: Route[] = [

@@ -11,11 +11,9 @@ import { z } from 'zod';
 
 import { Container, FormContainer } from './styles';
 
-import * as Logo from '~/components/Logo';
-import { Mui } from '~/components/Mui';
-import { useLogin } from '~/hooks/query/auth/login';
-import { useAuth } from '~/hooks/store';
-import type { Token } from '~/models/Auth';
+import { Large, Mui } from '~/components';
+import { useAuth, useLogin } from '~/hooks';
+import type { Token } from '~/models';
 
 const SigninFormSchema = z.object({
 	email: z
@@ -47,7 +45,7 @@ export function Signin(): ReactElement {
 		reset,
 		formState: { errors },
 	} = useForm<SigninFormInputs>({
-		mode: 'all',
+		mode: 'onSubmit',
 		resolver: zodResolver(SigninFormSchema),
 	});
 
@@ -88,7 +86,7 @@ export function Signin(): ReactElement {
 				direction="row"
 				gap={2}
 			>
-				<Logo.Large />
+				<Large />
 				<Typography
 					variant="h3"
 					fontWeight="bold"

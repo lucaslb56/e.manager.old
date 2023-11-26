@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
 import { CaretRight } from 'phosphor-react';
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Table } from '~/components/Table';
-import { LeiauteVersionNormalize, type Extract } from '~/models/Leiaute';
+import { Table } from '~/components';
+import { LeiauteVersionNormalize, type Extract } from '~/models';
 
 interface ListProps {
 	data: Extract[];

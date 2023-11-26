@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { PrivateRoutes } from './routes';
 
-import { DefaultLayout } from '~/layouts/default';
+import { DefaultLayout } from '~/layouts';
 
 export function Private(): ReactElement {
 	return (

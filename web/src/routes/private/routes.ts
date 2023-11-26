@@ -1,4 +1,4 @@
-import type { Route } from '~/models/Route';
+import type { Route } from '~/models';
 import * as Page from '~/pages';
 
 export const PrivateRoutes: Route[] = [

@@ -10,19 +10,19 @@ import { CaretDown, MagnifyingGlass, Upload, X } from 'phosphor-react';
 import type { ChangeEvent, ReactElement } from 'react';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 
-import { Modal } from './modal/extract';
-import { List } from './table/list';
+import { Modal } from './modal';
+import { List } from './table';
 
-import { Header } from '~/components/Header';
-import { Loading } from '~/components/Loading';
-import { Mui } from '~/components/Mui';
-import { useLeiauteActiveList } from '~/hooks/query/leiaute/active-list';
-import { useExtractPaginate } from '~/hooks/query/leiaute/extract-list-paginate';
-import type { UseModal } from '~/hooks/store/modal';
-import { useModal } from '~/hooks/store/modal';
-import type { LeiautePrefix, LeiauteVersion } from '~/models/Leiaute';
-import { LeiauteVersionList, type LeiauteQuery } from '~/models/Leiaute';
-import type { QueryType, QueryValueType } from '~/models/Query';
+import { Header, Loading, Mui } from '~/components';
+import type { UseModal } from '~/hooks';
+import { useExtractPaginate, useLeiauteActiveList, useModal } from '~/hooks';
+import type {
+	LeiautePrefix,
+	LeiauteVersion,
+	QueryType,
+	QueryValueType,
+} from '~/models';
+import { LeiauteVersionList, type LeiauteQuery } from '~/models';
 
 const labels = ['E-Social ID', 'Evento', 'Leiaute', 'Versão', 'Registros'];
 

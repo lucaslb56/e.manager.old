@@ -1,4 +1,4 @@
-export { Signin } from './auth/Signin';
+export { Signin } from './auth/signin';
 export { Extracts } from './extracts';
 export { Detail as ExtractDetail } from './extracts/views/detail';
 export { Extract as ExtractData } from './extracts/views/extract';

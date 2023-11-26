@@ -3,7 +3,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
 import { AuthService } from '~/api';
-import type { AuthRequest, Token } from '~/models/Auth';
+import type { AuthRequest, Token } from '~/models';
 
 async function mutator(data: AuthRequest): Promise<Token> {
 	const response = await AuthService.signin(data);

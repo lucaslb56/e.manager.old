@@ -7,8 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { ThemeProvider } from './contexts/Theme';
-import { queryClient } from './hooks/query/client';
+import { ThemeProvider } from './contexts';
+import { queryClient } from './hooks';
 import { Router } from './routes';
 
 export function App(): ReactElement {

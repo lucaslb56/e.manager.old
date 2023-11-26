@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import { Container } from './styles';
 
-import { Sidebar } from '~/components/Sidebar';
+import { Sidebar } from '~/components/sidebar';
 
 export function DefaultLayout(): ReactElement {
 	return (

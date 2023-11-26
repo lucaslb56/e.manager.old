@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { API } from '~/api';
-import type { Token } from '~/models/Auth';
+import type { Token } from '~/models';
 
 type Authenticated = Token & {
 	isLogged: boolean;

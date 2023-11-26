@@ -8,7 +8,7 @@ import { PrivateMenus } from './menus';
 import { SidebarButton } from './SidebarButton';
 import { Container, Header, Navbar } from './styles';
 
-import * as Logo from '~/components/Logo';
+import { Small } from '~/components';
 import { useAuth } from '~/hooks/store';
 
 export function Sidebar(): ReactElement {
@@ -25,7 +25,7 @@ export function Sidebar(): ReactElement {
 				direction="row"
 				gap={2}
 			>
-				<Logo.Small />
+				<Small />
 				<Typography
 					variant="h5"
 					fontWeight="bold"

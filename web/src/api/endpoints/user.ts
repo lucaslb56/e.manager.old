@@ -3,7 +3,7 @@ import type { AxiosResponse } from 'axios';
 import { API } from '..';
 
 import type { User } from '~/models/User';
-import type { CreateUserType } from '~/schemas/User';
+import type { CreateUserType } from '~/schemas/user';
 
 export async function list(): Promise<AxiosResponse<User[]>> {
 	return await API.get<User[]>('/users');

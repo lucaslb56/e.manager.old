@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
 import { LeiauteService } from '~/api';
-import type { ExtractData, LeiauteQuery } from '~/models/Leiaute';
+import type { ExtractData, LeiauteQuery } from '~/models';
 
 async function mutator(
 	request: Pick<ExtractData, 'extracts'> &

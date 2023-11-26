@@ -5,8 +5,7 @@ import type { AxiosError } from 'axios';
 import { KEYS } from '../keys';
 
 import { LeiauteService } from '~/api';
-import type { Extract, LeiauteQuery } from '~/models/Leiaute';
-import type { Paginate } from '~/models/Paginate';
+import type { Extract, LeiauteQuery, Paginate } from '~/models';
 
 async function fetcher(params?: LeiauteQuery): Promise<Paginate<Extract>> {
 	const { data } = await LeiauteService.extractList(params);
