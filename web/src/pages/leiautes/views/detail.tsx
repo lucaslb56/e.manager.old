@@ -107,6 +107,7 @@ export function Detail(): ReactElement {
 						gap={2}
 					>
 						<Mui.Button
+							disabled={!leiaute.active}
 							size="medium"
 							endIcon={<Download weight="bold" />}
 							onClick={(): Promise<void> =>

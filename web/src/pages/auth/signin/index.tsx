@@ -1,5 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Stack, Typography } from '@mui/material';
+import type { ButtonOwnProps } from '@mui/material';
+import {
+	Button,
+	CircularProgress,
+	InputAdornment,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material';
 import { AxiosError } from 'axios';
 import { Eye, EyeSlash } from 'phosphor-react';
 import type { ReactElement } from 'react';
@@ -11,9 +19,9 @@ import { z } from 'zod';
 
 import { Container, FormContainer } from './styles';
 
-import { Large, Mui } from '~/components';
+import { Large } from '~/components';
 import { useAuth, useLogin } from '~/hooks';
-import type { Token } from '~/models';
+import type { MuiInputProps, Token } from '~/models';
 
 const SigninFormSchema = z.object({
 	email: z
@@ -74,11 +82,44 @@ export function Signin(): ReactElement {
 		toast.error(error.message);
 	}
 
-	const { mutateAsync: mutateLogin } = useLogin({ onSuccess, onError });
+	const { mutateAsync: mutateLogin, isLoading } = useLogin({
+		onSuccess,
+		onError,
+	});
 
 	function handleSignin(data: SigninFormInputs): void {
 		mutateLogin(data);
 	}
+
+	const buttonEndIcon: ButtonOwnProps['endIcon'] = isLoading && (
+		<CircularProgress
+			size={16}
+			sx={{ color: 'white' }}
+		/>
+	);
+
+	const passwordInputProps: MuiInputProps = {
+		endAdornment: (
+			<InputAdornment
+				position="end"
+				sx={{ cursor: 'pointer' }}
+			>
+				{showPassword && (
+					<EyeSlash
+						onClick={(): void => setShowPassword((state) => !state)}
+						size={20}
+					/>
+				)}
+
+				{!showPassword && (
+					<Eye
+						onClick={(): void => setShowPassword((state) => !state)}
+						size={20}
+					/>
+				)}
+			</InputAdornment>
+		),
+	};
 
 	return (
 		<Container>
@@ -96,7 +137,7 @@ export function Signin(): ReactElement {
 			</Stack>
 			<form onSubmit={handleSubmit(handleSignin)}>
 				<FormContainer spacing={2}>
-					<Mui.TextField
+					<TextField
 						size="small"
 						autoComplete="off"
 						label={errors?.email?.message || 'E-mail'}
@@ -105,42 +146,25 @@ export function Signin(): ReactElement {
 						{...register('email')}
 					/>
 
-					<Mui.TextField
+					<TextField
 						size="small"
 						autoComplete="off"
 						label={errors?.password?.message || 'Senha'}
 						placeholder="Senha"
 						type={showPassword ? 'text' : 'password'}
 						error={Boolean(errors?.password?.message)}
-						InputProps={{
-							endAdornment: (
-								<Mui.Adornment position="end">
-									{showPassword && (
-										<EyeSlash
-											onClick={(): void => setShowPassword((state) => !state)}
-											size={20}
-										/>
-									)}
-
-									{!showPassword && (
-										<Eye
-											onClick={(): void => setShowPassword((state) => !state)}
-											size={20}
-										/>
-									)}
-								</Mui.Adornment>
-							),
-						}}
+						InputProps={passwordInputProps}
 						{...register('password')}
 					/>
 
-					<Mui.Button
+					<Button
 						variant="contained"
 						type="submit"
 						size="large"
+						endIcon={buttonEndIcon}
 					>
 						Entrar
-					</Mui.Button>
+					</Button>
 				</FormContainer>
 			</form>
 		</Container>

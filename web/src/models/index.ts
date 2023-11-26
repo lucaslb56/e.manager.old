@@ -1,5 +1,6 @@
 export * from './auth';
 export * from './base';
+export * from './input';
 export * from './leiaute';
 export * from './menu';
 export * from './meta';
