@@ -1,6 +1,6 @@
-import { Database, Files } from 'phosphor-react';
+import { Database, Files } from '@phosphor-icons/react';
 
-import type { Menu } from '~/models/Menu';
+import type { Menu } from '~/models';
 
 export const PrivateMenus: Menu[] = [
 	{

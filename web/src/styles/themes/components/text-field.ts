@@ -1,5 +1,9 @@
 import type { Components, Theme } from '@mui/material';
-import { inputAdornmentClasses, inputBaseClasses } from '@mui/material';
+import {
+	inputAdornmentClasses,
+	inputBaseClasses,
+	selectClasses,
+} from '@mui/material';
 
 type TextFieldProps = Components<Omit<Theme, 'components'>>['MuiTextField'];
 
@@ -14,6 +18,11 @@ export const MuiTextField: TextFieldProps = {
 				[`& .${inputAdornmentClasses.root}`]: {
 					color: theme.palette.error.main,
 				},
+			},
+
+			[`& .${selectClasses.icon}`]: {
+				color: theme.palette.text.primary,
+				outline: 'none',
 			},
 		}),
 	},

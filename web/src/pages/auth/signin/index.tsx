@@ -8,8 +8,8 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
+import { Eye, EyeSlash } from '@phosphor-icons/react';
 import { AxiosError } from 'axios';
-import { Eye, EyeSlash } from 'phosphor-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';

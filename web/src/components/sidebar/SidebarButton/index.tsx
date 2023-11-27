@@ -1,15 +1,16 @@
-import type { Icon } from 'phosphor-react';
+import { Typography } from '@mui/material';
+import type { Icon } from '@phosphor-icons/react';
 import type { HTMLAttributes, ReactElement } from 'react';
 
 import { Button } from './styles';
 
-import type { MenuPath } from '~/models/Menu';
+import type { MenuPath } from '~/models';
 
 interface SidebarButtonProps
 	extends HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
-	label: string;
+	label?: string;
 	path?: MenuPath;
-	Icon: Icon;
+	Icon?: Icon;
 }
 
 export function SidebarButton({
@@ -23,8 +24,13 @@ export function SidebarButton({
 			to={`/${path}`}
 			{...rest}
 		>
-			<Icon size={25} />
-			{label}
+			{Icon && (
+				<Icon
+					size={20}
+					weight="fill"
+				/>
+			)}
+			{label && <Typography>{label}</Typography>}
 		</Button>
 	);
 }

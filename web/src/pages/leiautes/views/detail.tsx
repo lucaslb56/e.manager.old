@@ -1,18 +1,20 @@
 /* eslint-disable no-unused-vars */
 import {
 	Box,
+	Button,
 	Container,
 	Grid,
 	MenuItem,
 	Stack,
+	TextField,
 	Typography,
 } from '@mui/material';
-import { CaretDown, CaretLeft, Download } from 'phosphor-react';
+import { CaretDown, CaretLeft, Download } from '@phosphor-icons/react';
 import type { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { Header, Loading, Mui } from '~/components';
+import { Loading } from '~/components';
 import {
 	KEYS,
 	queryClient,
@@ -77,74 +79,73 @@ export function Detail(): ReactElement {
 				overflowY: 'auto',
 			}}
 		>
-			<Header.Root>
-				<Box
-					display="flex"
-					flex="1"
-					justifyContent="space-between"
+			<Box
+				display="flex"
+				flex="1"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Stack
+					direction="row"
 					alignItems="center"
+					gap={2}
+					style={{
+						cursor: 'pointer',
+					}}
+					component="div"
+					onClick={(): void => navigate(-1)}
 				>
-					<Stack
-						direction="row"
-						alignItems="center"
-						gap={2}
-						style={{
-							cursor: 'pointer',
+					<CaretLeft
+						size={36}
+						weight="bold"
+					/>
+					<Typography variant="h4">Detalhes de leiaute</Typography>
+				</Stack>
+
+				<Stack
+					direction="row"
+					alignItems="center"
+					gap={2}
+				>
+					<Button
+						disabled={!leiaute.active}
+						size="medium"
+						endIcon={<Download weight="bold" />}
+						variant="contained"
+						onClick={(): Promise<void> =>
+							report({
+								prefix: leiaute.prefix as LeiautePrefix,
+								version: leiaute.version as LeiauteVersion,
+								export_type: 'csv',
+							})
+						}
+					>
+						Baixar extrações
+					</Button>
+
+					<TextField
+						value={leiaute.active ? 'active' : 'inactive'}
+						onChange={(): void => {
+							toggleStatus(leiaute.id);
+							navigate(-1);
 						}}
-						component="div"
-						onClick={(): void => navigate(-1)}
+						size="small"
+						select
+						SelectProps={{
+							IconComponent: CaretDown,
+						}}
 					>
-						<CaretLeft
-							size={36}
-							weight="bold"
-						/>
-						<Header.Title variant="h4">Detalhes de leiaute</Header.Title>
-					</Stack>
-
-					<Stack
-						direction="row"
-						alignItems="center"
-						gap={2}
-					>
-						<Mui.Button
-							disabled={!leiaute.active}
-							size="medium"
-							endIcon={<Download weight="bold" />}
-							onClick={(): Promise<void> =>
-								report({
-									prefix: leiaute.prefix as LeiautePrefix,
-									version: leiaute.version as LeiauteVersion,
-									export_type: 'csv',
-								})
-							}
-						>
-							Baixar extrações
-						</Mui.Button>
-
-						<Mui.TextField
-							value={leiaute.active ? 'active' : 'inactive'}
-							onChange={(): void => {
-								toggleStatus(leiaute.id);
-								navigate(-1);
-							}}
-							size="small"
-							select
-							SelectProps={{
-								IconComponent: CaretDown,
-							}}
-						>
-							{LeiauteStatusList.map((status) => (
-								<MenuItem
-									value={status.value}
-									key={status.id}
-								>
-									{status.label}
-								</MenuItem>
-							))}
-						</Mui.TextField>
-					</Stack>
-				</Box>
-			</Header.Root>
+						{LeiauteStatusList.map((status) => (
+							<MenuItem
+								value={status.value}
+								key={status.id}
+							>
+								{status.label}
+							</MenuItem>
+						))}
+					</TextField>
+				</Stack>
+			</Box>
 
 			<Grid
 				paddingTop={3}

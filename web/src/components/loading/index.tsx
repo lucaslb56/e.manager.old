@@ -13,7 +13,7 @@ export function Loading({ ...rest }: Props): ReactElement {
 			justifyContent="center"
 			{...rest}
 		>
-			<CircularProgress color="info" />
+			<CircularProgress color="primary" />
 		</Stack>
 	);
 }

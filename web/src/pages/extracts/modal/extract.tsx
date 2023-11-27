@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ModalProps } from '@mui/material';
-import { Box, MenuItem } from '@mui/material';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
+import { CaretDown, Download, Upload } from '@phosphor-icons/react';
 import type { AxiosError } from 'axios';
-import { CaretDown, Download, Upload } from 'phosphor-react';
 import { Fragment, useRef, type ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 
-import { Loading, Mui } from '~/components';
+import { Loading, Modal } from '~/components';
 import { useExtractLeiaute, useLeiauteActiveList } from '~/hooks';
 import type { ExtractData } from '~/models';
 import {
@@ -35,7 +35,7 @@ const Schema = z.object({
 
 type FormType = z.infer<typeof Schema>;
 
-export function Modal({ open, onClose, ...rest }: Props): ReactElement {
+export function Extract({ open, onClose, ...rest }: Props): ReactElement {
 	const {
 		data: leiaute_active_list,
 		isSuccess,
@@ -86,144 +86,149 @@ export function Modal({ open, onClose, ...rest }: Props): ReactElement {
 	}
 
 	return (
-		<Mui.Modal
+		<Modal.Root
 			open={open}
 			onClose={onClose}
-			title="Importação de dados"
+			// title="Importação de dados"
 			{...rest}
 		>
-			<Box
-				component="form"
-				display="flex"
-				flexDirection="column"
-				gap={2}
-				padding={2}
-				onSubmit={handleSubmit(handleExtract)}
-			>
-				{isLoading && <Loading />}
+			<Modal.Body>
+				<Box
+					component="form"
+					display="flex"
+					flexDirection="column"
+					gap={2}
+					padding={2}
+					onSubmit={handleSubmit(handleExtract)}
+				>
+					{isLoading && <Loading />}
 
-				{is_loading_extract && <Loading />}
+					{is_loading_extract && <Loading />}
 
-				{!is_loading_extract &&
-					!isLoading &&
-					isSuccess &&
-					leiaute_active_list.length > 0 && (
-						<Fragment>
-							<Mui.TextField
-								label="Prefixo"
-								select
-								fullWidth
-								size="small"
-								defaultValue={''}
-								SelectProps={{
-									IconComponent: CaretDown,
-								}}
-								error={!!errors.prefix?.message}
-								{...register('prefix')}
-							>
-								<MenuItem
-									value=""
-									disabled
+					{!is_loading_extract &&
+						!isLoading &&
+						isSuccess &&
+						leiaute_active_list.length > 0 && (
+							<Fragment>
+								<TextField
+									label="Prefixo"
+									select
+									fullWidth
+									size="small"
+									defaultValue={''}
+									SelectProps={{
+										IconComponent: CaretDown,
+									}}
+									error={!!errors.prefix?.message}
+									{...register('prefix')}
 								>
-									Selecione prefixo
-								</MenuItem>
-								{leiaute_active_list.map((item) => (
 									<MenuItem
-										key={item.id}
-										value={item.prefix}
+										value=""
+										disabled
 									>
-										{item.prefix}
+										Selecione prefixo
 									</MenuItem>
-								))}
-							</Mui.TextField>
+									{leiaute_active_list.map((item) => (
+										<MenuItem
+											key={item.id}
+											value={item.prefix}
+										>
+											{item.prefix}
+										</MenuItem>
+									))}
+								</TextField>
 
-							<Mui.TextField
-								fullWidth
-								label="Versão"
-								defaultValue={''}
-								size="small"
-								select
-								SelectProps={{
-									IconComponent: CaretDown,
-								}}
-								error={!!errors.version?.message}
-								{...register('version')}
-							>
-								<MenuItem
-									value=""
-									disabled
+								<TextField
+									fullWidth
+									label="Versão"
+									defaultValue={''}
+									size="small"
+									select
+									SelectProps={{
+										IconComponent: CaretDown,
+									}}
+									error={!!errors.version?.message}
+									{...register('version')}
 								>
-									Selecione versão
-								</MenuItem>
-
-								{LeiauteVersionList.map((item) => (
 									<MenuItem
-										value={item.value}
-										key={item.id}
-										disabled={item.value === 'S_1_1'}
+										value=""
+										disabled
 									>
-										{item.label}
+										Selecione versão
 									</MenuItem>
-								))}
-							</Mui.TextField>
-						</Fragment>
+
+									{LeiauteVersionList.map((item) => (
+										<MenuItem
+											value={item.value}
+											key={item.id}
+											disabled={item.value === 'S_1_1'}
+										>
+											{item.label}
+										</MenuItem>
+									))}
+								</TextField>
+							</Fragment>
+						)}
+
+					{!is_loading_extract && !isLoading && !isValidPrefixAndVersion && (
+						<Button
+							fullWidth
+							style={{ paddingLeft: '50px', paddingRight: '50px' }}
+							endIcon={
+								<Upload
+									size={20}
+									weight="bold"
+								/>
+							}
+							type="button"
+							variant="contained"
+							color="error"
+							// MuiBackground="#991B1B"
+							onClick={(): void => inputFile.current?.click()}
+						>
+							Importar arquivos
+						</Button>
 					)}
 
-				{!is_loading_extract && !isLoading && !isValidPrefixAndVersion && (
-					<Mui.Button
-						fullWidth
-						style={{ paddingLeft: '50px', paddingRight: '50px' }}
-						endIcon={
-							<Upload
-								size={20}
-								weight="bold"
-							/>
-						}
-						type="button"
-						MuiBackground="#991B1B"
-						onClick={(): void => inputFile.current?.click()}
-					>
-						Importar arquivos
-					</Mui.Button>
-				)}
+					<input
+						ref={inputFile}
+						type="file"
+						accept="text/xml"
+						multiple
+						onChange={(event): void => {
+							const form = new FormData();
+							const files = [...(event.target.files as FileList)].filter(
+								(item) =>
+									item.name.includes(prefix) ||
+									item.name.includes(prefix?.replace('S', 'S-')) ||
+									item.name.includes(prefix?.replace('S', 'S_')),
+							);
 
-				<input
-					ref={inputFile}
-					type="file"
-					accept="text/xml"
-					multiple
-					onChange={(event): void => {
-						const form = new FormData();
-						const files = [...(event.target.files as FileList)].filter(
-							(item) =>
-								item.name.includes(prefix) ||
-								item.name.includes(prefix?.replace('S', 'S-')) ||
-								item.name.includes(prefix?.replace('S', 'S_')),
-						);
+							for (const file of files) form.append('leiautes[]', file);
 
-						for (const file of files) form.append('leiautes[]', file);
+							setValue('leiautes', form);
+						}}
+						style={{ display: 'none' }}
+					/>
 
-						setValue('leiautes', form);
-					}}
-					style={{ display: 'none' }}
-				/>
-
-				{!is_loading_extract && !isLoading && isValidPrefixAndVersion && (
-					<Mui.Button
-						fullWidth
-						style={{ paddingLeft: '50px', paddingRight: '50px' }}
-						endIcon={
-							<Download
-								size={20}
-								weight="bold"
-							/>
-						}
-						type="submit"
-					>
-						Iniciar extração
-					</Mui.Button>
-				)}
-			</Box>
-		</Mui.Modal>
+					{!is_loading_extract && !isLoading && isValidPrefixAndVersion && (
+						<Button
+							fullWidth
+							style={{ paddingLeft: '50px', paddingRight: '50px' }}
+							endIcon={
+								<Download
+									size={20}
+									weight="bold"
+								/>
+							}
+							type="submit"
+							variant="contained"
+						>
+							Iniciar extração
+						</Button>
+					)}
+				</Box>
+			</Modal.Body>
+		</Modal.Root>
 	);
 }

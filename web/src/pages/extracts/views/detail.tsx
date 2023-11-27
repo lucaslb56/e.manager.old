@@ -1,17 +1,18 @@
 /* eslint-disable no-unused-vars */
 import {
 	Box,
+	Button,
 	Container,
 	Divider,
 	Grid,
 	Stack,
 	Typography,
 } from '@mui/material';
-import { CaretLeft, Download } from 'phosphor-react';
+import { CaretLeft, Download } from '@phosphor-icons/react';
 import { Fragment, type ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Header, Loading, Mui } from '~/components';
+import { Loading } from '~/components';
 import { useExtractBySocial, useLeiauteReport } from '~/hooks';
 import type { Extract, LeiautePrefix, LeiauteVersion } from '~/models';
 
@@ -60,46 +61,44 @@ export function Detail(): ReactElement {
 				overflowX: 'hidden',
 			}}
 		>
-			<Header.Root>
-				<Box
-					display="flex"
-					flex="1"
-					justifyContent="space-between"
+			<Box
+				display="flex"
+				flex="1"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Stack
+					direction="row"
 					alignItems="center"
+					gap={2}
+					style={{
+						cursor: 'pointer',
+					}}
+					component="div"
+					onClick={(): void => navigate(-1)}
 				>
-					<Stack
-						direction="row"
-						alignItems="center"
-						gap={2}
-						style={{
-							cursor: 'pointer',
-						}}
-						component="div"
-						onClick={(): void => navigate(-1)}
-					>
-						<CaretLeft
-							size={36}
-							weight="bold"
-						/>
-						<Header.Title variant="h4">Detalhes da extração</Header.Title>
-					</Stack>
+					<CaretLeft
+						size={36}
+						weight="bold"
+					/>
+					<Typography variant="h4">Detalhes da extração</Typography>
+				</Stack>
 
-					<Mui.Button
-						size="medium"
-						endIcon={<Download weight="bold" />}
-						onClick={(): Promise<void> =>
-							report({
-								prefix: extract.prefix as LeiautePrefix,
-								version: extract.version as LeiauteVersion,
-								e_social_id: extract.e_social_id,
-								export_type: 'csv',
-							})
-						}
-					>
-						Baixar dados
-					</Mui.Button>
-				</Box>
-			</Header.Root>
+				<Button
+					size="medium"
+					endIcon={<Download weight="bold" />}
+					onClick={(): Promise<void> =>
+						report({
+							prefix: extract.prefix as LeiautePrefix,
+							version: extract.version as LeiauteVersion,
+							e_social_id: extract.e_social_id,
+							export_type: 'csv',
+						})
+					}
+				>
+					Baixar dados
+				</Button>
+			</Box>
 
 			<Stack paddingTop={2}>
 				{isLoading && <Loading />}

@@ -1,11 +1,19 @@
-import { Box, Container, Pagination, Stack, Typography } from '@mui/material';
-import { MagnifyingGlass, Plus, X } from 'phosphor-react';
+import {
+	Box,
+	Button,
+	Container,
+	Pagination,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material';
+import { MagnifyingGlass, Plus, X } from '@phosphor-icons/react';
 import type { ChangeEvent, ReactElement } from 'react';
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { List } from './table/list';
 
-import { Header, Loading, Mui } from '~/components';
+import { Grid, Loading } from '~/components';
 import { useLeiautePaginate } from '~/hooks';
 import type { LeiauteQuery, QueryType, QueryValueType } from '~/models';
 
@@ -60,111 +68,120 @@ export function Leiautes(): ReactElement {
 				overflowY: 'auto',
 			}}
 		>
-			<Header.Root>
-				<Header.Title
+			<Stack>
+				<Typography
 					variant="h4"
 					component="h1"
 				>
 					Leiautes
-				</Header.Title>
+				</Typography>
+			</Stack>
 
-				<Header.Item
-					xl={8}
-					xs={8}
-					sm={6}
-				>
-					<Mui.TextField
-						size="small"
-						fullWidth
-						placeholder="Pesquisar por nome ou prefixo"
-						onChange={changeSearch}
-						value={search}
-					/>
-				</Header.Item>
+			<Box>
+				<Grid.Root>
+					<Grid.Item
+						xl={8}
+						xs={8}
+						sm={6}
+					>
+						<TextField
+							size="small"
+							fullWidth
+							placeholder="Pesquisar por nome ou prefixo"
+							onChange={changeSearch}
+							value={search}
+						/>
+					</Grid.Item>
 
-				<Header.Item
-					xl={2}
-					xs={2}
-					sm={3}
-				>
-					<Mui.Button
-						fullWidth
-						size="medium"
-						endIcon={
-							queryParams.search ? (
-								<X
+					<Grid.Item
+						xl={2}
+						xs={2}
+						sm={3}
+					>
+						<Button
+							fullWidth
+							size="medium"
+							variant="contained"
+							endIcon={
+								queryParams.search ? (
+									<X
+										size={18}
+										weight="bold"
+									/>
+								) : (
+									<MagnifyingGlass
+										size={18}
+										weight="bold"
+									/>
+								)
+							}
+							onClick={queryParams.search ? handleClear : handleSearch}
+						>
+							{queryParams.search && 'Limpar'}
+							{!queryParams.search && 'Buscar'}
+						</Button>
+					</Grid.Item>
+
+					<Grid.Item
+						xl={2}
+						xs={2}
+						sm={3}
+					>
+						<Button
+							fullWidth
+							size="medium"
+							variant="contained"
+							endIcon={
+								<Plus
 									size={18}
 									weight="bold"
 								/>
-							) : (
-								<MagnifyingGlass
-									size={18}
-									weight="bold"
-								/>
-							)
-						}
-						onClick={queryParams.search ? handleClear : handleSearch}
-					>
-						{queryParams.search && 'Limpar'}
-						{!queryParams.search && 'Buscar'}
-					</Mui.Button>
-				</Header.Item>
-
-				<Header.Item
-					xl={2}
-					xs={2}
-					sm={3}
-				>
-					<Mui.Button
-						fullWidth
-						size="medium"
-						endIcon={
-							<Plus
-								size={18}
-								weight="bold"
-							/>
-						}
-						// onClick={(): void => fileInput.current?.click()}
-					>
-						Novo
-					</Mui.Button>
-					{/* <input
+							}
+							// onClick={(): void => fileInput.current?.click()}
+						>
+							Novo
+						</Button>
+						{/* <input
 						ref={fileInput}
 						type="file"
 						accept="text/xml"
 						style={{ display: 'none' }}
 					/> */}
-				</Header.Item>
-			</Header.Root>
+					</Grid.Item>
+				</Grid.Root>
 
-			{isLoading && <Loading />}
+				{isLoading && <Loading />}
 
-			{isSuccess && !(list_data.data.length > 0) && (
-				<Box marginTop="1rem">
-					<Typography variant="h6">Nenhum registro encontrado</Typography>
-				</Box>
-			)}
+				{isSuccess && !(list_data.data.length > 0) && (
+					<Box marginTop="1rem">
+						<Typography variant="h6">Nenhum registro encontrado</Typography>
+					</Box>
+				)}
 
-			{isSuccess && list_data.data.length > 0 && (
-				<Fragment>
-					<List
-						data={list_data.data}
-						labels={labels}
-					/>
-					<Stack
-						alignItems={'flex-end'}
-						direction={'column'}
-						paddingTop={2}
-					>
-						<Pagination
-							count={list_data.meta.last_page}
-							page={list_data.meta.current_page}
-							onChange={(_, page): void => handleQuery('page', page)}
-							color="primary"
+				{isSuccess && list_data.data.length > 0 && (
+					<Stack>
+						<List
+							data={list_data.data}
+							labels={labels}
 						/>
+
+						{list_data.meta.total > list_data.meta.per_page && (
+							<Stack
+								alignItems={'flex-end'}
+								direction={'column'}
+								paddingTop={2}
+							>
+								<Pagination
+									count={list_data.meta.last_page}
+									page={list_data.meta.current_page}
+									onChange={(_, page): void => handleQuery('page', page)}
+									color="primary"
+								/>
+							</Stack>
+						)}
 					</Stack>
-				</Fragment>
-			)}
+				)}
+			</Box>
 		</Container>
 	);
 }

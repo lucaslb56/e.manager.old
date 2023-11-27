@@ -2,7 +2,7 @@ import { Box, ThemeProvider as MuiThemeProvider } from '@mui/material';
 import type { ReactElement, ReactNode } from 'react';
 import { createContext, useCallback, useMemo, useState } from 'react';
 
-import { MaterialTheme } from '~/styles/themes/material';
+import { MaterialTheme } from '~/styles';
 
 export interface ThemeContextType {
 	themeName: 'dark' | 'light';

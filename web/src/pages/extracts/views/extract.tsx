@@ -1,20 +1,20 @@
 /* eslint-disable no-unused-vars */
 import {
 	Box,
+	Button,
 	Container,
 	Divider,
 	Grid,
 	Stack,
 	Typography,
 } from '@mui/material';
+import { CaretLeft, Upload } from '@phosphor-icons/react';
 import type { AxiosError } from 'axios';
-import { CaretLeft, Upload } from 'phosphor-react';
 import { Fragment, type ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Header, Mui } from '~/components';
 import { useExtractBuild } from '~/hooks';
 import type { ExtractData, LeiauteQuery } from '~/models';
 
@@ -63,47 +63,45 @@ export function Extract(): ReactElement {
 				overflowX: 'hidden',
 			}}
 		>
-			<Header.Root>
-				<Box
-					display="flex"
-					flex="1"
-					justifyContent="space-between"
+			<Box
+				display="flex"
+				flex="1"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Stack
+					direction="row"
 					alignItems="center"
+					gap={2}
+					style={{
+						cursor: 'pointer',
+					}}
+					component="div"
+					onClick={(): void => navigate(-1)}
 				>
-					<Stack
-						direction="row"
-						alignItems="center"
-						gap={2}
-						style={{
-							cursor: 'pointer',
-						}}
-						component="div"
-						onClick={(): void => navigate(-1)}
-					>
-						<CaretLeft
-							size={36}
-							weight="bold"
-						/>
-						<Header.Title variant="h4">Dados extraídos</Header.Title>
-					</Stack>
+					<CaretLeft
+						size={36}
+						weight="bold"
+					/>
+					<Typography variant="h4">Dados extraídos</Typography>
+				</Stack>
 
-					<Stack
-						direction="row"
-						alignItems="center"
-						gap={2}
+				<Stack
+					direction="row"
+					alignItems="center"
+					gap={2}
+				>
+					<Button
+						size="medium"
+						endIcon={<Upload weight="bold" />}
+						onClick={(): Promise<ExtractData> =>
+							extract_build({ extracts, version, prefix })
+						}
 					>
-						<Mui.Button
-							size="medium"
-							endIcon={<Upload weight="bold" />}
-							onClick={(): Promise<ExtractData> =>
-								extract_build({ extracts, version, prefix })
-							}
-						>
-							Armazenar
-						</Mui.Button>
-					</Stack>
-				</Box>
-			</Header.Root>
+						Armazenar
+					</Button>
+				</Stack>
+			</Box>
 
 			{extracts.length > 0 && (
 				<Fragment>

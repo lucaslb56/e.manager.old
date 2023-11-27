@@ -1,1 +1,2 @@
-export * from './extract';
+import { Extract } from './extract';
+export const Modal = { Extract };

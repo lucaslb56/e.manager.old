@@ -1,19 +1,21 @@
 import {
 	Box,
+	Button,
 	Container,
 	MenuItem,
 	Pagination,
 	Stack,
+	TextField,
 	Typography,
 } from '@mui/material';
-import { CaretDown, MagnifyingGlass, Upload, X } from 'phosphor-react';
+import { CaretDown, MagnifyingGlass, Upload, X } from '@phosphor-icons/react';
 import type { ChangeEvent, ReactElement } from 'react';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { Modal } from './modal';
 import { List } from './table';
 
-import { Header, Loading, Mui } from '~/components';
+import { Grid, Loading } from '~/components';
 import type { UseModal } from '~/hooks';
 import { useExtractPaginate, useLeiauteActiveList, useModal } from '~/hooks';
 import type {
@@ -84,190 +86,205 @@ export function Extracts(): ReactElement {
 				overflowY: 'auto',
 			}}
 		>
-			<Header.Root
-				direction="row"
-				justifyContent="flex-end"
-			>
-				<Header.Title
+			<Stack>
+				<Typography
 					variant="h4"
 					component="h1"
 				>
 					Extrações
-				</Header.Title>
+				</Typography>
+			</Stack>
 
-				<Header.Item
-					xl={8}
-					xs={8}
-					sm={6}
+			<Box>
+				<Grid.Root
+					direction="row"
+					justifyContent="flex-end"
 				>
-					<Mui.TextField
-						size="small"
-						fullWidth
-						placeholder="Pesquisar por Social ID ou Evento"
-						onChange={changeSearch}
-						value={search}
-					/>
-				</Header.Item>
-
-				<Header.Item
-					xl={2}
-					xs={2}
-					sm={3}
-				>
-					<Mui.Button
-						fullWidth
-						size="medium"
-						endIcon={
-							queryParams.search ? (
-								<X
-									size={18}
-									weight="bold"
-								/>
-							) : (
-								<MagnifyingGlass
-									size={18}
-									weight="bold"
-								/>
-							)
-						}
-						onClick={queryParams.search ? handleClear : handleSearch}
+					<Grid.Item
+						xl={8}
+						xs={8}
+						sm={6}
 					>
-						{queryParams.search && 'Limpar'}
-						{!queryParams.search && 'Buscar'}
-					</Mui.Button>
-				</Header.Item>
-
-				<Header.Item
-					xl={2}
-					xs={2}
-					sm={3}
-				>
-					<Mui.Button
-						fullWidth
-						size="medium"
-						endIcon={<Upload weight="bold" />}
-						onClick={(): void => modal.open({ key: 'modal-import' })}
-					>
-						Enviar
-					</Mui.Button>
-				</Header.Item>
-
-				{is_success_active_list && active_list.length > 0 && (
-					<Fragment>
-						<Header.Item
-							xl={2}
-							xs={2}
-							sm={3}
-						>
-							<Mui.TextField
-								onChange={(event): void =>
-									handleQuery('prefix', event.target.value as LeiautePrefix)
-								}
-								fullWidth
-								label="Prefixo"
-								defaultValue={queryParams.prefix ?? ''}
-								size="small"
-								select
-								SelectProps={{
-									IconComponent: CaretDown,
-								}}
-							>
-								<MenuItem
-									value=""
-									disabled
-								>
-									Selecione prefixo
-								</MenuItem>
-
-								{active_list.map((item) => (
-									<MenuItem
-										value={item.prefix}
-										key={item.id}
-									>
-										{item.prefix}
-									</MenuItem>
-								))}
-							</Mui.TextField>
-						</Header.Item>
-
-						<Header.Item
-							xl={2}
-							xs={2}
-							sm={3}
-						>
-							<Mui.TextField
-								onChange={(event): void =>
-									handleQuery('version', event.target.value as LeiauteVersion)
-								}
-								fullWidth
-								label="Versão"
-								defaultValue={queryParams?.version ?? ''}
-								size="small"
-								select
-								SelectProps={{
-									IconComponent: CaretDown,
-								}}
-							>
-								<MenuItem
-									value=""
-									disabled
-								>
-									Selecione versão
-								</MenuItem>
-
-								{LeiauteVersionList.map((item) => (
-									<MenuItem
-										value={item.value}
-										key={item.id}
-										disabled={item.value === 'S_1_1'}
-									>
-										{item.label}
-									</MenuItem>
-								))}
-							</Mui.TextField>
-						</Header.Item>
-					</Fragment>
-				)}
-			</Header.Root>
-
-			{isLoading && queryParams.prefix && queryParams.version && <Loading />}
-
-			{!queryParams.prefix && !queryParams.version && (
-				<Box marginTop="1rem">
-					<Typography variant="h6">
-						Informe prefixo e versão para buscar dados
-					</Typography>
-				</Box>
-			)}
-
-			{isSuccess && !(list_data.data.length > 0) && (
-				<Box marginTop="1rem">
-					<Typography variant="h6">Nenhum registro encontrado</Typography>
-				</Box>
-			)}
-
-			{isSuccess && list_data.data.length > 0 && (
-				<Fragment>
-					<List
-						data={list_data.data}
-						labels={labels}
-					/>
-					<Stack
-						alignItems={'flex-end'}
-						direction={'column'}
-						paddingTop={2}
-					>
-						<Pagination
-							count={list_data.meta.last_page}
-							page={list_data.meta.current_page}
-							onChange={(_, page): void => handleQuery('page', page)}
-							color="primary"
+						<TextField
+							size="small"
+							fullWidth
+							placeholder="Pesquisar por Social ID ou Evento"
+							onChange={changeSearch}
+							value={search}
 						/>
+					</Grid.Item>
+
+					<Grid.Item
+						xl={2}
+						xs={2}
+						sm={3}
+					>
+						<Button
+							fullWidth
+							size="medium"
+							variant="contained"
+							endIcon={
+								queryParams.search ? (
+									<X
+										size={18}
+										weight="bold"
+									/>
+								) : (
+									<MagnifyingGlass
+										size={18}
+										weight="bold"
+									/>
+								)
+							}
+							onClick={queryParams.search ? handleClear : handleSearch}
+						>
+							{queryParams.search && 'Limpar'}
+							{!queryParams.search && 'Buscar'}
+						</Button>
+					</Grid.Item>
+
+					<Grid.Item
+						xl={2}
+						xs={2}
+						sm={3}
+					>
+						<Button
+							fullWidth
+							size="medium"
+							variant="contained"
+							endIcon={<Upload weight="bold" />}
+							onClick={(): void => modal.open({ key: 'modal-import' })}
+						>
+							Enviar
+						</Button>
+					</Grid.Item>
+
+					{is_success_active_list && active_list.length > 0 && (
+						<Fragment>
+							<Grid.Item
+								xl={2}
+								xs={2}
+								sm={3}
+							>
+								<TextField
+									onChange={(event): void =>
+										handleQuery('prefix', event.target.value as LeiautePrefix)
+									}
+									fullWidth
+									label="Prefixo"
+									defaultValue={queryParams.prefix ?? ''}
+									size="small"
+									select
+									SelectProps={{
+										IconComponent: CaretDown,
+									}}
+								>
+									<MenuItem
+										value=""
+										disabled
+									>
+										Selecione prefixo
+									</MenuItem>
+
+									{active_list.map((item) => (
+										<MenuItem
+											value={item.prefix}
+											key={item.id}
+										>
+											{item.prefix}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid.Item>
+
+							<Grid.Item
+								xl={2}
+								xs={2}
+								sm={3}
+							>
+								<TextField
+									onChange={(event): void =>
+										handleQuery('version', event.target.value as LeiauteVersion)
+									}
+									fullWidth
+									label="Versão"
+									defaultValue={queryParams?.version ?? ''}
+									size="small"
+									select
+									SelectProps={{
+										IconComponent: CaretDown,
+									}}
+								>
+									<MenuItem
+										value=""
+										disabled
+									>
+										Selecione versão
+									</MenuItem>
+
+									{LeiauteVersionList.map((item) => (
+										<MenuItem
+											value={item.value}
+											key={item.id}
+											disabled={item.value === 'S_1_1'}
+										>
+											{item.label}
+										</MenuItem>
+									))}
+								</TextField>
+							</Grid.Item>
+						</Fragment>
+					)}
+				</Grid.Root>
+
+				{isLoading && queryParams.prefix && queryParams.version && <Loading />}
+
+				{!queryParams.prefix && !queryParams.version && (
+					<Box marginTop="1rem">
+						<Typography variant="h6">
+							Informe prefixo e versão para buscar dados
+						</Typography>
+					</Box>
+				)}
+
+				{!isLoading && isSuccess && !(list_data.data.length > 0) && (
+					<Stack sx={{ padding: '0.5rem' }}>
+						<Typography
+							variant="h6"
+							fontWeight="normal"
+						>
+							Nenhum registro encontrado.
+						</Typography>
 					</Stack>
-				</Fragment>
-			)}
+				)}
+
+				{isSuccess && list_data.data.length > 0 && (
+					<Stack>
+						<List
+							data={list_data.data}
+							labels={labels}
+						/>
+
+						{list_data.meta.total > list_data.meta.per_page && (
+							<Stack
+								alignItems={'flex-end'}
+								direction={'column'}
+								paddingTop={2}
+							>
+								<Pagination
+									count={list_data.meta.last_page}
+									page={list_data.meta.current_page}
+									onChange={(_, page): void => handleQuery('page', page)}
+									color="primary"
+								/>
+							</Stack>
+						)}
+					</Stack>
+				)}
+			</Box>
+
 			{modal.key === 'modal-import' && (
-				<Modal
+				<Modal.Extract
 					open={modal.isOpen}
 					onClose={modal.close}
 				/>

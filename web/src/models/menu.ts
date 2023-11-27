@@ -1,4 +1,4 @@
-import type { Icon } from 'phosphor-react';
+import type { Icon } from '@phosphor-icons/react';
 
 export type MenuPath =
 	| 'signin'

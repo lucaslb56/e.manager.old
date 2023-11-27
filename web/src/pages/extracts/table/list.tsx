@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { CaretRight } from 'phosphor-react';
+import { CaretRight } from '@phosphor-icons/react';
 import type { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 
