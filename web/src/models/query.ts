@@ -1,15 +1,9 @@
-interface QueryDate {
-	initial: string;
-	final: string;
-}
+import type { Date } from './date';
+
 export interface Query {
-	search?: string;
-	page?: number;
-	limit?: number;
-	order?: 'asc' | 'desc';
-	date?: QueryDate;
+	search: string | null;
+	page: number | null;
+	limit: number | null;
+	order: 'asc' | 'desc';
+	date: Date;
 }
-
-export type QueryType<Type> = keyof Type;
-
-export type QueryValueType<Type, Key extends QueryType<Type>> = Type[Key];

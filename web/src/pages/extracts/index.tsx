@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	Container,
+	InputAdornment,
 	MenuItem,
 	Pagination,
 	Stack,
@@ -9,27 +10,28 @@ import {
 	Typography,
 } from '@mui/material';
 import { CaretDown, MagnifyingGlass, Upload, X } from '@phosphor-icons/react';
-import type { ChangeEvent, ReactElement } from 'react';
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import type { ReactElement } from 'react';
+import { Fragment, useRef } from 'react';
 
 import { Modal } from './modal';
 import { List } from './table';
 
 import { Grid, Loading } from '~/components';
 import type { UseModal } from '~/hooks';
-import { useExtractPaginate, useLeiauteActiveList, useModal } from '~/hooks';
-import type {
-	LeiautePrefix,
-	LeiauteVersion,
-	QueryType,
-	QueryValueType,
-} from '~/models';
+import {
+	useExtractPaginate,
+	useLeiauteActiveList,
+	useModal,
+	useParams,
+} from '~/hooks';
+import type { LeiautePrefix, LeiauteVersion } from '~/models';
 import { LeiauteVersionList, type LeiauteQuery } from '~/models';
 
 const labels = ['E-Social ID', 'Evento', 'Leiaute', 'Versão', 'Registros'];
 
 export function Extracts(): ReactElement {
-	// const fileInput = useRef<HTMLInputElement | null>(null);
+	const searchInputRef = useRef<HTMLInputElement>(null);
+
 	const modal = useModal() as UseModal<null>;
 
 	const {
@@ -38,43 +40,17 @@ export function Extracts(): ReactElement {
 		isSuccess: is_success_active_list,
 	} = useLeiauteActiveList();
 
-	const [search, setSearch] = useState<string>('');
-
-	const [queryParams, setQueryParams] = useState<LeiauteQuery>({
+	const { params, handleParams: append } = useParams<LeiauteQuery>({
 		limit: 15,
 		prefix: 'S1000',
 		version: 'S_1_0',
-	} as LeiauteQuery);
+	});
 
 	const {
 		data: list_data,
 		isLoading,
 		isSuccess,
-	} = useExtractPaginate(queryParams);
-
-	function handleQuery<T extends QueryType<LeiauteQuery>>(
-		key: T,
-		value: QueryValueType<LeiauteQuery, T>,
-	): void {
-		setQueryParams((state) => ({ ...state, [key]: value }));
-	}
-
-	const handleClear = useCallback(() => {
-		setSearch('');
-		handleQuery('search', undefined);
-	}, []);
-
-	function changeSearch(event: ChangeEvent<HTMLInputElement>): void {
-		setSearch(event.target.value);
-	}
-
-	const handleSearch = useCallback(() => {
-		handleQuery('search', search);
-	}, [search]);
-
-	useEffect(() => {
-		if (!search) handleQuery('search', undefined);
-	}, [search]);
+	} = useExtractPaginate({ ...params });
 
 	return (
 		<Container
@@ -86,7 +62,7 @@ export function Extracts(): ReactElement {
 				overflowY: 'auto',
 			}}
 		>
-			<Stack>
+			<Stack sx={{ padding: '0 0.5rem' }}>
 				<Typography
 					variant="h4"
 					component="h1"
@@ -109,38 +85,53 @@ export function Extracts(): ReactElement {
 							size="small"
 							fullWidth
 							placeholder="Pesquisar por Social ID ou Evento"
-							onChange={changeSearch}
-							value={search}
-						/>
-					</Grid.Item>
+							inputRef={searchInputRef}
+							onChange={(event): void => {
+								if (!event.target.value || !searchInputRef.current?.value) {
+									append('search', null);
+									return;
+								}
+							}}
+							onKeyDown={(event): void => {
+								if (event.key === 'Enter' && searchInputRef.current?.value) {
+									append('search', searchInputRef.current?.value);
+									return;
+								}
+							}}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment
+										position="end"
+										sx={{ cursor: 'pointer' }}
+									>
+										{params.search && (
+											<X
+												size={18}
+												weight="bold"
+												onClick={(): void => {
+													if (searchInputRef.current?.value) {
+														searchInputRef.current.value = '';
+													}
+													append('search', null);
+												}}
+											/>
+										)}
 
-					<Grid.Item
-						xl={2}
-						xs={2}
-						sm={3}
-					>
-						<Button
-							fullWidth
-							size="medium"
-							variant="contained"
-							endIcon={
-								queryParams.search ? (
-									<X
-										size={18}
-										weight="bold"
-									/>
-								) : (
-									<MagnifyingGlass
-										size={18}
-										weight="bold"
-									/>
-								)
-							}
-							onClick={queryParams.search ? handleClear : handleSearch}
-						>
-							{queryParams.search && 'Limpar'}
-							{!queryParams.search && 'Buscar'}
-						</Button>
+										{!params.search && (
+											<MagnifyingGlass
+												size={18}
+												weight="bold"
+												onClick={(): void => {
+													if (!searchInputRef?.current?.value) return;
+
+													append('search', searchInputRef?.current?.value);
+												}}
+											/>
+										)}
+									</InputAdornment>
+								),
+							}}
+						/>
 					</Grid.Item>
 
 					<Grid.Item
@@ -168,11 +159,11 @@ export function Extracts(): ReactElement {
 							>
 								<TextField
 									onChange={(event): void =>
-										handleQuery('prefix', event.target.value as LeiautePrefix)
+										append('prefix', event.target.value as LeiautePrefix)
 									}
 									fullWidth
 									label="Prefixo"
-									defaultValue={queryParams.prefix ?? ''}
+									defaultValue={params.prefix ?? ''}
 									size="small"
 									select
 									SelectProps={{
@@ -204,11 +195,12 @@ export function Extracts(): ReactElement {
 							>
 								<TextField
 									onChange={(event): void =>
-										handleQuery('version', event.target.value as LeiauteVersion)
+										// handleQuery('version', event.target.value as LeiauteVersion)
+										append('version', event.target.value as LeiauteVersion)
 									}
 									fullWidth
 									label="Versão"
-									defaultValue={queryParams?.version ?? ''}
+									defaultValue={params?.version ?? ''}
 									size="small"
 									select
 									SelectProps={{
@@ -237,18 +229,18 @@ export function Extracts(): ReactElement {
 					)}
 				</Grid.Root>
 
-				{isLoading && queryParams.prefix && queryParams.version && <Loading />}
+				{isLoading && params.prefix && params.version && <Loading />}
 
-				{!queryParams.prefix && !queryParams.version && (
-					<Box marginTop="1rem">
+				{!params.prefix && !params.version && (
+					<Stack sx={{ padding: '0 0.5rem' }}>
 						<Typography variant="h6">
 							Informe prefixo e versão para buscar dados
 						</Typography>
-					</Box>
+					</Stack>
 				)}
 
 				{!isLoading && isSuccess && !(list_data.data.length > 0) && (
-					<Stack sx={{ padding: '0.5rem' }}>
+					<Stack sx={{ padding: '0 0.5rem' }}>
 						<Typography
 							variant="h6"
 							fontWeight="normal"
@@ -259,7 +251,7 @@ export function Extracts(): ReactElement {
 				)}
 
 				{isSuccess && list_data.data.length > 0 && (
-					<Stack>
+					<Stack sx={{ padding: '0 0.5rem' }}>
 						<List
 							data={list_data.data}
 							labels={labels}
@@ -274,7 +266,8 @@ export function Extracts(): ReactElement {
 								<Pagination
 									count={list_data.meta.last_page}
 									page={list_data.meta.current_page}
-									onChange={(_, page): void => handleQuery('page', page)}
+									// onChange={(_, page): void => handleQuery('page', page)}
+									onChange={(_, page): void => append('page', page)}
 									color="primary"
 								/>
 							</Stack>
