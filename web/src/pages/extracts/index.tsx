@@ -41,7 +41,7 @@ export function Extracts(): ReactElement {
 	const [search, setSearch] = useState<string>('');
 
 	const [queryParams, setQueryParams] = useState<LeiauteQuery>({
-		limit: 8,
+		limit: 15,
 		prefix: 'S1000',
 		version: 'S_1_0',
 	} as LeiauteQuery);

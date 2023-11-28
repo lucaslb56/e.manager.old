@@ -25,7 +25,7 @@ export function Leiautes(): ReactElement {
 	const [search, setSearch] = useState<string>('');
 
 	const [queryParams, setQueryParams] = useState<LeiauteQuery>({
-		limit: 8,
+		limit: 15,
 	} as LeiauteQuery);
 
 	const {
