@@ -11,6 +11,7 @@ import {
 import { MagnifyingGlass, Plus, X } from '@phosphor-icons/react';
 import type { ReactElement } from 'react';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { List } from './table/list';
 
@@ -21,6 +22,7 @@ import type { LeiauteQuery } from '~/models';
 const labels = ['Nome', 'Prefixo', 'Versão', 'Status'];
 
 export function Leiautes(): ReactElement {
+	const navigate = useNavigate();
 	const searchInputRef = useRef<HTMLInputElement>(null);
 
 	const { params, handleParams: append } = useParams<LeiauteQuery>({
@@ -123,6 +125,7 @@ export function Leiautes(): ReactElement {
 							size="medium"
 							variant="contained"
 							sx={{ gap: '0.5rem', height: '100%' }}
+							onClick={(): void => navigate('/leiautes/create')}
 						>
 							<Plus
 								size={18}
@@ -159,7 +162,7 @@ export function Leiautes(): ReactElement {
 								<Pagination
 									count={list_data.meta.last_page}
 									page={list_data.meta.current_page}
-									// onChange={(_, page): void => handleQuery('page', page)}
+									onChange={(_, page): void => append('page', page)}
 									color="primary"
 								/>
 							</Stack>

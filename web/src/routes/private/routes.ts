@@ -11,15 +11,19 @@ export const PrivateRoutes: Route[] = [
 		component: Page.Extracts,
 	},
 	{
+		path: 'leiautes/create',
+		component: Page.LeiauteView.Create,
+	},
+	{
 		path: 'leiautes/detail',
-		component: Page.LeiauteDetail,
+		component: Page.LeiauteView.Detail,
 	},
 	{
 		path: 'extracts/detail',
-		component: Page.ExtractDetail,
+		component: Page.ExtractView.Detail,
 	},
 	{
 		path: 'extracts/data',
-		component: Page.ExtractData,
+		component: Page.ExtractView.Extract,
 	},
 ];

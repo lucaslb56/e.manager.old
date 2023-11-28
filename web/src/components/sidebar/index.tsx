@@ -61,7 +61,7 @@ export function Sidebar(): ReactElement {
 						alignItems: 'center',
 						gap: '0.5rem',
 						justifyContent: 'center',
-						padding: '1rem 0',
+						padding: '1.5rem 0',
 					}}
 				>
 					<Small />
@@ -87,8 +87,8 @@ export function Sidebar(): ReactElement {
 							onClick={(): void => setOpen((state) => !state)}
 							sx={{
 								position: 'absolute',
-								right: -14,
-								top: -12,
+								right: -8,
+								top: -10,
 								transition: 'all 0.2s ease',
 								padding: '3px',
 								color: '#f4f4f4',
@@ -116,7 +116,8 @@ export function Sidebar(): ReactElement {
 						</IconButton>
 					)}
 
-					<Divider />
+					<Divider sx={{ border: '4px solid #b7beec77' }} />
+
 					{(!open || isMdDown) && (
 						<>
 							{PrivateMenus.map((menu) => (

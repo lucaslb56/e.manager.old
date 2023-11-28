@@ -4,6 +4,7 @@ export type MenuPath =
 	| 'signin'
 	| 'leiautes'
 	| 'leiautes/detail'
+	| 'leiautes/create'
 	| 'extracts'
 	| 'extracts/detail'
 	| 'extracts/data'

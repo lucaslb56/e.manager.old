@@ -14,8 +14,17 @@ const Container = styled(Stack)(({ theme }) => ({
 	padding: '1rem',
 	background: theme.palette.background.paper,
 	borderRadius: '16px',
-	minWidth: '18.75rem',
-	maxWidth: '90%',
+	minWidth: '12.5rem',
+	maxWidth: '31.25rem',
+	width: '90%',
+
+	...(theme.breakpoints.down('md') && {
+		width: '90%',
+	}),
+
+	// width: '100%',
+	// minWidth: '18.75rem',
+	// maxWidth: '90%',
 	zIndex: 9999,
 }));
 

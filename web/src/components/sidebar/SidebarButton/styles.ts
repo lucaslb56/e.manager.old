@@ -7,7 +7,7 @@ export const Button = styled(NavLink)({
 	// justifyContent: 'center',
 	gap: '1rem',
 	color: '#F4F4F4',
-	padding: '0.5rem 1rem',
+	padding: '1.5rem 1rem',
 	fontSize: '1.125rem',
 	textDecoration: 'none',
 	// borderRadius: '1rem',
@@ -15,7 +15,7 @@ export const Button = styled(NavLink)({
 	border: '1px solid transparent',
 
 	':hover': {
-		borderColor: '#4256D0',
+		backgroundColor: '#4256D055',
 		transition: 'all 0.2s ease',
 	},
 

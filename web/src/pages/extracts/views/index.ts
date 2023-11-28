@@ -1,7 +1,7 @@
-import { Create } from './create';
 import { Detail } from './detail';
+import { Extract } from './extract';
 
 export const View = {
-	Create,
 	Detail,
+	Extract,
 };

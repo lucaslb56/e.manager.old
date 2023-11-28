@@ -26,7 +26,7 @@ export function SidebarButton({
 		>
 			{Icon && (
 				<Icon
-					size={20}
+					size={24}
 					weight="fill"
 				/>
 			)}

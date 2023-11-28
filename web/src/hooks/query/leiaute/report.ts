@@ -5,16 +5,16 @@ import type { AxiosError } from 'axios';
 import { LeiauteService } from '~/api';
 import type { LeiauteQuery } from '~/models';
 
-async function mutator(params?: LeiauteQuery): Promise<void> {
+async function mutator(params: Partial<LeiauteQuery>): Promise<void> {
 	await LeiauteService.report(params);
 }
 
 export function useLeiauteReport(): UseMutationResult<
 	void,
 	Error | AxiosError,
-	LeiauteQuery | undefined
+	Partial<LeiauteQuery>
 > {
 	return useMutation({
-		mutationFn: (params?: LeiauteQuery) => mutator(params),
+		mutationFn: (params: Partial<LeiauteQuery>) => mutator(params),
 	});
 }

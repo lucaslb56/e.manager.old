@@ -2,8 +2,15 @@ import type { AxiosResponse } from 'axios';
 
 import { API } from '..';
 
-import type { Extract, Leiaute, LeiauteQuery } from '~/models/leiaute';
-import type { Paginate } from '~/models/paginate';
+import type {
+	ColumnData,
+	Extract,
+	ExtractData,
+	ExtractRequest,
+	Leiaute,
+	LeiauteQuery,
+	Paginate,
+} from '~/models';
 
 export async function list(
 	params?: LeiauteQuery,
@@ -24,7 +31,7 @@ export async function active(): Promise<AxiosResponse<Leiaute[]>> {
 }
 
 export async function columns(
-	params?: LeiauteQuery,
+	params: Partial<LeiauteQuery>,
 ): Promise<AxiosResponse<ColumnData>> {
 	return await API.get<ColumnData>('/leiaute/columns', {
 		params,
@@ -53,7 +60,7 @@ export async function toggleActive(id: string): Promise<AxiosResponse<void>> {
 }
 
 export async function report(
-	params?: LeiauteQuery,
+	params: Partial<LeiauteQuery>,
 ): Promise<AxiosResponse<void>> {
 	const response = await API.get('/leiaute/export', {
 		responseType: 'blob',
