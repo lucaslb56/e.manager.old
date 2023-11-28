@@ -1,2 +1,4 @@
-import { Extract } from './extract';
-export const Modal = { Extract };
+import { Filter } from './filter';
+import { Import } from './import';
+
+export const Modal = { Import, Filter };

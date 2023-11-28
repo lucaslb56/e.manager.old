@@ -76,6 +76,7 @@ export function Leiautes(): ReactElement {
 									return;
 								}
 							}}
+							sx={{ height: '100%' }}
 							InputProps={{
 								endAdornment: (
 									<InputAdornment
@@ -121,22 +122,16 @@ export function Leiautes(): ReactElement {
 							fullWidth
 							size="medium"
 							variant="contained"
-							endIcon={
-								<Plus
-									size={18}
-									weight="bold"
-								/>
-							}
-							// onClick={(): void => fileInput.current?.click()}
+							sx={{ gap: '0.5rem', height: '100%' }}
 						>
-							Novo
+							<Plus
+								size={18}
+								weight="bold"
+							/>
+							<Typography sx={{ display: { xs: 'none', md: 'block' } }}>
+								Novo
+							</Typography>
 						</Button>
-						{/* <input
-						ref={fileInput}
-						type="file"
-						accept="text/xml"
-						style={{ display: 'none' }}
-					/> */}
 					</Grid.Item>
 				</Grid.Root>
 

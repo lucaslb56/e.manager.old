@@ -3,42 +3,33 @@ import {
 	Button,
 	Container,
 	InputAdornment,
-	MenuItem,
 	Pagination,
 	Stack,
 	TextField,
 	Typography,
 } from '@mui/material';
-import { CaretDown, MagnifyingGlass, Upload, X } from '@phosphor-icons/react';
+import {
+	FunnelSimple,
+	MagnifyingGlass,
+	Upload,
+	X,
+} from '@phosphor-icons/react';
 import type { ReactElement } from 'react';
-import { Fragment, useRef } from 'react';
+import { useRef } from 'react';
 
 import { Modal } from './modal';
 import { List } from './table';
 
 import { Grid, Loading } from '~/components';
-import type { UseModal } from '~/hooks';
-import {
-	useExtractPaginate,
-	useLeiauteActiveList,
-	useModal,
-	useParams,
-} from '~/hooks';
-import type { LeiautePrefix, LeiauteVersion } from '~/models';
-import { LeiauteVersionList, type LeiauteQuery } from '~/models';
+import { useExtractPaginate, useModal, useParams } from '~/hooks';
+import { type LeiauteQuery } from '~/models';
 
 const labels = ['E-Social ID', 'Evento', 'Leiaute', 'Versão', 'Registros'];
 
 export function Extracts(): ReactElement {
 	const searchInputRef = useRef<HTMLInputElement>(null);
 
-	const modal = useModal() as UseModal<null>;
-
-	const {
-		data: active_list,
-		// isLoading: is_loading_active_list,
-		isSuccess: is_success_active_list,
-	} = useLeiauteActiveList();
+	const modal = useModal();
 
 	const { params, handleParams: append } = useParams<LeiauteQuery>({
 		limit: 15,
@@ -72,20 +63,14 @@ export function Extracts(): ReactElement {
 			</Stack>
 
 			<Box>
-				<Grid.Root
-					direction="row"
-					justifyContent="flex-end"
-				>
-					<Grid.Item
-						xl={8}
-						xs={8}
-						sm={6}
-					>
+				<Grid.Root>
+					<Grid.Item xs={8}>
 						<TextField
 							size="small"
 							fullWidth
 							placeholder="Pesquisar por Social ID ou Evento"
 							inputRef={searchInputRef}
+							sx={{ height: '100%' }}
 							onChange={(event): void => {
 								if (!event.target.value || !searchInputRef.current?.value) {
 									append('search', null);
@@ -134,23 +119,57 @@ export function Extracts(): ReactElement {
 						/>
 					</Grid.Item>
 
-					<Grid.Item
-						xl={2}
-						xs={2}
-						sm={3}
-					>
+					<Grid.Item xs={2}>
+						<Button
+							fullWidth
+							// size="medium"
+							variant="contained"
+							sx={{ gap: '0.5rem', height: '100%' }}
+							onClick={(): void => modal.open({ key: 'extract-filter' })}
+						>
+							<FunnelSimple
+								weight="bold"
+								size={20}
+							/>
+							<Typography
+								sx={{
+									display: {
+										xs: 'none',
+										lg: 'block',
+									},
+								}}
+							>
+								Filtros
+							</Typography>
+						</Button>
+					</Grid.Item>
+
+					<Grid.Item xs={2}>
 						<Button
 							fullWidth
 							size="medium"
 							variant="contained"
-							endIcon={<Upload weight="bold" />}
-							onClick={(): void => modal.open({ key: 'modal-import' })}
+							sx={{ gap: '0.5rem', height: '100%' }}
+							onClick={(): void => modal.open({ key: 'extract-import' })}
 						>
-							Enviar
+							<Upload
+								weight="bold"
+								size={20}
+							/>
+							<Typography
+								sx={{
+									display: {
+										xs: 'none',
+										md: 'block',
+									},
+								}}
+							>
+								Enviar
+							</Typography>
 						</Button>
 					</Grid.Item>
 
-					{is_success_active_list && active_list.length > 0 && (
+					{/* {is_success_active_list && active_list.length > 0 && (
 						<Fragment>
 							<Grid.Item
 								xl={2}
@@ -226,7 +245,7 @@ export function Extracts(): ReactElement {
 								</TextField>
 							</Grid.Item>
 						</Fragment>
-					)}
+					)} */}
 				</Grid.Root>
 
 				{isLoading && params.prefix && params.version && <Loading />}
@@ -276,8 +295,15 @@ export function Extracts(): ReactElement {
 				)}
 			</Box>
 
-			{modal.key === 'modal-import' && (
-				<Modal.Extract
+			{modal.key === 'extract-import' && (
+				<Modal.Import
+					open={modal.isOpen}
+					onClose={modal.close}
+				/>
+			)}
+
+			{modal.key === 'extract-filter' && (
+				<Modal.Filter
 					open={modal.isOpen}
 					onClose={modal.close}
 				/>
