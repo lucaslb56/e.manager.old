@@ -1,6 +1,5 @@
 import {
 	Box,
-	Divider,
 	IconButton,
 	Stack,
 	styled,
@@ -116,7 +115,7 @@ export function Sidebar(): ReactElement {
 						</IconButton>
 					)}
 
-					<Divider sx={{ border: '4px solid #b7beec77' }} />
+					{/* <Divider sx={{ border: '4px solid #b7beec77' }} /> */}
 
 					{(!open || isMdDown) && (
 						<>

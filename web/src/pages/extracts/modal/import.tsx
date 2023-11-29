@@ -88,6 +88,8 @@ export function Import(): ReactElement {
 		<Modal.Root
 			open={modal.isOpen && modal.key === 'extract-import'}
 			onClose={modal.close}
+			component="form"
+			onSubmit={handleSubmit(handleExtract)}
 		>
 			<Modal.Header
 				title="Extrair dados"
@@ -95,12 +97,10 @@ export function Import(): ReactElement {
 			/>
 			<Modal.Body>
 				<Box
-					component="form"
 					display="flex"
 					flexDirection="column"
 					gap={2}
 					sx={{ padding: '1rem 0' }}
-					onSubmit={handleSubmit(handleExtract)}
 				>
 					{isLoading && <Loading />}
 

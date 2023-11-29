@@ -4,8 +4,13 @@ import { CaretDown } from '@phosphor-icons/react';
 import { Fragment, type ReactElement } from 'react';
 
 import { Loading, Modal } from '~/components';
-import { useLeiauteActiveList, useModal, useParams } from '~/hooks';
-import type { LeiauteQuery } from '~/models';
+import {
+	useExtractFilter,
+	useLeiauteActiveList,
+	useModal,
+	useParams,
+} from '~/hooks';
+import type { LeiautePrefix, LeiauteQuery, LeiauteVersion } from '~/models';
 import { LeiauteVersionList } from '~/models';
 
 export function Filter(): ReactElement {
@@ -17,10 +22,10 @@ export function Filter(): ReactElement {
 		isLoading,
 	} = useLeiauteActiveList();
 
-	const { params, handleParams: append } = useParams<LeiauteQuery>({
-		limit: 15,
-		prefix: 'S1000',
-		version: 'S_1_0',
+	const { params: store, append } = useExtractFilter();
+
+	const { params, handleParams } = useParams<LeiauteQuery>({
+		...store,
 	});
 
 	return (
@@ -47,12 +52,16 @@ export function Filter(): ReactElement {
 							<TextField
 								label="Prefixo"
 								select
+								id="extract-prefix"
 								fullWidth
 								size="small"
-								defaultValue={params.prefix}
+								value={params.prefix}
 								SelectProps={{
 									IconComponent: CaretDown,
 								}}
+								onChange={(e): void =>
+									handleParams('prefix', e.target.value as LeiautePrefix)
+								}
 							>
 								{/* <MenuItem
 									value=""
@@ -73,12 +82,16 @@ export function Filter(): ReactElement {
 							<TextField
 								fullWidth
 								label="Versão"
-								defaultValue={params.version}
+								id="extract-version"
+								value={params.version}
 								size="small"
 								select
 								SelectProps={{
 									IconComponent: CaretDown,
 								}}
+								onChange={(e): void =>
+									handleParams('version', e.target.value as LeiauteVersion)
+								}
 							>
 								{/* <MenuItem
 									value=""
@@ -105,8 +118,7 @@ export function Filter(): ReactElement {
 				<Button
 					variant="contained"
 					onClick={(): void => {
-						append('prefix', params.prefix);
-						append('version', params.version);
+						append({ prefix: params.prefix, version: params.version });
 						modal.close();
 					}}
 				>
