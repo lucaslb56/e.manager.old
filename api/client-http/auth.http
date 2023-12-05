@@ -1,0 +1,24 @@
+
+@hostname=localhost
+@port=3333
+@host={{hostname}}:{{port}}
+@prefix=development
+
+###
+@token={{signin.response.body.type}} {{signin.response.body.token}}
+
+
+# @name signin
+POST http://{{host}}/{{prefix}}/auth/signin HTTP/1.1
+content-type: application/json
+
+{
+    "email": "admin@mail.com",
+    "password": "123123"
+}
+
+###
+
+# @name leiautes
+GET http://{{host}}/{{prefix}}/leiaute?limit=15
+Authorization: {{token}}
