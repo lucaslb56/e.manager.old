@@ -23,6 +23,7 @@ import Route from "@ioc:Adonis/Core/Route";
 import "./auth";
 import "./leiaute";
 import "./user";
+import "./version";
 
 Route.get("/", async () => {
   return { message: "welcome to e.manager API" };

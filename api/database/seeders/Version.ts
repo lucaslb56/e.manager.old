@@ -9,11 +9,11 @@ export default class extends BaseSeeder {
     await Version.createMany([
       {
         prefix: LeiauteVersion.S_1_0,
-        description: "Versão 1.0",
+        description: "Versão default adicionada 1.0",
       },
       {
         prefix: LeiauteVersion.S_1_1,
-        description: "Versão 1.1",
+        description: "Versão default adicionada 1.1",
       },
     ]);
   }

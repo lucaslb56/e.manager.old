@@ -3,11 +3,10 @@
 @port=3333
 @host={{hostname}}:{{port}}
 @prefix=development
-
-###
 @token={{signin.response.body.type}} {{signin.response.body.token}}
 
 
+###
 # @name signin
 POST http://{{host}}/{{prefix}}/auth/signin HTTP/1.1
 content-type: application/json
@@ -18,7 +17,17 @@ content-type: application/json
 }
 
 ###
-
-# @name leiautes
-GET http://{{host}}/{{prefix}}/leiaute?limit=15
+# @name list_version
+GET http://{{host}}/{{prefix}}/versions
 Authorization: {{token}}
+
+###
+# @name create_version
+POST  http://{{host}}/{{prefix}}/versions
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "prefix": "1.1.1",
+  "description": "Criando Versão"
+}

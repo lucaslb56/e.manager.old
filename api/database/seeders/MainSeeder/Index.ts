@@ -10,19 +10,19 @@ export default class extends BaseSeeder {
 
   public async run() {
     const users = await User.query();
-    const leiautes = await Leiaute.query();
     const versions = await Version.query();
+    const leiautes = await Leiaute.query();
 
     if (users.length === 0) {
       await this.runSeeder(await import("../User"));
     }
 
-    if (leiautes.length === 0) {
-      await this.runSeeder(await import("../Leiaute"));
-    }
-
     if (versions.length === 0) {
       await this.runSeeder(await import("../Version"));
+    }
+
+    if (leiautes.length === 0) {
+      await this.runSeeder(await import("../Leiaute"));
     }
 
     // await this.runSeeder(await import("../LeiauteBuilder"));
