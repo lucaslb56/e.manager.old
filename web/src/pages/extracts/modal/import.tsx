@@ -10,13 +10,14 @@ import { toast } from 'react-toastify';
 import { z } from 'zod';
 
 import { Loading, Modal } from '~/components';
-import { useExtractLeiaute, useLeiauteActiveList, useModal } from '~/hooks';
-import type { ExtractData } from '~/models';
 import {
-	LeiautePrefixEnum,
-	LeiauteVersionEnum,
-	LeiauteVersionList,
-} from '~/models';
+	useExtractLeiaute,
+	useLeiauteActiveList,
+	useModal,
+	useVersionList,
+} from '~/hooks';
+import type { ExtractData } from '~/models';
+import { LeiautePrefixEnum, LeiauteVersionEnum } from '~/models';
 
 const Schema = z.object({
 	prefix: z.nativeEnum(LeiautePrefixEnum, {
@@ -51,6 +52,9 @@ export function Import(): ReactElement {
 		mode: 'all',
 		resolver: zodResolver(Schema),
 	});
+
+	const { data: version_list, isSuccess: versionListIsSuccess } =
+		useVersionList();
 
 	const prefix = watch('prefix');
 	const version = watch('version');
@@ -158,15 +162,15 @@ export function Import(): ReactElement {
 										Selecione versão
 									</MenuItem>
 
-									{LeiauteVersionList.map((item) => (
-										<MenuItem
-											value={item.value}
-											key={item.id}
-											disabled={item.value === 'S_1_1'}
-										>
-											{item.label}
-										</MenuItem>
-									))}
+									{versionListIsSuccess &&
+										version_list.map((item) => (
+											<MenuItem
+												value={item.prefix}
+												key={item.id}
+											>
+												{item.prefix.replace(/S_/g, '').replace(/_/g, '.')}
+											</MenuItem>
+										))}
 								</TextField>
 							</Fragment>
 						)}

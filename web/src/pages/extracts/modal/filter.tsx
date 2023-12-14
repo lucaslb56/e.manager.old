@@ -9,9 +9,9 @@ import {
 	useLeiauteActiveList,
 	useModal,
 	useParams,
+	useVersionList,
 } from '~/hooks';
 import type { LeiautePrefix, LeiauteQuery, LeiauteVersion } from '~/models';
-import { LeiauteVersionList } from '~/models';
 
 export function Filter(): ReactElement {
 	const modal = useModal();
@@ -27,6 +27,9 @@ export function Filter(): ReactElement {
 	const { params, handleParams } = useParams<LeiauteQuery>({
 		...store,
 	});
+
+	const { data: version_list, isSuccess: versionListIsSuccess } =
+		useVersionList();
 
 	return (
 		<Modal.Root
@@ -63,12 +66,6 @@ export function Filter(): ReactElement {
 									handleParams('prefix', e.target.value as LeiautePrefix)
 								}
 							>
-								{/* <MenuItem
-									value=""
-									disabled
-								>
-									Selecione prefixo
-								</MenuItem> */}
 								{leiaute_active_list.map((item) => (
 									<MenuItem
 										key={item.id}
@@ -93,22 +90,15 @@ export function Filter(): ReactElement {
 									handleParams('version', e.target.value as LeiauteVersion)
 								}
 							>
-								{/* <MenuItem
-									value=""
-									disabled
-								>
-									Selecione versão
-								</MenuItem> */}
-
-								{LeiauteVersionList.map((item) => (
-									<MenuItem
-										value={item.value}
-										key={item.id}
-										disabled={item.value === 'S_1_1'}
-									>
-										{item.label}
-									</MenuItem>
-								))}
+								{versionListIsSuccess &&
+									version_list.map((item) => (
+										<MenuItem
+											value={item.prefix}
+											key={item.id}
+										>
+											{item.prefix.replace(/S_/g, '').replace(/_/g, '.')}
+										</MenuItem>
+									))}
 							</TextField>
 						</Fragment>
 					)}

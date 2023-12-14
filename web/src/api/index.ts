@@ -8,3 +8,4 @@ export const API: AxiosInstance = axios.create({
 export * as AuthService from './endpoints/auth';
 export * as LeiauteService from './endpoints/leiaute';
 export * as UserService from './endpoints/user';
+export * as VersionService from './endpoints/version';
