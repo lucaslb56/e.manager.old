@@ -4,6 +4,7 @@ import { LeiautePrefix, LeiauteVersion } from "App/Utils/constants";
 import { Base } from "./Base";
 import { Meta } from "./Meta";
 import { Query } from "./Query";
+import { Version } from "./Version";
 
 export interface LeiauteType {
   name: string;
@@ -17,11 +18,12 @@ export interface LeiauteExtractType {
 export interface Leiaute extends Base {
   name: string;
   prefix: string;
-  version: string;
+  version_id: string;
+  version: Version;
   active: boolean;
 }
 
-export type Create = Pick<Leiaute, "name" | "prefix" | "version">;
+export type Create = Pick<Leiaute, "name" | "prefix">;
 
 export type List = {
   meta: Meta;

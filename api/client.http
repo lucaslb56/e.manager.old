@@ -31,3 +31,8 @@ Content-Type: application/json
   "prefix": "1.1.1",
   "description": "Criando Versão"
 }
+
+###
+# @name list_leiaute
+GET http://{{host}}/{{prefix}}/leiaute
+Authorization: {{token}}

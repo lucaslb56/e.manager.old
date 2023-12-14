@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { CaretDown, CaretLeft, Download } from '@phosphor-icons/react';
 import type { ReactElement } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { Loading } from '~/components';
@@ -22,25 +22,28 @@ import {
 	useLeiauteReport,
 	useToggleActiveLeiaute,
 } from '~/hooks';
-import type { Leiaute, LeiautePrefix, LeiauteVersion } from '~/models';
+import { useGetLeiaute } from '~/hooks/query/leiaute/get-leiaute';
+import type { LeiautePrefix, LeiauteVersion } from '~/models';
 import { ColumnNormalize, LeiauteStatusList } from '~/models';
-
-interface UseLocation {
-	state: {
-		leiaute: Leiaute;
-	};
-}
 
 export enum LeiauteKeyMap {
 	name = 'Nome',
-	version = 'Versão em vigor',
+	// version = 'Versão em vigor',
 	prefix = 'Prefixo E-social',
 }
 
 export function Detail(): ReactElement {
-	const {
-		state: { leiaute },
-	} = useLocation() as UseLocation;
+	const { id } = useParams<{ id?: string }>();
+
+	const { data: leiaute, isSuccess: useGetLeiauteIsSuccess } = useGetLeiaute({
+		params: { id },
+		onSuccess(data) {
+			console.log(data);
+		},
+		onError(error) {
+			console.log(error);
+		},
+	});
 
 	const navigate = useNavigate();
 
@@ -49,24 +52,20 @@ export function Detail(): ReactElement {
 		isSuccess,
 		isLoading,
 	} = useColumnList({
-		prefix: leiaute.prefix as LeiautePrefix,
-		version: leiaute.version as LeiauteVersion,
+		prefix: leiaute?.prefix as LeiautePrefix,
+		version: leiaute?.version.prefix as LeiauteVersion,
 	});
 
 	const { mutateAsync: report } = useLeiauteReport();
 
-	function onError(): void {
-		toast.error('Houve um erro ao tentar atualizar status.');
-	}
-
-	function onSuccess(): void {
-		queryClient.invalidateQueries([KEYS['LEIAUTE-PAGINATE-LIST']]);
-		toast.success('Status atualizado com sucesso.');
-	}
-
 	const { mutateAsync: toggleStatus } = useToggleActiveLeiaute({
-		onError,
-		onSuccess,
+		onError(error) {
+			toast.error('Houve um erro ao tentar atualizar status.');
+		},
+		onSuccess() {
+			queryClient.invalidateQueries([KEYS['LEIAUTE-PAGINATE-LIST']]);
+			toast.success('Status atualizado com sucesso.');
+		},
 	});
 
 	return (
@@ -102,49 +101,51 @@ export function Detail(): ReactElement {
 					<Typography variant="h4">Detalhes de leiaute</Typography>
 				</Stack>
 
-				<Stack
-					direction="row"
-					alignItems="center"
-					gap={2}
-				>
-					<Button
-						disabled={!leiaute.active}
-						size="medium"
-						endIcon={<Download weight="bold" />}
-						variant="contained"
-						onClick={(): Promise<void> =>
-							report({
-								prefix: leiaute.prefix as LeiautePrefix,
-								version: leiaute.version as LeiauteVersion,
-								export_type: 'csv',
-							})
-						}
+				{useGetLeiauteIsSuccess && leiaute && (
+					<Stack
+						direction="row"
+						alignItems="center"
+						gap={2}
 					>
-						Baixar extrações
-					</Button>
+						<Button
+							disabled={!leiaute.active}
+							size="medium"
+							endIcon={<Download weight="bold" />}
+							variant="contained"
+							onClick={(): Promise<void> =>
+								report({
+									prefix: leiaute.prefix as LeiautePrefix,
+									version: leiaute.version.prefix as LeiauteVersion,
+									export_type: 'csv',
+								})
+							}
+						>
+							Baixar extrações
+						</Button>
 
-					<TextField
-						value={leiaute.active ? 'active' : 'inactive'}
-						onChange={(): void => {
-							toggleStatus(leiaute.id);
-							navigate(-1);
-						}}
-						size="small"
-						select
-						SelectProps={{
-							IconComponent: CaretDown,
-						}}
-					>
-						{LeiauteStatusList.map((status) => (
-							<MenuItem
-								value={status.value}
-								key={status.id}
-							>
-								{status.label}
-							</MenuItem>
-						))}
-					</TextField>
-				</Stack>
+						<TextField
+							value={leiaute.active ? 'active' : 'inactive'}
+							onChange={(): void => {
+								toggleStatus(leiaute.id);
+								navigate(-1);
+							}}
+							size="small"
+							select
+							SelectProps={{
+								IconComponent: CaretDown,
+							}}
+						>
+							{LeiauteStatusList.map((status) => (
+								<MenuItem
+									value={status.value}
+									key={status.id}
+								>
+									{status.label}
+								</MenuItem>
+							))}
+						</TextField>
+					</Stack>
+				)}
 			</Box>
 
 			<Grid
@@ -152,33 +153,57 @@ export function Detail(): ReactElement {
 				container
 				spacing={2}
 			>
-				{Object.entries(leiaute)
-					.filter(([key]) => key in LeiauteKeyMap)
-					.map(([key, value]) => (
-						<Grid
-							item
-							key={key}
-							xl={4}
-							xs={6}
-						>
-							<Stack
-								padding={1}
-								gap={1}
-								color="#F4F4f4"
-								style={{ background: '#5C73DB99', borderRadius: '8px' }}
-								height={'100%'}
+				{useGetLeiauteIsSuccess &&
+					leiaute &&
+					Object.entries(leiaute)
+						.filter(([key]) => key in LeiauteKeyMap)
+						.map(([key, value]) => (
+							<Grid
+								item
+								key={key}
+								xl={4}
+								xs={6}
 							>
-								<Typography
-									variant="body1"
-									fontWeight="bold"
+								<Stack
+									padding={1}
+									gap={1}
 									color="#F4F4f4"
+									style={{ background: '#5C73DB99', borderRadius: '8px' }}
+									height={'100%'}
 								>
-									{LeiauteKeyMap[key as keyof typeof LeiauteKeyMap]}
-								</Typography>
-								{value}
-							</Stack>
-						</Grid>
-					))}
+									<Typography
+										variant="body1"
+										fontWeight="bold"
+										color="#F4F4f4"
+									>
+										{LeiauteKeyMap[key as keyof typeof LeiauteKeyMap]}
+									</Typography>
+									{value}
+								</Stack>
+							</Grid>
+						))}
+				<Grid
+					item
+					xl={4}
+					xs={6}
+				>
+					<Stack
+						padding={1}
+						gap={1}
+						color="#F4F4f4"
+						style={{ background: '#5C73DB99', borderRadius: '8px' }}
+						height={'100%'}
+					>
+						<Typography
+							variant="body1"
+							fontWeight="bold"
+							color="#F4F4f4"
+						>
+							Versão em vigor
+						</Typography>
+						{leiaute?.version.prefix}
+					</Stack>
+				</Grid>
 			</Grid>
 
 			<Stack

@@ -24,7 +24,7 @@ export function Private(): ReactElement {
 
 				{PrivateRoutes.map((route) => (
 					<Route
-						path={route.path}
+						path={`/${route.path}`}
 						element={<route.component />}
 						key={route.path}
 					/>

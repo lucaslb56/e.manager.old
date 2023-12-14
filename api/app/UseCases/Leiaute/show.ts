@@ -5,7 +5,8 @@ export class ShowUseCase {
   constructor(private leiauteRepository: LeiauteRepository) {}
 
   async execute(id: string): Promise<Leiaute> {
-    const leiaute = await this.leiauteRepository.findBy("id", id);
+    // const leiaute = await this.leiauteRepository.findBy("id", id);
+    const leiaute = await this.leiauteRepository.findBy({ id });
 
     if (!leiaute) throw new Error("Leiaute not found");
 

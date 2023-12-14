@@ -9,15 +9,18 @@ export class BuildUseCase {
     data,
     query,
   }: Build): Promise<{ [key: string]: number | string }[]> {
-    const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
+    // const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
+    const leiaute = await this.leiauteRepository.findBy({
+      prefix: query.prefix,
+    });
 
-    if (!leiaute || leiaute.version !== query.version)
+    if (!leiaute || leiaute.version.prefix !== query.version)
       throw new Error("Leiaute not found");
 
     const exist_e_social_id_list =
       await this.leiauteRepository.getExistsESocialId({
         prefix: leiaute.prefix as keyof typeof LeiautePrefix,
-        version: leiaute.version,
+        version: leiaute.version.prefix,
       });
 
     const filtered_data = data?.filter(

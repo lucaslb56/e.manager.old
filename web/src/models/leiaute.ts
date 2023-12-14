@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 import type { Base } from './base';
 import type { Query } from './query';
+import { Version } from './version';
 
 export interface Leiaute extends Base {
 	name: string;
 	prefix: string;
-	version: string;
+	// version: string;
+	version: Version;
 	active: boolean;
 }
 
@@ -38,6 +40,7 @@ export interface Extract extends Base {
 }
 
 export interface LeiauteQuery extends Query {
+	id?: string;
 	prefix: LeiautePrefix;
 	version: LeiauteVersion;
 	e_social_id?: string;

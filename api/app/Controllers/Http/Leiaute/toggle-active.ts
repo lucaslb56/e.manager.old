@@ -9,8 +9,6 @@ export async function toggleActive({
   try {
     const { id } = request.params();
 
-    console.log({ id });
-
     const toggleActiveUseCase = ToggleActiveFactory();
 
     await toggleActiveUseCase.execute(id);

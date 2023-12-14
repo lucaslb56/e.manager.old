@@ -21,8 +21,7 @@ import { Modal } from './modal';
 import { List } from './table';
 
 import { Grid, Loading } from '~/components';
-import { useExtractPaginate, useModal, useParams } from '~/hooks';
-import { type LeiauteQuery } from '~/models';
+import { useExtractFilter, useExtractPaginate, useModal } from '~/hooks';
 
 const labels = ['E-Social ID', 'Evento', 'Leiaute', 'Versão', 'Registros'];
 
@@ -31,11 +30,15 @@ export function Extracts(): ReactElement {
 
 	const modal = useModal();
 
-	const { params, handleParams: append } = useParams<LeiauteQuery>({
-		limit: 15,
-		prefix: 'S1000',
-		version: 'S_1_0',
-	});
+	const { params, append } = useExtractFilter();
+
+	// const { params, handleParams: append } = useParams<LeiauteQuery>({
+	// 	limit: 15,
+	// 	prefix: 'S1000',
+	// 	version: 'S_1_0',
+	// });
+
+	console.log({ params });
 
 	const {
 		data: list_data,
@@ -73,13 +76,13 @@ export function Extracts(): ReactElement {
 							sx={{ height: '100%' }}
 							onChange={(event): void => {
 								if (!event.target.value || !searchInputRef.current?.value) {
-									append('search', null);
+									append({ search: null });
 									return;
 								}
 							}}
 							onKeyDown={(event): void => {
 								if (event.key === 'Enter' && searchInputRef.current?.value) {
-									append('search', searchInputRef.current?.value);
+									append({ search: searchInputRef.current?.value });
 									return;
 								}
 							}}
@@ -97,7 +100,7 @@ export function Extracts(): ReactElement {
 													if (searchInputRef.current?.value) {
 														searchInputRef.current.value = '';
 													}
-													append('search', null);
+													append({ search: null });
 												}}
 											/>
 										)}
@@ -109,7 +112,7 @@ export function Extracts(): ReactElement {
 												onClick={(): void => {
 													if (!searchInputRef?.current?.value) return;
 
-													append('search', searchInputRef?.current?.value);
+													append({ search: searchInputRef?.current?.value });
 												}}
 											/>
 										)}
@@ -297,15 +300,15 @@ export function Extracts(): ReactElement {
 
 			{modal.key === 'extract-import' && (
 				<Modal.Import
-					open={modal.isOpen}
-					onClose={modal.close}
+				// open={modal.isOpen}
+				// onClose={modal.close}
 				/>
 			)}
 
 			{modal.key === 'extract-filter' && (
 				<Modal.Filter
-					open={modal.isOpen}
-					onClose={modal.close}
+				// open={modal.isOpen}
+				// onClose={modal.close}
 				/>
 			)}
 		</Container>

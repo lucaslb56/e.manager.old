@@ -10,9 +10,9 @@ export class ExtractUseCase {
     prefix,
     version,
   }: LeiauteExtract): Promise<ListLeiauteData[]> {
-    const leiaute = await this.leiauteRepository.findBy("prefix", prefix);
+    const leiaute = await this.leiauteRepository.findBy({ prefix });
 
-    if (!leiaute || leiaute.version !== version)
+    if (!leiaute || leiaute.version.prefix !== version)
       throw new Error("Leiaute not found");
 
     const extracts = await this.leiauteRepository.extract({

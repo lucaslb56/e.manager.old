@@ -17,9 +17,14 @@ export async function list(
 ): Promise<AxiosResponse<Paginate<Leiaute>>> {
 	return await API.get<Paginate<Leiaute>>('/leiaute', { params });
 }
+export async function get(
+	params?: Partial<LeiauteQuery>,
+): Promise<AxiosResponse<Leiaute>> {
+	return await API.get<Leiaute>(`/leiaute/${params?.id}`);
+}
 
 export async function extractList(
-	params?: LeiauteQuery,
+	params?: Partial<LeiauteQuery>,
 ): Promise<AxiosResponse<Paginate<Extract>>> {
 	return await API.get<Paginate<Extract>>('/leiaute/extract-list', {
 		params,

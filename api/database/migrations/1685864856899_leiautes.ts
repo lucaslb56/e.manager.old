@@ -18,10 +18,10 @@ export default class extends BaseSchema {
         .inTable("versions")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
-        /**
-         * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-         */
-        .table.timestamp("created_at", { useTz: true });
+      /**
+       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
+       */
+      table.timestamp("created_at", { useTz: true });
       table.timestamp("updated_at", { useTz: true });
     });
   }

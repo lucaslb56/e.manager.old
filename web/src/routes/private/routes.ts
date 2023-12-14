@@ -15,7 +15,7 @@ export const PrivateRoutes: Route[] = [
 		component: Page.LeiauteView.Create,
 	},
 	{
-		path: 'leiautes/detail',
+		path: 'leiautes/:id',
 		component: Page.LeiauteView.Detail,
 	},
 	{

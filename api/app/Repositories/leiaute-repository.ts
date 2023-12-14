@@ -11,10 +11,7 @@ import {
 import { Query } from "App/Dtos/Query";
 
 export interface LeiauteRepository {
-  findBy: <T extends keyof Leiaute>(
-    key: T,
-    value: Leiaute[T]
-  ) => Promise<Leiaute | null>;
+  findBy: (data: Partial<Leiaute>) => Promise<Leiaute | null>;
   list: (query: Query) => Promise<List>;
   extracts: (query: LeiauteQuery) => Promise<ExtractList>;
   activeList: (query: Query) => Promise<Leiaute[]>;

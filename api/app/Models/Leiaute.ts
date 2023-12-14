@@ -1,4 +1,4 @@
-import { HasOne, column, hasOne } from "@ioc:Adonis/Lucid/Orm";
+import { BelongsTo, belongsTo, column } from "@ioc:Adonis/Lucid/Orm";
 import { Base } from "./Base";
 import Version from "./Version";
 
@@ -12,10 +12,10 @@ export default class Leiaute extends Base {
   @column()
   public version_id: string;
 
-  @hasOne(() => Version, {
+  @belongsTo(() => Version, {
     foreignKey: "version_id",
   })
-  public version: HasOne<typeof Version>;
+  public version: BelongsTo<typeof Version>;
 
   @column()
   public active: boolean;

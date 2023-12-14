@@ -1,6 +1,5 @@
-import { BelongsTo, belongsTo, column } from "@ioc:Adonis/Lucid/Orm";
+import { column } from "@ioc:Adonis/Lucid/Orm";
 import { Base } from "./Base";
-import Leiaute from "./Leiaute";
 
 export default class Version extends Base {
   @column()
@@ -9,6 +8,6 @@ export default class Version extends Base {
   @column()
   public description: string;
 
-  @belongsTo(() => Leiaute, { foreignKey: "version_id" })
-  public leiaute: BelongsTo<typeof Leiaute>;
+  // @belongsTo(() => Leiaute, { foreignKey: "version_id" })
+  // public leiaute: BelongsTo<typeof Leiaute>;
 }

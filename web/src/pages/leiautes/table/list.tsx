@@ -35,15 +35,13 @@ export function List({ data, labels }: ListProps): ReactElement {
 					{data.map((item) => (
 						<Table.Row
 							key={item.id}
-							onClick={(): void =>
-								navigate('/leiautes/detail', { state: { leiaute: item } })
-							}
+							onClick={(): void => navigate(`/leiautes/${item.id}`)}
 						>
 							<Table.Column component="td">{item.name || '-'}</Table.Column>
 							<Table.Column component="td">{item.prefix || '-'}</Table.Column>
 							<Table.Column component="td">
 								{LeiauteVersionNormalize[
-									item.version as keyof typeof LeiauteVersionNormalize
+									item.version.prefix as keyof typeof LeiauteVersionNormalize
 								] || '-'}
 							</Table.Column>
 

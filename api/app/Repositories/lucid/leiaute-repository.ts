@@ -20,13 +20,22 @@ import { DateTime } from "luxon";
 import { LeiauteRepository } from "../leiaute-repository";
 
 export class LucidLeiauteRepository implements LeiauteRepository {
-  public async findBy<T extends keyof Leiaute>(
-    key: T,
-    value: Leiaute[T]
+  public async findBy(
+    data: Partial<Omit<Leiaute, "version">>
   ): Promise<Leiaute | null> {
-    const Leiaute = await Model.findBy(key, value);
+    const entries = Object.entries(data);
+    const values = entries.map(([_, value]) => value);
+    const keys = entries.map(([key, _]) => key);
+    const query = keys.map((key) => `${key} = ?`).join(" AND ");
 
-    return (Leiaute?.toJSON() as Leiaute) ?? null;
+    const leiaute = await Model.query()
+      .whereRaw(query, values)
+      .preload("version")
+      .first();
+
+    if (!leiaute) return null;
+
+    return leiaute?.toJSON() as Leiaute;
   }
 
   public async list(query: Query): Promise<List> {
@@ -37,6 +46,7 @@ export class LucidLeiauteRepository implements LeiauteRepository {
             .where("name", "ilike", `%${query.search}%`)
             .orWhere("prefix", "ilike", `%${query.search}%`)
         )
+        .preload("version")
         .orderBy("prefix", query.order)
         .paginate(Number(query.page), Number(query.limit))
     ).toJSON() as List;
@@ -55,30 +65,34 @@ export class LucidLeiauteRepository implements LeiauteRepository {
   }
 
   public async extracts(query: LeiauteQuery): Promise<ExtractList> {
-    return (
-      await Database.query()
-        .from(`${query.prefix}_${query.version}`)
-        .select([
-          "e_social_id",
-          "event_type",
-          "leiaute_id",
-          "leiautes.prefix as prefix",
-          "leiautes.version as version",
-        ])
-        .if(query?.search, (builder) =>
-          builder
-            .where("e_social_id", "ilike", `%${query.search}%`)
-            .orWhere("event_type", "ilike", `%${query.search}%`)
+    console.log(`${query.prefix}_${query.version}`);
+    const data = await Database.query()
+      .from(`${query.prefix}_${query.version}`)
+      .select([
+        "e_social_id",
+        "event_type",
+        "leiaute_id",
+        "leiautes.prefix as prefix",
+        "versions.prefix as version",
+        // "leiautes.version as version",
+      ])
+      .if(query?.search, (builder) =>
+        builder
+          .where("e_social_id", "ilike", `%${query.search}%`)
+          .orWhere("event_type", "ilike", `%${query.search}%`)
+      )
+      .distinct(["e_social_id"])
+      .select(
+        Database.raw(
+          `COUNT(e_social_id) OVER(PARTITION BY e_social_id)::int as count`
         )
-        .distinct(["e_social_id"])
-        .select(
-          Database.raw(
-            `COUNT(e_social_id) OVER(PARTITION BY e_social_id)::int as count`
-          )
-        )
-        .innerJoin("leiautes", "leiaute_id", "leiautes.id")
-        .paginate(Number(query.page), Number(query.limit))
-    ).toJSON() as ExtractList;
+      )
+      .innerJoin("leiautes", "leiaute_id", "leiautes.id")
+      .innerJoin("versions", "leiautes.version_id", "versions.id")
+      .paginate(Number(query.page), Number(query.limit));
+
+    console.log(data.toJSON());
+    return data.toJSON() as ExtractList;
   }
 
   public async findManyByESocialId(

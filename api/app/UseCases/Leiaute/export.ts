@@ -10,9 +10,12 @@ export class ExportUseCase {
   async execute(
     query: LeiauteQuery
   ): Promise<{ path: string; filename: string }> {
-    const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
+    // const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
+    const leiaute = await this.leiauteRepository.findBy({
+      prefix: query.prefix,
+    });
 
-    if (!leiaute || leiaute.version !== query.version)
+    if (!leiaute || leiaute.version.prefix !== query.version)
       throw new Error("Leiaute not found");
 
     const final_dir = Application.resourcesPath("/templates");
