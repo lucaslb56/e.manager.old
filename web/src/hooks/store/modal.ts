@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { create } from 'zustand';
 
-type Key = 'extract-import' | 'extract-filter' | 'leiaute-create';
+type Key =
+	| 'extract-import'
+	| 'extract-filter'
+	| 'leiaute-create'
+	| 'create-version';
 
 interface UseModal {
 	isOpen: boolean;

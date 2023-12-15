@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { Box, Button, MenuItem, TextField } from '@mui/material';
-import { CaretDown } from '@phosphor-icons/react';
+import { Autocomplete, Box, Button, TextField } from '@mui/material';
+import { CaretDown, X } from '@phosphor-icons/react';
+import type { ReactNode } from 'react';
 import { Fragment, type ReactElement } from 'react';
 
 import { Loading, Modal } from '~/components';
@@ -52,54 +53,52 @@ export function Filter(): ReactElement {
 
 					{!isLoading && isSuccess && leiaute_active_list.length > 0 && (
 						<Fragment>
-							<TextField
-								label="Prefixo"
-								select
-								id="extract-prefix"
-								fullWidth
-								size="small"
+							<Autocomplete
+								disablePortal
 								value={params.prefix}
-								SelectProps={{
-									IconComponent: CaretDown,
-								}}
-								onChange={(e): void =>
-									handleParams('prefix', e.target.value as LeiautePrefix)
+								options={
+									leiaute_active_list?.map((leiaute) => leiaute.prefix) || []
 								}
-							>
-								{leiaute_active_list.map((item) => (
-									<MenuItem
-										key={item.id}
-										value={item.prefix}
-									>
-										{item.prefix}
-									</MenuItem>
-								))}
-							</TextField>
+								onChange={(_, value): void =>
+									handleParams('prefix', value as LeiautePrefix)
+								}
+								noOptionsText="Nenhum prefixo encontrado"
+								popupIcon={<CaretDown size={14} />}
+								clearIcon={<X size={14} />}
+								renderInput={(p): ReactNode => (
+									<TextField
+										{...p}
+										fullWidth
+										id="extract-prefix"
+										label="Prefixo"
+										size="small"
+									/>
+								)}
+							/>
 
-							<TextField
-								fullWidth
-								label="Versão"
-								id="extract-version"
+							<Autocomplete
+								disablePortal
 								value={params.version}
-								size="small"
-								select
-								SelectProps={{
-									IconComponent: CaretDown,
-								}}
-								onChange={(e): void =>
-									handleParams('version', e.target.value as LeiauteVersion)
+								options={version_list?.map((version) => version.prefix) || []}
+								onChange={(_, value): void =>
+									handleParams('version', value as LeiauteVersion)
 								}
-							>
-								{versionListIsSuccess &&
-									version_list.map((item) => (
-										<MenuItem
-											value={item.prefix}
-											key={item.id}
-										>
-											{item.prefix.replace(/S_/g, '').replace(/_/g, '.')}
-										</MenuItem>
-									))}
-							</TextField>
+								getOptionLabel={(option): string =>
+									option?.replace(/S_/g, '')?.replace(/_/g, '.') || ''
+								}
+								noOptionsText="Nenhuma versão encontrada"
+								popupIcon={<CaretDown size={14} />}
+								clearIcon={<X size={14} />}
+								renderInput={(p): ReactNode => (
+									<TextField
+										{...p}
+										fullWidth
+										id="extract-version"
+										label="Versão"
+										size="small"
+									/>
+								)}
+							/>
 						</Fragment>
 					)}
 				</Box>

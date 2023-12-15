@@ -18,7 +18,6 @@ import { toast } from 'react-toastify';
 
 import { PrivateMenus } from './menus';
 import { SidebarButton } from './SidebarButton';
-// import { Container, Header, Navbar } from './styles';
 
 import { Small } from '~/components';
 import { useAuth } from '~/hooks/store';
@@ -38,10 +37,10 @@ export function Sidebar(): ReactElement {
 
 	const SidebarMenu = styled(Box)(({ theme }) => ({
 		display: 'flex',
-		// gap: '1rem',
 		flexDirection: 'column',
 		width: open && !isMdDown ? 180 : 60,
 		backgroundColor: '#5C73DB',
+		minHeight: '100vh',
 		// position: 'relative',
 		...(open && {
 			transition: theme.transitions.create('all', {

@@ -18,8 +18,8 @@ interface UseAuthType {
 	check: () => { isLogged: boolean };
 }
 
-export const useAuth = create(
-	persist<UseAuthType>(
+export const useAuth = create<UseAuthType>()(
+	persist(
 		(set, get) => ({
 			authentication: null,
 			login: (data: Partial<Authenticated>): void => {

@@ -11,7 +11,7 @@ export default class extends BaseSchema {
         .defaultTo(this.db.knexRawQuery("gen_random_uuid()"));
 
       table.string("prefix").notNullable();
-      table.string("description").notNullable();
+      table.string("description").nullable();
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

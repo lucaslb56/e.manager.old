@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+	Autocomplete,
 	Box,
 	Button,
 	Container,
@@ -8,13 +9,17 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import { CaretLeft, Plus } from '@phosphor-icons/react';
-import type { ReactElement } from 'react';
+import { CaretDown, CaretLeft, Plus, X } from '@phosphor-icons/react';
+import type { ReactElement, ReactNode } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
+import { Modal } from '../modal';
+
 import { Grid } from '~/components';
+import { useModal, useVersionList } from '~/hooks';
+import { LeiauteVersionEnum } from '~/models';
 
 const TaSchema = z.object({
 	name: z.string().min(1, { message: 'Informe item.' }),
@@ -31,12 +36,14 @@ type LeiauteType = z.infer<typeof LeiauteSchema>;
 
 export function Create(): ReactElement {
 	const navigate = useNavigate();
+	const modal = useModal();
 
 	const {
 		register,
 		control,
 		formState: { errors },
 		handleSubmit,
+		setValue,
 	} = useForm<LeiauteType>({
 		mode: 'onSubmit',
 		resolver: zodResolver(LeiauteSchema),
@@ -57,6 +64,9 @@ export function Create(): ReactElement {
 	function handleCreate(data: LeiauteType): void {
 		console.log(data);
 	}
+
+	const { data: version_list, isSuccess: versionListIsSuccess } =
+		useVersionList();
 
 	return (
 		<Container
@@ -110,15 +120,52 @@ export function Create(): ReactElement {
 								{...register('prefix')}
 							/>
 						</Grid.Item>
-						<Grid.Item xs={4}>
-							<TextField
-								size="small"
-								fullWidth
-								placeholder="Versão"
-								error={!!errors.version}
-								{...register('version')}
-							/>
-						</Grid.Item>
+						{versionListIsSuccess && (
+							<Grid.Item xs={4}>
+								<Autocomplete
+									disablePortal
+									options={version_list?.map((version) => version.prefix) || []}
+									getOptionLabel={(option): string =>
+										option?.replace(/S_/g, '')?.replace(/_/g, '.') || ''
+									}
+									noOptionsText="Nenhuma versão encontrada"
+									popupIcon={<CaretDown size={14} />}
+									clearIcon={<X size={14} />}
+									onChange={(_, value): void => {
+										setValue(
+											'version',
+											LeiauteVersionEnum[
+												value as keyof typeof LeiauteVersionEnum
+											],
+										);
+									}}
+									renderInput={(p): ReactNode => (
+										<TextField
+											{...p}
+											fullWidth
+											id="extract-version"
+											label="Versão"
+											size="small"
+										/>
+									)}
+								/>
+								<Typography
+									component="a"
+									align="right"
+									variant="body2"
+									sx={{
+										cursor: 'pointer',
+										display: 'flex',
+										justifyContent: 'flex-end',
+										paddingY: '0.25rem',
+										textDecoration: 'underline',
+									}}
+									onClick={(): void => modal.open({ key: 'create-version' })}
+								>
+									Nova versão
+								</Typography>
+							</Grid.Item>
+						)}
 					</Grid.Root>
 
 					<Stack
@@ -169,6 +216,7 @@ export function Create(): ReactElement {
 					</Stack>
 				</Stack>
 			</Box>
+			{modal.key === 'create-version' && <Modal.CreateVersion />}
 		</Container>
 	);
 }

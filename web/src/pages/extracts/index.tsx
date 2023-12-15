@@ -38,8 +38,6 @@ export function Extracts(): ReactElement {
 	// 	version: 'S_1_0',
 	// });
 
-	console.log({ params });
-
 	const {
 		data: list_data,
 		isLoading,

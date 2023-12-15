@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, MenuItem, TextField } from '@mui/material';
-import { CaretDown, Download, Upload } from '@phosphor-icons/react';
+import { Autocomplete, Box, Button, TextField } from '@mui/material';
+import { CaretDown, Download, Upload, X } from '@phosphor-icons/react';
 import type { AxiosError } from 'axios';
+import type { ReactNode } from 'react';
 import { Fragment, useRef, type ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +50,7 @@ export function Import(): ReactElement {
 		watch,
 		setValue,
 	} = useForm<FormType>({
-		mode: 'all',
+		mode: 'onSubmit',
 		resolver: zodResolver(Schema),
 	});
 
@@ -115,63 +116,53 @@ export function Import(): ReactElement {
 						isSuccess &&
 						leiaute_active_list.length > 0 && (
 							<Fragment>
-								<TextField
-									label="Prefixo"
-									select
-									fullWidth
-									size="small"
-									defaultValue={''}
-									SelectProps={{
-										IconComponent: CaretDown,
-									}}
-									error={!!errors.prefix?.message}
-									{...register('prefix')}
-								>
-									<MenuItem
-										value=""
-										disabled
-									>
-										Selecione prefixo
-									</MenuItem>
-									{leiaute_active_list.map((item) => (
-										<MenuItem
-											key={item.id}
-											value={item.prefix}
-										>
-											{item.prefix}
-										</MenuItem>
-									))}
-								</TextField>
+								<Autocomplete
+									disablePortal
+									options={
+										leiaute_active_list?.map((leiaute) => leiaute.prefix) || []
+									}
+									noOptionsText="Nenhum prefixo encontrado"
+									popupIcon={<CaretDown size={14} />}
+									clearIcon={<X size={14} />}
+									renderInput={(p): ReactNode => (
+										<TextField
+											{...p}
+											fullWidth
+											id="extract-prefix"
+											label="Prefixo"
+											size="small"
+											{...register('prefix')}
+										/>
+									)}
+								/>
 
-								<TextField
-									fullWidth
-									label="Versão"
-									defaultValue={''}
-									size="small"
-									select
-									SelectProps={{
-										IconComponent: CaretDown,
+								<Autocomplete
+									disablePortal
+									options={version_list?.map((version) => version.prefix) || []}
+									getOptionLabel={(option): string =>
+										option?.replace(/S_/g, '')?.replace(/_/g, '.') || ''
+									}
+									noOptionsText="Nenhuma versão encontrada"
+									popupIcon={<CaretDown size={14} />}
+									clearIcon={<X size={14} />}
+									onChange={(_, value): void => {
+										setValue(
+											'version',
+											LeiauteVersionEnum[
+												value as keyof typeof LeiauteVersionEnum
+											],
+										);
 									}}
-									error={!!errors.version?.message}
-									{...register('version')}
-								>
-									<MenuItem
-										value=""
-										disabled
-									>
-										Selecione versão
-									</MenuItem>
-
-									{versionListIsSuccess &&
-										version_list.map((item) => (
-											<MenuItem
-												value={item.prefix}
-												key={item.id}
-											>
-												{item.prefix.replace(/S_/g, '').replace(/_/g, '.')}
-											</MenuItem>
-										))}
-								</TextField>
+									renderInput={(p): ReactNode => (
+										<TextField
+											{...p}
+											fullWidth
+											id="extract-version"
+											label="Versão"
+											size="small"
+										/>
+									)}
+								/>
 							</Fragment>
 						)}
 				</Box>

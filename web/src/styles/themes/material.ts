@@ -114,5 +114,16 @@ export const MaterialTheme: Theme = createTheme({
 		},
 
 		MuiDrawer: MuiDrawer,
+
+		MuiAutocomplete: {
+			styleOverrides: {
+				clearIndicator: ({ theme }) => ({
+					color: theme.palette.primary.main,
+				}),
+				popupIndicator: ({ theme }) => ({
+					color: theme.palette.primary.main,
+				}),
+			},
+		},
 	},
 });

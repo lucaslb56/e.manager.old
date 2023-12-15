@@ -6,7 +6,7 @@ export class CreateVersionValidator {
 
   public schema = schema.create({
     prefix: schema.string(),
-    description: schema.string(),
+    description: schema.string.optional(),
   });
 
   public messages: CustomMessages = {};

@@ -2,16 +2,7 @@ import type { Components, Theme } from '@mui/material';
 
 export const MuiDrawer: Components<Omit<Theme, 'components'>>['MuiDrawer'] = {
 	styleOverrides: {
-		// root: ({ theme, ownerState }) => ({
-		// 	backgroundColor: theme.palette.primary.main,
-		// 	width: 80,
-		// 	...(ownerState.open && {}),
-		// 	...(!ownerState.open && {
-		// 		display: 'flex',
-		// 	}),
-		// }),
-
-		paper: ({ theme, ownerState }) => ({
+		paper: ({ theme }) => ({
 			backgroundColor: theme.palette.primary.main,
 			...(theme.breakpoints.down('md') && {
 				width: 150,
@@ -22,12 +13,6 @@ export const MuiDrawer: Components<Omit<Theme, 'components'>>['MuiDrawer'] = {
 					duration: theme.transitions.duration.enteringScreen,
 				}),
 			}),
-			// ...(!ownerState.open && {
-			// 	transition: theme.transitions.create('padding', {
-			// 		easing: theme.transitions.easing.sharp,
-			// 		duration: theme.transitions.duration.leavingScreen,
-			// 	}),
-			// }),
 		}),
 	},
 };
