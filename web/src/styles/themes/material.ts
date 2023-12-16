@@ -1,6 +1,8 @@
 import type { Theme } from '@mui/material';
 import {
+	buttonBaseClasses,
 	createTheme,
+	inputClasses,
 	tableBodyClasses,
 	tableCellClasses,
 	tableRowClasses,
@@ -122,6 +124,20 @@ export const MaterialTheme: Theme = createTheme({
 				}),
 				popupIndicator: ({ theme }) => ({
 					color: theme.palette.primary.main,
+				}),
+				endAdornment: ({ theme }) => ({
+					top: 'calc(50% - 12px)',
+
+					[`& .${buttonBaseClasses.root}`]: {
+						color: theme.palette.primary.main,
+					},
+				}),
+				inputRoot: ({ theme }) => ({
+					[`&.${inputClasses.error}`]: {
+						[`& .${buttonBaseClasses.root}`]: {
+							color: theme.palette.error.main,
+						},
+					},
 				}),
 			},
 		},

@@ -9,22 +9,38 @@ interface InputProps {
 	name: string;
 }
 
-export const PrefixInputMask = forwardRef<
+export const VersionPrefixInputMask = forwardRef<
 	HTMLInputElement,
 	Omit<InputBaseComponentProps, 'onChange'> & InputProps
 >(({ ...props }, ref) => {
-	const { onChange, ...rest } = props;
+	const { onChange, name, ...rest } = props;
 	return (
 		<IMaskInput
 			{...rest}
 			mask="0.0"
 			inputRef={ref as RefCallback<HTMLTextAreaElement | HTMLInputElement>}
-			onAccept={(value): void =>
-				onChange({ target: { name: props.name, value: value as string } })
-			}
+			onAccept={(value): void => onChange({ target: { name, value } })}
 			overwrite
 		/>
 	);
 });
 
-PrefixInputMask.displayName = 'PrefixInputMask';
+VersionPrefixInputMask.displayName = 'VersionPrefixInputMask';
+
+export const LeiautePrefixInputMask = forwardRef<
+	HTMLInputElement,
+	Omit<InputBaseComponentProps, 'onChange'> & InputProps
+>(({ ...props }, ref) => {
+	const { onChange, name, ...rest } = props;
+	return (
+		<IMaskInput
+			{...rest}
+			mask="S0000"
+			inputRef={ref as RefCallback<HTMLTextAreaElement | HTMLInputElement>}
+			onAccept={(value): void => onChange({ target: { name, value } })}
+			overwrite
+		/>
+	);
+});
+
+LeiautePrefixInputMask.displayName = 'LeiautePrefixInputMask';

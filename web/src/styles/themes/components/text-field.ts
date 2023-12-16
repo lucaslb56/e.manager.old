@@ -17,6 +17,7 @@ export const MuiTextField: TextFieldProps = {
 
 				[`& .${inputAdornmentClasses.root}`]: {
 					color: theme.palette.error.main,
+					border: '1px solid red',
 				},
 			},
 

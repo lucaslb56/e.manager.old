@@ -16,7 +16,7 @@ import { z } from 'zod';
 import { Modal } from '~/components';
 import { KEYS, queryClient, useModal } from '~/hooks';
 import { useCreateVersion } from '~/hooks/query/version/create';
-import { PrefixInputMask } from '~/utils/mask-input';
+import { VersionPrefixInputMask } from '~/utils/mask-input';
 
 const RegexVersion = new RegExp(/^\d+\.\d+$/);
 
@@ -40,25 +40,21 @@ export function CreateVersion(): ReactElement {
 		resolver: zodResolver(Schema),
 	});
 
-	const {
-		data: version,
-		isSuccess: isSuccessCreateVersion,
-		isLoading: isLoadingCreateVersion,
-		mutateAsync: createVersion,
-	} = useCreateVersion({
-		onError(error) {
-			if (error instanceof AxiosError) {
-				setError('prefix', {
-					message: 'Prefixo já existe',
-				});
-				return;
-			}
-		},
-		onSuccess(data) {
-			queryClient.invalidateQueries([KEYS['VERSION-LIST']]);
-			modal.close();
-		},
-	});
+	const { isLoading: isLoadingCreateVersion, mutateAsync: createVersion } =
+		useCreateVersion({
+			onError(error) {
+				if (error instanceof AxiosError) {
+					setError('prefix', {
+						message: 'Prefixo já existe',
+					});
+					return;
+				}
+			},
+			onSuccess(data) {
+				queryClient.invalidateQueries([KEYS['VERSION-LIST']]);
+				modal.close();
+			},
+		});
 
 	function createVersionHandler(data: FormType): void {
 		createVersion(data);
@@ -93,7 +89,7 @@ export function CreateVersion(): ReactElement {
 							error={!!errors.prefix}
 							aria-describedby="prefix-helper-text"
 							InputProps={{
-								inputComponent: PrefixInputMask,
+								inputComponent: VersionPrefixInputMask,
 							}}
 							{...register('prefix')}
 						/>

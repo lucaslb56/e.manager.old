@@ -5,13 +5,22 @@ import {
 	Box,
 	Button,
 	Container,
+	FormControl,
+	FormHelperText,
+	IconButton,
 	Stack,
 	TextField,
 	Typography,
 } from '@mui/material';
-import { CaretDown, CaretLeft, Plus, X } from '@phosphor-icons/react';
-import type { ReactElement, ReactNode } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import {
+	CaretDown,
+	CaretLeft,
+	PencilSimpleLine,
+	Plus,
+	X,
+} from '@phosphor-icons/react';
+import { Children, cloneElement, type ReactElement } from 'react';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
@@ -19,16 +28,25 @@ import { Modal } from '../modal';
 
 import { Grid } from '~/components';
 import { useModal, useVersionList } from '~/hooks';
-import { LeiauteVersionEnum } from '~/models';
+import { LeiautePrefixInputMask } from '~/utils/mask-input';
 
 const TaSchema = z.object({
 	name: z.string().min(1, { message: 'Informe item.' }),
 });
 
+const RegexLeiautePrefix = new RegExp(/^S\d{4}$/);
+const RegexLeiauteVersion = new RegExp(/^S_\d_\d$/);
+
 const LeiauteSchema = z.object({
 	name: z.string().min(1, { message: 'Informe nome do leiaute.' }),
-	prefix: z.string().min(1, { message: 'Informe prefixo do leiaute.' }),
-	version: z.string().min(1, { message: 'Informe versão do leiaute.' }),
+	prefix: z
+		.string()
+		.regex(RegexLeiautePrefix, 'Por favor, informe um prefixo válido'),
+	version: z
+		.string({
+			errorMap: () => ({ message: 'Por favor, informe versão.' }),
+		})
+		.regex(RegexLeiauteVersion, 'Por favor, informe uma versão válida.'),
 	tags: z.array(TaSchema),
 });
 
@@ -43,11 +61,12 @@ export function Create(): ReactElement {
 		control,
 		formState: { errors },
 		handleSubmit,
-		setValue,
 	} = useForm<LeiauteType>({
 		mode: 'onSubmit',
 		resolver: zodResolver(LeiauteSchema),
 		defaultValues: {
+			version: 'S_1_0',
+			prefix: 'S1234',
 			tags: [
 				{
 					name: 'Tag/Column 1',
@@ -67,6 +86,27 @@ export function Create(): ReactElement {
 
 	const { data: version_list, isSuccess: versionListIsSuccess } =
 		useVersionList();
+
+	function addEditIconToEndAdornment(endAdornment: ReactElement): ReactElement {
+		const items = Children.toArray(endAdornment?.props?.children);
+
+		items.push(
+			<IconButton
+				size="medium"
+				onClick={(): void => modal.open({ key: 'create-version' })}
+				key="edit-icon"
+				sx={{
+					padding: '2px',
+				}}
+			>
+				<PencilSimpleLine size={14} />
+			</IconButton>,
+		);
+
+		const [clear, popup, edit] = items;
+
+		return cloneElement(endAdornment as ReactElement, {}, [clear, edit, popup]);
+	}
 
 	return (
 		<Container
@@ -112,58 +152,88 @@ export function Create(): ReactElement {
 							/>
 						</Grid.Item>
 						<Grid.Item xs={4}>
-							<TextField
-								size="small"
-								fullWidth
-								placeholder="Prefixo"
-								error={!!errors.prefix}
-								{...register('prefix')}
-							/>
+							<FormControl fullWidth>
+								<TextField
+									label="Prefixo"
+									placeholder="S0000"
+									size="small"
+									fullWidth
+									error={!!errors.prefix}
+									aria-describedby="prefix-helper-text"
+									InputProps={{
+										inputComponent: LeiautePrefixInputMask,
+									}}
+									{...register('prefix')}
+								/>
+								<FormHelperText
+									id="prefix-helper-text"
+									variant="standard"
+									error={!!errors.prefix}
+									sx={{
+										textAlign: 'right',
+									}}
+								>
+									{errors.prefix?.message ?? ' '}
+								</FormHelperText>
+							</FormControl>
 						</Grid.Item>
 						{versionListIsSuccess && (
 							<Grid.Item xs={4}>
-								<Autocomplete
-									disablePortal
-									options={version_list?.map((version) => version.prefix) || []}
-									getOptionLabel={(option): string =>
-										option?.replace(/S_/g, '')?.replace(/_/g, '.') || ''
-									}
-									noOptionsText="Nenhuma versão encontrada"
-									popupIcon={<CaretDown size={14} />}
-									clearIcon={<X size={14} />}
-									onChange={(_, value): void => {
-										setValue(
-											'version',
-											LeiauteVersionEnum[
-												value as keyof typeof LeiauteVersionEnum
-											],
-										);
-									}}
-									renderInput={(p): ReactNode => (
-										<TextField
-											{...p}
-											fullWidth
-											id="extract-version"
-											label="Versão"
-											size="small"
-										/>
-									)}
-								/>
-								<Typography
-									component="a"
-									align="right"
-									variant="body2"
-									sx={{
-										cursor: 'pointer',
-										display: 'flex',
-										justifyContent: 'flex-end',
-										paddingY: '0.25rem',
-										textDecoration: 'underline',
-									}}
-									onClick={(): void => modal.open({ key: 'create-version' })}
-								>
-									Nova versão
-								</Typography>
+								<Box flexDirection="row">
+									<Controller
+										name="version"
+										control={control}
+										render={({ field: { onChange, value } }): ReactElement => (
+											<FormControl fullWidth>
+												<Autocomplete
+													disablePortal
+													options={
+														version_list?.map((version) => version.prefix) || []
+													}
+													getOptionLabel={(option): string =>
+														option?.replace(/S_/g, '')?.replace(/_/g, '.') || ''
+													}
+													noOptionsText="Nenhuma versão encontrada"
+													popupIcon={<CaretDown size={14} />}
+													clearIcon={<X size={14} />}
+													value={value ?? ''}
+													onChange={(_, v): void => onChange(v ?? '')}
+													size="small"
+													id="extract-version"
+													aria-describedby="version-helper-text"
+													// isOptionEqualToValue={(option, value): boolean => {
+													// 	console.log({ option, value });
+													// 	return option !== '' && value === '';
+													// }}
+													renderInput={(params): ReactElement => (
+														<TextField
+															{...params}
+															label="Versão"
+															placeholder="0.0"
+															error={!!errors.version}
+															InputProps={{
+																...params.InputProps,
+																endAdornment: addEditIconToEndAdornment(
+																	params.InputProps.endAdornment,
+																),
+															}}
+														/>
+													)}
+												/>
+												<FormHelperText
+													id="version-helper-text"
+													variant="standard"
+													error={!!errors.version}
+													sx={{
+														textAlign: 'right',
+													}}
+												>
+													{errors.version?.message ?? ' '}
+												</FormHelperText>
+											</FormControl>
+										)}
+									/>
+								</Box>
 							</Grid.Item>
 						)}
 					</Grid.Root>
@@ -206,12 +276,19 @@ export function Create(): ReactElement {
 						direction="row"
 						justifyContent="flex-end"
 						padding={1}
+						gap={1}
 					>
+						<Button
+							variant="outlined"
+							disabled
+						>
+							Montar a partir de XML (em breve)
+						</Button>
 						<Button
 							variant="contained"
 							type="submit"
 						>
-							Criar
+							Gerar
 						</Button>
 					</Stack>
 				</Stack>
