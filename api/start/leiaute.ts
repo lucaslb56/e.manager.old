@@ -14,6 +14,7 @@ Route.group(() => {
   Route.patch("leiaute/:id/toggle-active", Leiaute.toggleActive);
   Route.post("leiaute/build", Leiaute.build);
   Route.post("leiaute/extract", Leiaute.extract);
+  Route.post("leiaute", Leiaute.create);
 })
   .prefix(Env.get("PREFIX"))
   .middleware("auth");

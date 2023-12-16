@@ -9,7 +9,6 @@ export class BuildUseCase {
     data,
     query,
   }: Build): Promise<{ [key: string]: number | string }[]> {
-    // const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
     const leiaute = await this.leiauteRepository.findBy({
       prefix: query.prefix,
     });

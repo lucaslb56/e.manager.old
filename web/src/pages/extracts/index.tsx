@@ -287,7 +287,7 @@ export function Extracts(): ReactElement {
 									count={list_data.meta.last_page}
 									page={list_data.meta.current_page}
 									// onChange={(_, page): void => handleQuery('page', page)}
-									onChange={(_, page): void => append('page', page)}
+									onChange={(_, page): void => append({ page })}
 									color="primary"
 								/>
 							</Stack>

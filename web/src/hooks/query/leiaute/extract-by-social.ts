@@ -7,7 +7,7 @@ import { KEYS } from '../keys';
 import { LeiauteService } from '~/api';
 import type { ExtractData, LeiauteQuery } from '~/models';
 
-async function fetcher(params?: LeiauteQuery): Promise<ExtractData> {
+async function fetcher(params?: Partial<LeiauteQuery>): Promise<ExtractData> {
 	const { data } = await LeiauteService.extracts(params);
 
 	return data;
@@ -15,7 +15,9 @@ async function fetcher(params?: LeiauteQuery): Promise<ExtractData> {
 
 type UseExtractBySocial = UseQueryResult<ExtractData, Error | AxiosError>;
 
-export function useExtractBySocial(params?: LeiauteQuery): UseExtractBySocial {
+export function useExtractBySocial(
+	params?: Partial<LeiauteQuery>,
+): UseExtractBySocial {
 	return useQuery({
 		queryKey: [KEYS['EXTRACT-BY-SOCIAL'], params],
 		queryFn: () => fetcher(params),

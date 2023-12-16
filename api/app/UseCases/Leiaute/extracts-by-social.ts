@@ -9,7 +9,6 @@ export class ExtractBySocialUseCase {
     version,
     e_social_id,
   }: LeiauteQuery): Promise<ListLeiauteData[]> {
-    // const leiaute = await this.leiauteRepository.findBy("prefix", prefix);
     const leiaute = await this.leiauteRepository.findBy({
       prefix,
     });

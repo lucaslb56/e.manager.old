@@ -23,7 +23,7 @@ export interface Leiaute extends Base {
   active: boolean;
 }
 
-export type Create = Pick<Leiaute, "name" | "prefix">;
+export type CreateLeiaute = Pick<Leiaute, "name" | "prefix">;
 
 export type List = {
   meta: Meta;

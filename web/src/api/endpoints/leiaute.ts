@@ -12,6 +12,12 @@ import type {
 	Paginate,
 } from '~/models';
 
+export async function create(
+	data: Partial<Leiaute> & { version: string },
+): Promise<AxiosResponse<Leiaute>> {
+	return await API.post<Leiaute>('/leiaute', data);
+}
+
 export async function list(
 	params?: LeiauteQuery,
 ): Promise<AxiosResponse<Paginate<Leiaute>>> {
@@ -93,7 +99,7 @@ export async function report(
 }
 
 export async function extracts(
-	params?: LeiauteQuery,
+	params?: Partial<LeiauteQuery>,
 ): Promise<AxiosResponse<ExtractData>> {
 	return await API.get<ExtractData>(
 		`/leiaute/extracts/${params?.e_social_id}`,

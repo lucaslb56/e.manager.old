@@ -22,4 +22,10 @@ export interface LeiauteRepository {
   getExistsESocialId: (query: LeiauteQuery) => Promise<string[]>;
   extract: (data: LeiauteExtract) => Promise<ListLeiauteData[]>;
   findManyByESocialId(query: LeiauteQuery): Promise<ListLeiauteData[]>;
+  create: (
+    data: Omit<
+      Leiaute,
+      "version" | "created_at" | "updated_at" | "id" | "active"
+    >
+  ) => Promise<Leiaute>;
 }

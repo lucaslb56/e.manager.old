@@ -141,5 +141,13 @@ export const MaterialTheme: Theme = createTheme({
 				}),
 			},
 		},
+
+		MuiIconButton: {
+			styleOverrides: {
+				root: ({ theme }) => ({
+					color: theme.palette.primary.main,
+				}),
+			},
+		},
 	},
 });

@@ -8,7 +8,7 @@ import { UserService } from '~/api';
 import type { User } from '~/models';
 
 async function fetch(): Promise<User[]> {
-	const { data } = await UserService.list();
+	const { data } = await UserService._list();
 	return data;
 }
 

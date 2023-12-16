@@ -7,19 +7,14 @@ import {
 	Container,
 	FormControl,
 	FormHelperText,
-	IconButton,
+	MenuItem,
 	Stack,
 	TextField,
 	Typography,
+	useTheme,
 } from '@mui/material';
-import {
-	CaretDown,
-	CaretLeft,
-	PencilSimpleLine,
-	Plus,
-	X,
-} from '@phosphor-icons/react';
-import { Children, cloneElement, type ReactElement } from 'react';
+import { CaretDown, CaretLeft, Plus, X } from '@phosphor-icons/react';
+import { Fragment, type ReactElement } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
@@ -28,10 +23,18 @@ import { Modal } from '../modal';
 
 import { Grid } from '~/components';
 import { useModal, useVersionList } from '~/hooks';
+import { useCreateLeiaute } from '~/hooks/query/leiaute/create';
+import { addEditIconToAutoCompleteEndAdornment } from '~/utils/change-components';
 import { LeiautePrefixInputMask } from '~/utils/mask-input';
 
-const TaSchema = z.object({
+const NodeChildSchema = z.object({
 	name: z.string().min(1, { message: 'Informe item.' }),
+	type: z.enum(['string', 'number']),
+});
+
+const NodeSchema = z.object({
+	name: z.string().min(1, { message: 'Informe item.' }),
+	children: z.array(NodeChildSchema),
 });
 
 const RegexLeiautePrefix = new RegExp(/^S\d{4}$/);
@@ -47,15 +50,24 @@ const LeiauteSchema = z.object({
 			errorMap: () => ({ message: 'Por favor, informe versão.' }),
 		})
 		.regex(RegexLeiauteVersion, 'Por favor, informe uma versão válida.'),
-	tags: z.array(TaSchema),
+	nodes: z.array(NodeSchema),
 });
 
 type LeiauteType = z.infer<typeof LeiauteSchema>;
 
+const children_types: Pick<z.infer<typeof NodeChildSchema>, 'type'>[] = [
+	{
+		type: 'number',
+	},
+	{
+		type: 'string',
+	},
+];
+
 export function Create(): ReactElement {
 	const navigate = useNavigate();
 	const modal = useModal();
-
+	const theme = useTheme();
 	const {
 		register,
 		control,
@@ -67,46 +79,37 @@ export function Create(): ReactElement {
 		defaultValues: {
 			version: 'S_1_0',
 			prefix: 'S1234',
-			tags: [
+			nodes: [
 				{
-					name: 'Tag/Column 1',
-				},
-				{
-					name: 'Tag/Column 2',
+					name: '',
+					children: [
+						{
+							name: 'Child 1',
+							type: 'number',
+						},
+					],
 				},
 			],
 		},
 	});
 
-	const { fields, append } = useFieldArray({ control, name: 'tags' });
+	const { fields, append } = useFieldArray({ control, name: 'nodes' });
+
+	const { mutateAsync: createLeiaute } = useCreateLeiaute({
+		onSuccess(data) {
+			console.log(data);
+		},
+		onError(error) {
+			console.log(error);
+		},
+	});
 
 	function handleCreate(data: LeiauteType): void {
-		console.log(data);
+		createLeiaute(data);
 	}
 
 	const { data: version_list, isSuccess: versionListIsSuccess } =
 		useVersionList();
-
-	function addEditIconToEndAdornment(endAdornment: ReactElement): ReactElement {
-		const items = Children.toArray(endAdornment?.props?.children);
-
-		items.push(
-			<IconButton
-				size="medium"
-				onClick={(): void => modal.open({ key: 'create-version' })}
-				key="edit-icon"
-				sx={{
-					padding: '2px',
-				}}
-			>
-				<PencilSimpleLine size={14} />
-			</IconButton>,
-		);
-
-		const [clear, popup, edit] = items;
-
-		return cloneElement(endAdornment as ReactElement, {}, [clear, edit, popup]);
-	}
 
 	return (
 		<Container
@@ -115,19 +118,20 @@ export function Create(): ReactElement {
 				paddingTop: '5rem',
 				paddingBottom: '2rem',
 				height: '100vh',
-				overflowY: 'auto',
+				overflowY: 'hidden',
 			}}
 		>
-			<Box>
+			<Box sx={{ overflowY: 'hidden' }}>
 				<Stack
 					direction="row"
 					alignItems="center"
 					gap={2}
-					style={{
-						cursor: 'pointer',
-					}}
 					component="div"
 					onClick={(): void => navigate(-1)}
+					sx={{
+						cursor: 'pointer',
+						width: 'max-content',
+					}}
 				>
 					<CaretLeft
 						size={36}
@@ -140,6 +144,7 @@ export function Create(): ReactElement {
 					component="form"
 					onSubmit={handleSubmit(handleCreate)}
 					padding={2}
+					sx={{ overflowY: 'auto', maxHeight: '100vh' }}
 				>
 					<Grid.Root>
 						<Grid.Item xs={4}>
@@ -213,9 +218,11 @@ export function Create(): ReactElement {
 															error={!!errors.version}
 															InputProps={{
 																...params.InputProps,
-																endAdornment: addEditIconToEndAdornment(
-																	params.InputProps.endAdornment,
-																),
+																endAdornment:
+																	addEditIconToAutoCompleteEndAdornment(
+																		params.InputProps
+																			.endAdornment as ReactElement,
+																	),
 															}}
 														/>
 													)}
@@ -239,38 +246,88 @@ export function Create(): ReactElement {
 					</Grid.Root>
 
 					<Stack
-						paddingLeft={1}
-						paddingRight={1}
 						justifyContent="space-between"
 						alignItems="center"
 						direction="row"
+						sx={{
+							padding: '0.5rem 0',
+						}}
 					>
-						<Typography fontWeight="bold">Colunas/Tags</Typography>
+						<Typography fontWeight="bold">Árvore XML E-Social</Typography>
 						<Button
-							variant="outlined"
 							size="small"
-							onClick={(): void => append({ name: '' })}
+							onClick={(): void =>
+								append({
+									name: '',
+									children: [
+										{
+											name: '',
+											type: 'number',
+										},
+									],
+								})
+							}
+							startIcon={<Plus size={20} />}
 						>
-							<Plus size={20} />
+							Adicionar nó
 						</Button>
 					</Stack>
-					<Grid.Root>
+
+					<Stack gap={2}>
 						{fields.map((field, index) => (
-							<Grid.Item
-								xs={12}
+							<Grid.Root
 								key={field.id}
+								sx={{
+									border: '1px solid #b5b4b7',
+									borderRadius: '8px',
+									padding: '0.5rem',
+								}}
 							>
-								<TextField
-									size="small"
-									fullWidth
-									placeholder="Tag/Coluna"
-									defaultValue={field.name}
-									error={!!errors?.tags?.[index]?.name?.message}
-									{...register(`tags.${index}.name` as const)}
-								/>
-							</Grid.Item>
+								<Grid.Item xs={12}>
+									<TextField
+										size="small"
+										fullWidth
+										placeholder="Nó principal"
+										defaultValue={field.name}
+										error={!!errors?.nodes?.[index]?.name?.message}
+										{...register(`nodes.${index}.name` as const)}
+									/>
+								</Grid.Item>
+								{field?.children?.length > 0 &&
+									field?.children.map((child, index) => (
+										<Fragment key={index}>
+											<Grid.Item xs={6}>
+												<TextField
+													size="small"
+													fullWidth
+													placeholder="Nó interno"
+												/>
+											</Grid.Item>
+											<Grid.Item xs={6}>
+												<TextField
+													size="small"
+													fullWidth
+													placeholder="Tipo filho"
+													select
+													SelectProps={{
+														IconComponent: CaretDown,
+													}}
+												>
+													{children_types.map((child) => (
+														<MenuItem
+															key={child.type}
+															value={child.type}
+														>
+															{child.type === 'number' ? 'Numérico' : 'Texto'}
+														</MenuItem>
+													))}
+												</TextField>
+											</Grid.Item>
+										</Fragment>
+									))}
+							</Grid.Root>
 						))}
-					</Grid.Root>
+					</Stack>
 
 					<Stack
 						direction="row"

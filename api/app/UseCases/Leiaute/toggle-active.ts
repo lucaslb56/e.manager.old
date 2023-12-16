@@ -4,7 +4,6 @@ export class ToggleActiveUseCase {
   constructor(private leiauteRepository: LeiauteRepository) {}
 
   async execute(id: string): Promise<void> {
-    // const leiaute = await this.leiauteRepository.findBy("id", id);
     const leiaute = await this.leiauteRepository.findBy({ id });
 
     if (!leiaute) throw new Error("Leiaute not found");

@@ -6,7 +6,6 @@ import { Version } from './version';
 export interface Leiaute extends Base {
 	name: string;
 	prefix: string;
-	// version: string;
 	version: Version;
 	active: boolean;
 }

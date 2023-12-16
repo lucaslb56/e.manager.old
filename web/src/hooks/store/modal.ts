@@ -14,7 +14,7 @@ interface UseModal {
 	close: () => void;
 }
 
-export const useModal = create<UseModal>((set) => ({
+export const useModal = create<UseModal>()((set) => ({
 	isOpen: false,
 	key: null,
 	open: ({ key }: { key: Key }): void =>

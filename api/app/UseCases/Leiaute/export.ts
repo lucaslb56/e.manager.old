@@ -10,7 +10,6 @@ export class ExportUseCase {
   async execute(
     query: LeiauteQuery
   ): Promise<{ path: string; filename: string }> {
-    // const leiaute = await this.leiauteRepository.findBy("prefix", query.prefix);
     const leiaute = await this.leiauteRepository.findBy({
       prefix: query.prefix,
     });

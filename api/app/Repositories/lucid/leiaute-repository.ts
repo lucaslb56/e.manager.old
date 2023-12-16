@@ -20,6 +20,17 @@ import { DateTime } from "luxon";
 import { LeiauteRepository } from "../leiaute-repository";
 
 export class LucidLeiauteRepository implements LeiauteRepository {
+  public async create(
+    data: Omit<
+      Leiaute,
+      "version" | "created_at" | "updated_at" | "id" | "active"
+    >
+  ): Promise<Leiaute> {
+    const leiaute = await Model.create(data);
+
+    return leiaute?.toJSON() as Leiaute;
+  }
+
   public async findBy(
     data: Partial<Omit<Leiaute, "version">>
   ): Promise<Leiaute | null> {
@@ -65,7 +76,6 @@ export class LucidLeiauteRepository implements LeiauteRepository {
   }
 
   public async extracts(query: LeiauteQuery): Promise<ExtractList> {
-    console.log(`${query.prefix}_${query.version}`);
     const data = await Database.query()
       .from(`${query.prefix}_${query.version}`)
       .select([
@@ -74,7 +84,6 @@ export class LucidLeiauteRepository implements LeiauteRepository {
         "leiaute_id",
         "leiautes.prefix as prefix",
         "versions.prefix as version",
-        // "leiautes.version as version",
       ])
       .if(query?.search, (builder) =>
         builder
@@ -91,7 +100,6 @@ export class LucidLeiauteRepository implements LeiauteRepository {
       .innerJoin("versions", "leiautes.version_id", "versions.id")
       .paginate(Number(query.page), Number(query.limit));
 
-    console.log(data.toJSON());
     return data.toJSON() as ExtractList;
   }
 

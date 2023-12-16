@@ -2,10 +2,10 @@ import type { AxiosResponse } from 'axios';
 
 import { API } from '..';
 
-import type { User } from '~/models/User';
+import type { User } from '~/models';
 import type { CreateUserType } from '~/schemas/user';
 
-export async function list(): Promise<AxiosResponse<User[]>> {
+export async function _list(): Promise<AxiosResponse<User[]>> {
 	return await API.get<User[]>('/users');
 }
 
