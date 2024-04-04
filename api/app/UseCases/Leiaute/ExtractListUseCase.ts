@@ -17,3 +17,4 @@ export class ExtractListUseCase {
     return await this.leiauteRepository.extracts(query);
   }
 }
+

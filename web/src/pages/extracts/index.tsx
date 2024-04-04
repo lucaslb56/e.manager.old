@@ -9,6 +9,7 @@ import {
 	Typography,
 } from '@mui/material';
 import {
+	Download,
 	FunnelSimple,
 	MagnifyingGlass,
 	Upload,
@@ -65,7 +66,7 @@ export function Extracts(): ReactElement {
 
 			<Box>
 				<Grid.Root>
-					<Grid.Item xs={8}>
+					<Grid.Item xs={6}>
 						<TextField
 							size="small"
 							fullWidth
@@ -152,6 +153,30 @@ export function Extracts(): ReactElement {
 							variant="contained"
 							sx={{ gap: '0.5rem', height: '100%' }}
 							onClick={(): void => modal.open({ key: 'extract-import' })}
+						>
+							<Download
+								weight="bold"
+								size={20}
+							/>
+							<Typography
+								sx={{
+									display: {
+										xs: 'none',
+										md: 'block',
+									},
+								}}
+							>
+								Importar
+							</Typography>
+						</Button>
+					</Grid.Item>
+					<Grid.Item xs={2}>
+						<Button
+							fullWidth
+							size="medium"
+							variant="contained"
+							sx={{ gap: '0.5rem', height: '100%' }}
+							onClick={(): void => console.log("teste")}
 						>
 							<Upload
 								weight="bold"
